@@ -6,17 +6,17 @@ import { connect } from 'react-redux';
 import { IAppReduxState } from 'shared/types/app';
 
 import { selectors } from '../../../redux';
-import './LoginForm.scss';
+//import './LoginForm.scss';
 
 const b = block('login-form');
 
 function mapState(state: IAppReduxState) {
   return {
-    profile: selectors.selectProfile(state),
+    login: state,
   };
 }
 
-class ProfilePreviewComponent extends React.PureComponent {
+class LoginForm extends React.PureComponent {
   public render() {
     return (
       <div className={b()}>
@@ -24,9 +24,8 @@ class ProfilePreviewComponent extends React.PureComponent {
       </div>
     );
   }
-
 }
 
-const connectedComponent = connect(mapState)(ProfilePreviewComponent);
+const connectedComponent = connect(mapState)(LoginForm);
 
 export { connectedComponent as LoginForm };

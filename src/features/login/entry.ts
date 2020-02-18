@@ -8,7 +8,7 @@ const entry = makeFeatureEntry({
   actionCreators,
   selectors,
   reduxEntry: {
-    reducers: { profile: reducer },
+    reducers: { login: reducer },
   },
 });
 
