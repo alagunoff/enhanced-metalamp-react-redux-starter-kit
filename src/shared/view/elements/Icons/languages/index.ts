@@ -1,0 +1,10 @@
+export { CIcon } from './CIcon';
+export { CppIcon } from './CppIcon';
+export { CsIcon } from './CsIcon';
+export { JSIcon } from './JSIcon';
+export { TSIcon } from './TSIcon';
+export { RubyIcon } from './RubyIcon';
+export { PythonIcon } from './PythonIcon';
+export { JavaIcon } from './JavaIcon';
+export { SwiftIcon } from './SwiftIcon';
+export { HaskellIcon } from './HaskellIcon';
