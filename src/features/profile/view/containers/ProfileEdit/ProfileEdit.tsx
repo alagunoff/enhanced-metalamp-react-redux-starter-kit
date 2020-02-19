@@ -44,6 +44,7 @@ const { profile: intl } = tKeys.features;
 class ProfileEditComponent extends React.PureComponent<IProps> {
   public render() {
     const { profile } = this.props;
+    
     return (
       <Form
         onSubmit={this.handleFormSubmit}

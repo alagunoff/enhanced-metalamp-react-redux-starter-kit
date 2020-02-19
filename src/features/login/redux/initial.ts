@@ -1,9 +1,14 @@
-import { IReduxState } from '../namespace';
+import { IReduxState, ICommunication } from '../namespace';
 
-const initial: IReduxState = {
-  login: {
-    isLogged: false,
+const initalCommunication: ICommunication = {
+  isRequesting: false,
+  error: '',
+};
+
+const initialState: IReduxState = {
+  communication: {
+    login: initalCommunication,
   },
 };
 
-export { initial };
+export { initialState };

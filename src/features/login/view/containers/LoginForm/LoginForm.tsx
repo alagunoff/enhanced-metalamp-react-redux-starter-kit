@@ -1,31 +1,42 @@
 import React from 'react';
 import block from 'bem-cn';
 import { connect } from 'react-redux';
-// import { autobind } from 'core-decorators';
+import { Form, FormRenderProps } from 'react-final-form';
+import { autobind } from 'core-decorators';
 
+import { TextInputField } from 'shared/view/form';
+import { Button } from 'shared/view/elements';
 import { IAppReduxState } from 'shared/types/app';
+//import { actionCreators } from './../../../redux';
 
-import { selectors } from '../../../redux';
-//import './LoginForm.scss';
+import './LoginForm.scss';
 
 const b = block('login-form');
 
+type IActionProps = typeof mapDispatch;
+
+type IProps = IActionProps;
+
 function mapState(state: IAppReduxState) {
   return {
-    login: state,
+    loginState: state.login,
   };
 }
 
-class LoginForm extends React.PureComponent {
+const mapDispatch = {
+  saveProfile: actionCreators.saveProfile,
+};
+
+class LoginForm extends React.PureComponent<IProps> {
   public render() {
     return (
       <div className={b()}>
-        login form
+        <form className={b('content')}>form login</form>
       </div>
     );
   }
 }
 
-const connectedComponent = connect(mapState)(LoginForm);
+const connectedComponent = connect(mapState, mapDispatch)(LoginForm);
 
 export { connectedComponent as LoginForm };
