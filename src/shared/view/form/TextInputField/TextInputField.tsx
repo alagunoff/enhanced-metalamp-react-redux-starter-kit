@@ -5,7 +5,7 @@ import { TextInput, TextInputProps } from 'shared/view/elements';
 import { getFieldWithComponent } from 'shared/helpers/react';
 import { TranslateFunction } from 'services/i18n';
 
-type IProps = TextInputProps & FieldRenderProps & { t: TranslateFunction };
+type IProps = TextInputProps & FieldRenderProps & { t?: TranslateFunction };
 
 function TextInputField(props: IProps) {
   const { input, meta, t, ...rest } = props;
@@ -16,7 +16,7 @@ function TextInputField(props: IProps) {
   return (
     <TextInput
       {...rest}
-      helperText={error && t(error)}
+      helperText={error && t ? t(error) : error}
       error={Boolean(error)}
       {...input}
     />

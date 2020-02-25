@@ -1,17 +1,12 @@
 .login-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
   height: 100%;
-
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    width: 75rem;
-    height: 100%;
-    background-color: #e5e5e5;
-  }
+  background-color: rgba(229, 229, 229, 0.2);
 
   &__login-form {
-    width: 39rem;
+    width: 35rem;
   }
 }

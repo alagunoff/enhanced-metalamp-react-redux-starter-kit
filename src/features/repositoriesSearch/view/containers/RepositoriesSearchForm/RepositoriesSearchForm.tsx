@@ -77,6 +77,7 @@ class RepositoriesSearchFormComponent extends React.PureComponent<IProps> {
   @autobind
   private handleFormSubmit(formValues: IRepositoriesSearchFormFields) {
     const { searchRepositories, onSubmit } = this.props;
+    
     searchRepositories({ searchOptions: formValues, page: 1 });
     onSubmit(formValues);
   }

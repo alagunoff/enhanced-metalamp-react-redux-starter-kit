@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { communicationReducer } from './communications';
+import { communicationReducer } from './communication';
+import * as NS from '../../namespace';
 
-const reducer = combineReducers({
-  login: communicationReducer,
+const reducer = combineReducers<NS.IReduxState>({
+  communication: communicationReducer,
 });
 
 export { reducer };

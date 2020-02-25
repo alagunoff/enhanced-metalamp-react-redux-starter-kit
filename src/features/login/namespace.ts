@@ -6,14 +6,22 @@ interface IReduxState {
   };
 }
 
-export type ILoginPayload = {
+type ILoginPayload = {
   email: string;
   password: string;
 };
 
-export type ILogin = IAction<'LOGIN:LOGIN', ILoginPayload>;
-export type ILoginSuccess = IPlainAction<'LOGIN:LOGIN_SUCCESS'>;
-export type ILoginFail = IPlainFailAction<'LOGIN:LOGIN_FAIL'>;
-export type ILoginAction = ILogin | ILoginSuccess | ILoginFail;
+type ILogin = IAction<'LOGIN:LOGIN', ILoginPayload>;
+type ILoginSuccess = IPlainAction<'LOGIN:LOGIN_SUCCESS'>;
+type ILoginFail = IPlainFailAction<'LOGIN:LOGIN_FAIL'>;
+type ILoginAction = ILogin | ILoginSuccess | ILoginFail;
 
-export { IReduxState, ICommunication };
+export {
+  IReduxState,
+  ICommunication,
+  ILoginPayload,
+  ILogin,
+  ILoginSuccess,
+  ILoginFail,
+  ILoginAction,
+};

@@ -3,7 +3,8 @@ import { autobind } from 'core-decorators';
 import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import Adjust from '@material-ui/icons/Adjust';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 type IProps = Omit<TextFieldProps, 'ref'>;
 
@@ -42,7 +43,7 @@ class TextInput extends React.PureComponent<IProps, IState> {
           aria-label="Toggle password visibility"
           onClick={this.handleClickShowPassword}
         >
-          <Adjust />
+          {this.state.type === 'password' ? <Visibility /> : <VisibilityOff />}
         </IconButton>
       </InputAdornment>
     ) : null;

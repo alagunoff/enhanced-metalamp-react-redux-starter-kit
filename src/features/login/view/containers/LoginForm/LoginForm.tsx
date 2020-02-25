@@ -1,42 +1,97 @@
 import React from 'react';
 import block from 'bem-cn';
 import { connect } from 'react-redux';
-import { Form, FormRenderProps } from 'react-final-form';
 import { autobind } from 'core-decorators';
+import { Form, FormRenderProps } from 'react-final-form';
 
-import { TextInputField } from 'shared/view/form';
-import { Button } from 'shared/view/elements';
 import { IAppReduxState } from 'shared/types/app';
-//import { actionCreators } from './../../../redux';
+import { TextInputField } from 'shared/view/form';
 
+import { actionCreators } from './../../../redux';
+import { validateEmail, validatePassword } from '../constants';
 import './LoginForm.scss';
 
-const b = block('login-form');
+interface IStateProps {
+  isLoginRequesting: boolean;
+}
 
-type IActionProps = typeof mapDispatch;
+type OwnProps = {
+  onRestoreLinkClick: () => void;
+  onRegistrationLinkClick: () => void;
+};
+type LoginFormFields = {
+  email: string;
+  password: string;
+};
+type IActionProps = typeof mapDispatchToProps;
+type IProps = IActionProps & IStateProps & OwnProps;
 
-type IProps = IActionProps;
-
-function mapState(state: IAppReduxState) {
+function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
-    loginState: state.login,
+    isLoginRequesting: state.login.communication.login.isRequesting,
   };
 }
 
-const mapDispatch = {
-  saveProfile: actionCreators.saveProfile,
+const mapDispatchToProps = {
+  login: actionCreators.login,
 };
+
+const b = block('login-form');
 
 class LoginForm extends React.PureComponent<IProps> {
   public render() {
+    const { onRegistrationLinkClick } = this.props;
+
     return (
       <div className={b()}>
-        <form className={b('content')}>form login</form>
+        <button type='button' className={b('registration-link')} onClick={onRegistrationLinkClick}>
+          Зарегистрироваться
+        </button>
+        <div className={b('title')}>Войти</div>
+        <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
       </div>
+    );
+  }
+
+  @autobind
+  private handleFormSubmit(formValues: LoginFormFields) {
+    const { login } = this.props;
+    
+    login(formValues);
+  }
+
+  @autobind
+  private renderForm({ handleSubmit }: FormRenderProps) {
+    const { onRestoreLinkClick } = this.props;
+
+    return (
+      <form onSubmit={handleSubmit} className={b('content')}>
+        <div className={b('fields')}>
+          <div className={b('field')}>
+            <TextInputField name='email' label='Email' validate={validateEmail} />
+          </div>
+          <div className={b('field')}>
+            <TextInputField
+              name='password'
+              type='password'
+              label='Пароль'
+              validate={validatePassword}
+            />
+          </div>
+        </div>
+        <div className={b('button-container')}>
+          <button type='button' className={b('password-restore-link')} onClick={onRestoreLinkClick}>
+            Восстановить пароль
+          </button>
+          <button type='submit' className={b('button')}>
+            Войти
+          </button>
+        </div>
+      </form>
     );
   }
 }
 
-const connectedComponent = connect(mapState, mapDispatch)(LoginForm);
+const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
 
 export { connectedComponent as LoginForm };

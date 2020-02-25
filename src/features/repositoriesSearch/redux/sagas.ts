@@ -10,11 +10,10 @@ import * as NS from '../namespace';
 import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
-  const searchRepositoriesType: NS.ISearchRepositories['type'] = 'REPOSITORIES_SEARCH:SEARCH_REPOSITORIES';
+  const searchRepositoriesType: NS.ISearchRepositories['type'] =
+    'REPOSITORIES_SEARCH:SEARCH_REPOSITORIES';
   return function* saga(): SagaIterator {
-    yield all([
-      takeLatest(searchRepositoriesType, executeSearchRepositories, deps),
-    ]);
+    yield all([takeLatest(searchRepositoriesType, executeSearchRepositories, deps)]);
   };
 }
 
@@ -23,11 +22,19 @@ function* executeSearchRepositories({ api }: IDependencies, { payload }: NS.ISea
     const { searchOptions, page } = payload;
     const { searchString, ...filters } = searchOptions;
     const searchResults: IRepositoriesSearchResults = yield call(
-      api.searchRepositories, searchString, filters, page,
+      api.searchRepositories,
+      searchString,
+      filters,
+      page,
     );
     yield put(actionCreators.searchRepositoriesSuccess({ ...searchResults, page }));
     if (searchResults.data.length === 0) {
-      yield put(notificationActionCreators.setNotification({ kind: 'error', text: 'No repositories found :(' }));
+      yield put(
+        notificationActionCreators.setNotification({
+          kind: 'error',
+          text: 'No repositories found :(',
+        }),
+      );
     }
   } catch (error) {
     const errorMsg = getErrorMsg(error);

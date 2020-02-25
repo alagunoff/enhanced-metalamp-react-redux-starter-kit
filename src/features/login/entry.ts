@@ -6,7 +6,6 @@ import { actionCreators, reducer, getSaga } from './redux';
 const entry = makeFeatureEntry({
   containers,
   actionCreators,
-  selectors: {},
   reduxEntry: {
     reducers: { login: reducer },
     sagas: [getSaga],
@@ -14,4 +13,5 @@ const entry = makeFeatureEntry({
 });
 
 type Entry = typeof entry;
+
 export { Entry, entry };

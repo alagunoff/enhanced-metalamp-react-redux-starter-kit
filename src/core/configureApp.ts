@@ -70,7 +70,7 @@ function configureApp(data?: IAppData): IAppData {
         store.replaceReducer(createReducer(connectedReducers as ReducersMap<IAppReduxState>));
       }
     }
-
+    
     if (sagas && __CLIENT__) {
       sagas.forEach((saga: RootSaga) => {
         if (!connectedSagas.includes(saga) && runSaga) {
