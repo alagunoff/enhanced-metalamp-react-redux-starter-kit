@@ -7,7 +7,7 @@ import { CheckboxInput } from 'shared/view/elements';
 import { getFieldWithComponent } from 'shared/helpers/react';
 import { TranslateFunction } from 'services/i18n';
 
-type IProps = GetProps<typeof CheckboxInput> & FieldRenderProps & { t: TranslateFunction };
+type IProps = GetProps<typeof CheckboxInput> & FieldRenderProps & { t?: TranslateFunction };
 
 function CheckboxInputFieldComponent(props: IProps) {
   const { input, meta, t, ...rest } = props;

@@ -9,6 +9,7 @@ import { initializeI18n } from 'services/i18n/i18nContainer';
 import { configureStore, createReducer } from './configureStore';
 import { TYPES, container } from './configureIoc';
 import { configureDeps } from './configureDeps';
+import { configureFirestore } from 'core/configureFirestore';
 
 type ReducerName = keyof IAppReduxState;
 
@@ -42,6 +43,7 @@ function configureApp(data?: IAppData): IAppData {
 
   const dependencies = configureDeps();
   initializeI18n();
+  configureFirestore();
 
   sharedReduxEntries.forEach(connectEntryToStore);
   modules.forEach((module: IModule) => {

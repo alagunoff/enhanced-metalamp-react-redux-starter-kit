@@ -56,7 +56,7 @@ class LoginForm extends React.PureComponent<IProps> {
   @autobind
   private handleFormSubmit(formValues: LoginFormFields) {
     const { login } = this.props;
-    
+
     login(formValues);
   }
 

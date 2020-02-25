@@ -1,4 +1,6 @@
-import { IReduxState, ICommunication } from '../namespace';
+import { ICommunication } from 'shared/types/redux';
+
+import { IReduxState } from '../namespace';
 
 const initalCommunication: ICommunication = {
   isRequesting: false,
@@ -8,6 +10,7 @@ const initalCommunication: ICommunication = {
 const initialState: IReduxState = {
   communication: {
     login: initalCommunication,
+    registration: initalCommunication,
   },
 };
 

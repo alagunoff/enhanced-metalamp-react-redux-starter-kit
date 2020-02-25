@@ -1,27 +1,28 @@
 import { ICommunication, IPlainFailAction, IAction, IPlainAction } from 'shared/types/redux';
 
-interface IReduxState {
+export interface IReduxState {
   communication: {
     login: ICommunication;
+    registration: ICommunication;
   };
 }
 
-type ILoginPayload = {
+export type ILoginPayload = {
   email: string;
   password: string;
 };
 
-type ILogin = IAction<'LOGIN:LOGIN', ILoginPayload>;
-type ILoginSuccess = IPlainAction<'LOGIN:LOGIN_SUCCESS'>;
-type ILoginFail = IPlainFailAction<'LOGIN:LOGIN_FAIL'>;
-type ILoginAction = ILogin | ILoginSuccess | ILoginFail;
+export type IRegistrationPayload = {
+  email: string;
+  password: string;
+  refusalToSubscription: boolean;
+}
 
-export {
-  IReduxState,
-  ICommunication,
-  ILoginPayload,
-  ILogin,
-  ILoginSuccess,
-  ILoginFail,
-  ILoginAction,
-};
+export type ILogin = IAction<'LOGIN:LOGIN', ILoginPayload>;
+export type ILoginSuccess = IPlainAction<'LOGIN:LOGIN_SUCCESS'>;
+export type ILoginFail = IPlainFailAction<'LOGIN:LOGIN_FAIL'>;
+export type ILoginAction = ILogin | ILoginSuccess | ILoginFail;
+export type IRegistration = IAction<'REGISTRATION:REGISTRATION', IRegistrationPayload>;
+export type IRegistrationSuccess = IPlainAction<'REGISTRATION:REGISTRATION_SUCCESS'>;
+export type IRegistrationFail = IPlainFailAction<'REGISTRATION:REGISTRATION_FAIL'>;
+export type IRegistrationAction = IRegistration | IRegistrationSuccess | IRegistrationFail;
