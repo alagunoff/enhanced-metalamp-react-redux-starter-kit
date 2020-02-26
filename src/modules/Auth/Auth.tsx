@@ -4,15 +4,12 @@ import { Route, Switch } from 'react-router-dom';
 import { routes } from 'modules/routes';
 import { IModule } from 'shared/types/app';
 
-import { LoginLayout, RegistrationLayout } from './view/components';
+import { LoginLayout, RegistrationLayout, RestorePasswordLayout } from './view/components';
 
 const Auth: IModule = {
   getRoutes() {
     return (
-      <Route
-        key={routes.auth.getElementKey()}
-        path={routes.auth.getRoutePath()}
-      >
+      <Route key={routes.auth.getElementKey()} path={routes.auth.getRoutePath()}>
         <Switch>
           <Route
             key={routes.auth.login.getElementKey()}
@@ -24,11 +21,11 @@ const Auth: IModule = {
             path={routes.auth.registration.getRoutePath()}
             component={RegistrationLayout}
           />
-          {/* <Route
-            key={routes.auth.restorePassword.getElementKey()}
-            path={routes.auth.restorePassword.getRoutePath()}
+          <Route
+            key={routes.auth['restore-password'].getElementKey()}
+            path={routes.auth['restore-password'].getRoutePath()}
             component={RestorePasswordLayout}
-          /> */}
+          />
         </Switch>
       </Route>
     );

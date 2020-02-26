@@ -1,4 +1,3 @@
-
 import * as allModules from 'modules';
 import { ReducersMap } from 'shared/types/redux';
 import { reduxEntry as themeProviderRE } from 'services/theme';
@@ -6,10 +5,10 @@ import { reduxEntry as notificationReduxEntry } from 'services/notification';
 import { IAppData, IModule, RootSaga, IAppReduxState, IReduxEntry } from 'shared/types/app';
 import { initializeI18n } from 'services/i18n/i18nContainer';
 
+import { createFirebaseStore } from './createFirebaseStore';
 import { configureStore, createReducer } from './configureStore';
 import { TYPES, container } from './configureIoc';
 import { configureDeps } from './configureDeps';
-import { configureFirestore } from 'core/configureFirestore';
 
 type ReducerName = keyof IAppReduxState;
 
@@ -21,10 +20,7 @@ function configureApp(data?: IAppData): IAppData {
     return { ...data, modules };
   }
 
-  const sharedReduxEntries: IReduxEntry[] = [
-    themeProviderRE,
-    notificationReduxEntry,
-  ];
+  const sharedReduxEntries: IReduxEntry[] = [themeProviderRE, notificationReduxEntry];
 
   const connectedSagas: RootSaga[] = [];
   const connectedReducers: Partial<ReducersMap<IAppReduxState>> = {};
@@ -43,7 +39,7 @@ function configureApp(data?: IAppData): IAppData {
 
   const dependencies = configureDeps();
   initializeI18n();
-  configureFirestore();
+  createFirebaseStore();
 
   sharedReduxEntries.forEach(connectEntryToStore);
   modules.forEach((module: IModule) => {
@@ -72,7 +68,7 @@ function configureApp(data?: IAppData): IAppData {
         store.replaceReducer(createReducer(connectedReducers as ReducersMap<IAppReduxState>));
       }
     }
-    
+
     if (sagas && __CLIENT__) {
       sagas.forEach((saga: RootSaga) => {
         if (!connectedSagas.includes(saga) && runSaga) {

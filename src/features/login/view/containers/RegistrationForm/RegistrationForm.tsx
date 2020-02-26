@@ -6,11 +6,10 @@ import { Form, FormRenderProps } from 'react-final-form';
 
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
-import { ResolvedCommunication, ResolvedStatus } from 'shared/view/components';
 import { TextInputField, CheckboxInputField } from 'shared/view/form';
 
 import { actionCreators } from './../../../redux';
-import { validateEmail, validatePassword } from '../constants';
+import { validateEmail, validatePassword } from './../constants';
 import './RegistrationForm.scss';
 
 type IStateProps = {
@@ -50,7 +49,6 @@ class RegistrationForm extends React.PureComponent<IProps> {
         </button>
         <div className={b('title')}>Регистрация</div>
         <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
-        {this.renderStatus()}
       </div>
     );
   }
@@ -104,25 +102,6 @@ class RegistrationForm extends React.PureComponent<IProps> {
           />
         </div>
       </form>
-    );
-  }
-
-  private renderStatus() {
-    const {
-      registrationCommunication: { error },
-      registrationCommunication,
-    } = this.props;
-
-    return (
-      <div className={b('request-status')}>
-        <ResolvedCommunication communication={registrationCommunication}>
-          {(status: ResolvedStatus) => (
-            <div className={b('status')}>
-              {status === 'error' ? error : 'Registration success'}
-            </div>
-          )}
-        </ResolvedCommunication>
-      </div>
     );
   }
 }

@@ -10,6 +10,8 @@ const initalCommunication: ICommunication = {
 const initialState: IReduxState = {
   communication: {
     login: initalCommunication,
+    restorePassword: initalCommunication,
+    confirmRestorePassword: initalCommunication,
     registration: initalCommunication,
   },
 };

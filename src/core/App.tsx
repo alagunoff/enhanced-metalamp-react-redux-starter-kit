@@ -14,9 +14,7 @@ import { getRoutes } from './routes';
 function ClientApp({ modules, store }: IAppData) {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        {renderSharedPart(modules)}
-      </BrowserRouter>
+      <BrowserRouter>{renderSharedPart(modules)}</BrowserRouter>
     </Provider>
   );
 }
@@ -27,9 +25,7 @@ export function ServerApp(props: IAppData & StaticRouter['props']) {
   const { modules, store, ...routerProps } = props;
   return (
     <Provider store={store}>
-      <StaticRouter {...routerProps}>
-        {renderSharedPart(modules)}
-      </StaticRouter>
+      <StaticRouter {...routerProps}>{renderSharedPart(modules)}</StaticRouter>
     </Provider>
   );
 }

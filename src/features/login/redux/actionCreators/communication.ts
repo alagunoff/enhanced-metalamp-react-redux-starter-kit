@@ -13,6 +13,34 @@ export const {
 );
 
 export const {
+  execute: restorePassword,
+  completed: restorePasswordSuccess,
+  failed: restorePasswordFail,
+} = makeCommunicationActionCreators<
+  NS.IRestorePassword,
+  NS.IRestorePasswordSuccess,
+  NS.IRestorePasswordFail
+>(
+  'RESTORE_PASSWORD:RESTORE_PASSWORD',
+  'RESTORE_PASSWORD:RESTORE_PASSWORD_SUCCESS',
+  'RESTORE_PASSWORD:RESTORE_PASSWORD_FAIL',
+);
+
+export const {
+  execute: confirmRestorePassword,
+  completed: confirmRestorePasswordSuccess,
+  failed: confirmRestorePasswordFail,
+} = makeCommunicationActionCreators<
+  NS.IConfirmRestorePassword,
+  NS.IConfirmRestorePasswordSuccess,
+  NS.IConfirmRestorePasswordFail
+>(
+  'CONFIRM_RESTORE_PASSWORD:CONFIRM_RESTORE_PASSWORD',
+  'CONFIRM_RESTORE_PASSWORD:CONFIRM_RESTORE_PASSWORD_SUCCESS',
+  'CONFIRM_RESTORE_PASSWORD:CONFIRM_RESTORE_PASSWORD_FAIL',
+);
+
+export const {
   execute: registration,
   completed: registrationSuccess,
   failed: registrationFail,
