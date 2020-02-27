@@ -28,8 +28,9 @@ class LoginLayout extends React.PureComponent<IProps> {
       <div className={b()}>
         <div className={b('login-form')}>
           <LoginForm
-            onRestoreLinkClick={this.redirectToChangePassword}
-            onRegistrationLinkClick={this.redirectToRegistration}
+            handleRestoreLinkClick={this.handleRestoreLinkClick}
+            handleRegistrationLinkClick={this.handleRegistrationLinkClick}
+            handleSuccessfulLogin={this.handleSuccessfulLogin}
           />
         </div>
       </div>
@@ -37,17 +38,24 @@ class LoginLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private redirectToChangePassword() {
+  private handleSuccessfulLogin() {
+    const { history } = this.props;
+
+    history.push(routes.search.repositories.getRedirectPath());
+  }
+
+  @autobind
+  private handleRestoreLinkClick() {
     const { history } = this.props;
 
     history.push(routes.auth['restore-password'].getRedirectPath());
   }
 
   @autobind
-  private redirectToRegistration() {
+  private handleRegistrationLinkClick() {
     const { history } = this.props;
 
-    history.push(routes.auth['registration'].getRedirectPath());
+    history.push(routes.auth.registration.getRedirectPath());
   }
 }
 

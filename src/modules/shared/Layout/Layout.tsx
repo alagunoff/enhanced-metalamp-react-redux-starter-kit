@@ -5,11 +5,13 @@ import { autobind } from 'core-decorators';
 
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
+import { SessionContext } from 'core/session';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
 import { routes } from '../../routes';
 import { LayoutHeaderMenu, IHeaderMenuItem } from './LayoutHeaderMenu/LayoutHeaderMenu';
+
 import './Layout.scss';
 
 interface IOwnProps {
@@ -27,7 +29,13 @@ const { header, footer } = tKeys.shared;
 
 class LayoutComponent extends React.Component<IProps> {
   public render() {
-    const { children, title, profileFeatureEntry: { containers }, location, t } = this.props;
+    const {
+      children,
+      title,
+      profileFeatureEntry: { containers },
+      location,
+      t,
+    } = this.props;
     const { ProfilePreview } = containers;
 
     return (
@@ -41,24 +49,32 @@ class LayoutComponent extends React.Component<IProps> {
               />
             </div>
             <div className={b('right-menu')}>
-              <ProfilePreview onEditClick={this.handleEditProfileClick} />
-              <div className={b('language-selector')}><LanguageSelector /></div>
+              <SessionContext.Consumer>
+                {authUser =>
+                  authUser ? (
+                    <ProfilePreview onEditClick={this.handleEditProfileClick} />
+                  ) : (
+                    'Вам нужно войти'
+                  )
+                }
+              </SessionContext.Consumer>
+              <div className={b('language-selector')}>
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         </header>
         <div className={b('content')}>
-          <h1 className={b('title')}>
-            {title}
-          </h1>
+          <h1 className={b('title')}>{title}</h1>
           {children}
         </div>
         <footer className={b('footer')}>
           <div className={b('footer-content')}>
             <a
               className={b('company-link')}
-              href="https://fullstack-development.com"
-              target="_blank"
-              rel="noopener noreferrer"
+              href='https://fullstack-development.com'
+              target='_blank'
+              rel='noopener noreferrer'
             >
               {t(footer.fsd)}
             </a>
@@ -71,14 +87,16 @@ class LayoutComponent extends React.Component<IProps> {
   @memoizeByProps((props: IProps) => [props.t])
   private getMenuItems(): IHeaderMenuItem[] {
     const { t } = this.props;
-    return [{
-      path: routes.search.users.getRoutePath(),
-      title: t(header.users),
-    },
-    {
-      path: routes.search.repositories.getRoutePath(),
-      title: t(header.repositories),
-    }];
+    return [
+      {
+        path: routes.search.users.getRoutePath(),
+        title: t(header.users),
+      },
+      {
+        path: routes.search.repositories.getRoutePath(),
+        title: t(header.repositories),
+      },
+    ];
   }
 
   @autobind

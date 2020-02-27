@@ -18,7 +18,7 @@ function CheckboxInputFieldComponent(props: IProps) {
   return (
     <CheckboxInput
       {...rest}
-      helperText={error && t(error)}
+      helperText={error && t ? t(error) : undefined}
       error={Boolean(error)}
       {...input}
       value={value}

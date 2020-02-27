@@ -27,17 +27,30 @@ class RegistrationLayout extends React.PureComponent<IProps> {
     return (
       <div className={b()}>
         <div className={b('registration-form')}>
-          <RegistrationForm onLoginLinkClick={this.redirectToLogin} />
+          <RegistrationForm
+            handleLoginLikClick={this.handleLoginLikClick}
+            handleSuccessfulRegistration={this.handleSuccessfulRegistration}
+          />
         </div>
       </div>
     );
   }
 
   @autobind
+  private handleLoginLikClick() {
+    this.redirectToLogin();
+  }
+
+  @autobind
+  private handleSuccessfulRegistration() {
+    this.redirectToLogin();
+  }
+
+  @autobind
   private redirectToLogin() {
     const { history } = this.props;
 
-    history.push(routes.auth['login'].getRedirectPath());
+    history.push(routes.auth.login.getRedirectPath());
   }
 }
 

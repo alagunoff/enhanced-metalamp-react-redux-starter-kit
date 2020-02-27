@@ -23,7 +23,7 @@ function getSaga(deps: IDependencies) {
 
 function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   try {
-    yield call(api.auth.login, payload);
+    yield call(api.login, payload);
     yield put(actionCreators.loginSuccess());
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
@@ -35,7 +35,7 @@ function* executeRestorePassword(
   { payload: { email } }: NS.IRestorePassword,
 ) {
   try {
-    yield call(api.auth.restorePassword, email);
+    yield call(api.restorePassword, email);
     yield put(actionCreators.restorePasswordSuccess());
   } catch (error) {
     yield put(actionCreators.restorePasswordFail(getErrorMsg(error)));
@@ -44,7 +44,7 @@ function* executeRestorePassword(
 
 function* executeRegistration({ api }: IDependencies, { payload }: NS.IRegistration) {
   try {
-    yield call(api.auth.registration, payload);
+    yield call(api.registration, payload);
     yield put(actionCreators.registrationSuccess());
   } catch (error) {
     yield put(actionCreators.registrationFail(getErrorMsg(error)));

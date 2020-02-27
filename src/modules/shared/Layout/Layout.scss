@@ -81,6 +81,11 @@
   &__language-selector {
     margin: 0 1rem;
 
+    .MuiInputBase-root,
+    .MuiSelect-icon {
+      color: #eaeaea;
+    }
+
     & select {
       border: none;
       background: none;

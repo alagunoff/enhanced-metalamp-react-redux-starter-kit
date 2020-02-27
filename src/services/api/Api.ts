@@ -1,4 +1,6 @@
 import { autobind } from 'core-decorators';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 import {
   IUsersSearchFilters,
@@ -7,7 +9,6 @@ import {
   IRepositoriesSearchResults,
 } from 'shared/types/githubSearch';
 
-import { Auth } from './entities/Auth';
 import { SearchUserResponse, IDetailedServerUser, SearchRepositoriesResponse } from './types';
 import {
   constructUsersSearchQuery,
@@ -19,7 +20,6 @@ import { convertUser, convertUserDetails, convertRepository } from './converters
 import { HttpActions } from './HttpActions';
 
 class Api {
-  public auth: Auth;
   private actions: HttpActions;
   private headers = {
     get: {
@@ -29,8 +29,26 @@ class Api {
 
   constructor() {
     this.actions = new HttpActions('https://api.github.com/', this.headers);
+  }
 
-    this.auth = new Auth();
+  @autobind
+  async login(params: { email: string; password: string }) {
+    const { email, password } = params;
+
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+  }
+
+  @autobind
+  async restorePassword(email: string) {
+    await firebase.auth().sendPasswordResetEmail(email);
+  }
+
+  @autobind
+  async registration(params: { email: string; password: string; refusalToSubscription: boolean }) {
+    const { email, password } = params;
+    
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    await firebase.auth().signOut();
   }
 
   @autobind

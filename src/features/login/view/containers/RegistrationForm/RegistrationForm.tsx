@@ -10,13 +10,15 @@ import { TextInputField, CheckboxInputField } from 'shared/view/form';
 
 import { actionCreators } from './../../../redux';
 import { validateEmail, validatePassword } from './../constants';
+
 import './RegistrationForm.scss';
 
 type IStateProps = {
   registrationCommunication: ICommunication;
 };
 type OwnProps = {
-  onLoginLinkClick: () => void;
+  handleLoginLikClick: () => void;
+  handleSuccessfulRegistration: () => void;
 };
 type RegistrationFormFields = {
   email: string;
@@ -39,16 +41,31 @@ const mapDispatchToProps = {
 const b = block('registration-form');
 
 class RegistrationForm extends React.PureComponent<IProps> {
+  componentDidUpdate() {
+    const {
+      handleSuccessfulRegistration,
+      registrationCommunication: { isRequesting, error },
+    } = this.props;
+
+    if (error === '' && !isRequesting) {
+      setTimeout(() => handleSuccessfulRegistration(), 1000);
+    }
+  }
+
   public render() {
-    const { onLoginLinkClick } = this.props;
+    const {
+      handleLoginLikClick,
+      registrationCommunication: { error },
+    } = this.props;
 
     return (
       <div className={b()}>
-        <button type='button' className={b('login-link')} onClick={onLoginLinkClick}>
+        <button type='button' className={b('login-link')} onClick={handleLoginLikClick}>
           Войти
         </button>
         <div className={b('title')}>Регистрация</div>
         <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
+        {error !== '' ? error : null}
       </div>
     );
   }
@@ -62,11 +79,20 @@ class RegistrationForm extends React.PureComponent<IProps> {
 
   @autobind
   private renderForm({ handleSubmit }: FormRenderProps) {
+    const {
+      registrationCommunication: { isRequesting },
+    } = this.props;
+
     return (
       <form onSubmit={handleSubmit} className={b('content')}>
         <div className={b('fields')}>
           <div className={b('field')}>
-            <TextInputField name='email' label='Email' validate={validateEmail} />
+            <TextInputField
+              name='email'
+              label='Email'
+              validate={validateEmail}
+              disabled={isRequesting}
+            />
           </div>
           <div className={b('field')}>
             <TextInputField
@@ -74,6 +100,7 @@ class RegistrationForm extends React.PureComponent<IProps> {
               type='password'
               label='Пароль'
               validate={validatePassword}
+              disabled={isRequesting}
             />
           </div>
         </div>
@@ -83,7 +110,7 @@ class RegistrationForm extends React.PureComponent<IProps> {
           <li className={b('password-tips-item')}>Одна заглавная буква</li>
           <li className={b('password-tips-item')}>Минимум 8 знаков</li>
         </ul>
-        <button type='submit' className={b('button')}>
+        <button type='submit' className={b('button')} disabled={isRequesting}>
           Зарегистрироваться
         </button>
         <div className={b('agreement')}>
@@ -99,6 +126,7 @@ class RegistrationForm extends React.PureComponent<IProps> {
             name='refusalToSubscription'
             label='Я не хочу получать еженедельную рассылку с советами по поиску работы и новостях о самых
           востребованных профессиях'
+            disabled={isRequesting}
           />
         </div>
       </form>

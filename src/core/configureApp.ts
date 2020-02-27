@@ -5,7 +5,7 @@ import { reduxEntry as notificationReduxEntry } from 'services/notification';
 import { IAppData, IModule, RootSaga, IAppReduxState, IReduxEntry } from 'shared/types/app';
 import { initializeI18n } from 'services/i18n/i18nContainer';
 
-import { createFirebaseStore } from './createFirebaseStore';
+import { createFirebaseStore } from 'core/createFirebaseStore';
 import { configureStore, createReducer } from './configureStore';
 import { TYPES, container } from './configureIoc';
 import { configureDeps } from './configureDeps';
@@ -40,7 +40,7 @@ function configureApp(data?: IAppData): IAppData {
   const dependencies = configureDeps();
   initializeI18n();
   createFirebaseStore();
-
+  
   sharedReduxEntries.forEach(connectEntryToStore);
   modules.forEach((module: IModule) => {
     if (module.getReduxEntry) {
