@@ -11,6 +11,12 @@ const communicationReducer = combineReducers<NS.IReduxState['communication']>({
     'LOGIN:LOGIN_FAIL',
     initialState.communication.login,
   ),
+  logout: makeCommunicationReducer<NS.ILogout, NS.ILogoutSuccess, NS.ILogoutFail>(
+    'LOGOUT:LOGOUT',
+    'LOGOUT:LOGOUT_SUCCESS',
+    'LOGOUT:LOGOUT_FAIL',
+    initialState.communication.logout,
+  ),
   restorePassword: makeCommunicationReducer<
     NS.IRestorePassword,
     NS.IRestorePasswordSuccess,

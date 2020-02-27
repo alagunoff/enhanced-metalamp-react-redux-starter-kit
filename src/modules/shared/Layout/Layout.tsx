@@ -54,7 +54,23 @@ class LayoutComponent extends React.Component<IProps> {
                   authUser ? (
                     <ProfilePreview onEditClick={this.handleEditProfileClick} />
                   ) : (
-                    'Вам нужно войти'
+                    <div className={b('buttons')}>
+                      <button
+                        className={b('login-link')}
+                        type='button'
+                        onClick={this.handleLoginLinkClick}
+                      >
+                        Войти
+                      </button>
+                      {' / '}
+                      <button
+                        className={b('registration-link')}
+                        type='button'
+                        onClick={this.handleRegistrationLinkClick}
+                      >
+                        Зарегистрироваться
+                      </button>
+                    </div>
                   )
                 }
               </SessionContext.Consumer>
@@ -97,6 +113,20 @@ class LayoutComponent extends React.Component<IProps> {
         title: t(header.repositories),
       },
     ];
+  }
+
+  @autobind
+  private handleLoginLinkClick() {
+    const { history } = this.props;
+
+    history.push(routes.auth.login.getRedirectPath());
+  }
+
+  @autobind
+  private handleRegistrationLinkClick() {
+    const { history } = this.props;
+
+    history.push(routes.auth.registration.getRedirectPath());
   }
 
   @autobind

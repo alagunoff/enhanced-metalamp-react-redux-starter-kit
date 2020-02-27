@@ -13,6 +13,16 @@ export const {
 );
 
 export const {
+  execute: logout,
+  completed: logoutSuccess,
+  failed: logoutFail,
+} = makeCommunicationActionCreators<NS.ILogout, NS.ILogoutSuccess, NS.ILogoutFail>(
+  'LOGOUT:LOGOUT',
+  'LOGOUT:LOGOUT_SUCCESS',
+  'LOGOUT:LOGOUT_FAIL',
+);
+
+export const {
   execute: restorePassword,
   completed: restorePasswordSuccess,
   failed: restorePasswordFail,

@@ -32,19 +32,24 @@ class Api {
   }
 
   @autobind
-  async login(params: { email: string; password: string }) {
+  public async login(params: { email: string; password: string }) {
     const { email, password } = params;
 
     await firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
   @autobind
-  async restorePassword(email: string) {
+  public async logout() {
+    await firebase.auth().signOut();
+  }
+
+  @autobind
+  public async restorePassword(email: string) {
     await firebase.auth().sendPasswordResetEmail(email);
   }
 
   @autobind
-  async registration(params: { email: string; password: string; refusalToSubscription: boolean }) {
+  public async registration(params: { email: string; password: string; refusalToSubscription: boolean }) {
     const { email, password } = params;
     
     await firebase.auth().createUserWithEmailAndPassword(email, password);

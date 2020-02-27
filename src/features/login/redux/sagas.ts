@@ -9,12 +9,14 @@ import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
   const loginType: NS.ILogin['type'] = 'LOGIN:LOGIN';
+  const logoutType: NS.ILogout['type'] = 'LOGOUT:LOGOUT';
   const restorePasswordType: NS.IRestorePassword['type'] = 'RESTORE_PASSWORD:RESTORE_PASSWORD';
   const registrationType: NS.IRegistration['type'] = 'REGISTRATION:REGISTRATION';
 
   return function* saga(): SagaIterator {
     yield all([
       takeLatest(loginType, executeLogin, deps),
+      takeLatest(logoutType, executeLogout, deps),
       takeLatest(registrationType, executeRegistration, deps),
       takeLatest(restorePasswordType, executeRestorePassword, deps),
     ]);
@@ -27,6 +29,15 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
     yield put(actionCreators.loginSuccess());
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
+  }
+}
+
+function* executeLogout({ api }: IDependencies) {
+  try {
+    yield call(api.logout);
+    yield put(actionCreators.logoutSuccess());
+  } catch (error) {
+    yield put(actionCreators.logoutFail(getErrorMsg(error)));
   }
 }
 
