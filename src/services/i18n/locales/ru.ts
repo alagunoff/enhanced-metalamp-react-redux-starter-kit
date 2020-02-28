@@ -14,6 +14,8 @@ export const ru = {
       searchFor: 'Искать:',
       users: 'Пользователей',
       repositories: 'Репозитории',
+      login: 'Войти',
+      registration: 'Зарегистрироваться',
     },
     footer: {
       fsd: 'Fullstack Development',
@@ -33,6 +35,7 @@ export const ru = {
       yearsOld_1: '{{count}} года',
       yearsOld_2: '{{count}} год',
       edit: 'Редактировать',
+      logout: 'Выйти',
     },
     repositoriesSearch: {
       minStars: 'Мин. звезд',

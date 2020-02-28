@@ -6,10 +6,9 @@ import { autobind } from 'core-decorators';
 import { IAppReduxState } from 'shared/types/app';
 import { IProfile } from 'shared/types/models';
 import { Popover } from 'shared/view/components';
-import { SessionContext } from 'core/session';
 import { withTranslation, ITranslationProps, tKeys } from 'services/i18n';
+import { namespace as UserNamespace } from 'services/user';
 
-import { actionCreators } from './../../../../login/redux';
 import { ProfileAvatar } from '../../components';
 import { selectors } from '../../../redux';
 
@@ -21,19 +20,15 @@ interface IState {
 
 interface IOwnProps {
   onEditClick(): void;
+  onLogoutLinkClick: () => void;
 }
 
 interface IStateProps {
   profile: IProfile;
+  user: UserNamespace.IUser;
 }
 
-type IActionProps = typeof mapDispatchToProps;
-
-type IProps = IOwnProps & IStateProps & IActionProps & ITranslationProps;
-
-const mapDispatchToProps = {
-  logout: actionCreators.logout,
-};
+type IProps = IOwnProps & IStateProps & ITranslationProps;
 
 const b = block('profile-preview');
 const { profile: intl } = tKeys.features;
@@ -41,6 +36,7 @@ const { profile: intl } = tKeys.features;
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
     profile: selectors.selectProfile(state),
+    user: state.user.data.user,
   };
 }
 
@@ -56,8 +52,12 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
       profile: { avatarURL, name, nickname, age, bio },
       onEditClick,
       t,
+      onLogoutLinkClick,
+      user,
     } = this.props;
     const { isOpen } = this.state;
+
+    console.log(user);
 
     return (
       <div className={b()} ref={this.blockRef}>
@@ -95,31 +95,14 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
               >
                 {t(intl.edit)}
               </span>
-              <SessionContext.Consumer>
-                {authUser =>
-                  authUser ? (
-                    <button
-                      type='button'
-                      className={b('logout-link')}
-                      onClick={this.handleLogoutLinkClick}
-                    >
-                      Выйти
-                    </button>
-                  ) : null
-                }
-              </SessionContext.Consumer>
+              <button type='button' className={b('logout-link')} onClick={onLogoutLinkClick}>
+                {t(intl.logout)}
+              </button>
             </div>
           </div>
         </Popover>
       </div>
     );
-  }
-
-  @autobind
-  private handleLogoutLinkClick() {
-    const { logout } = this.props;
-
-    logout();
   }
 
   @autobind
@@ -149,7 +132,7 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
   }
 }
 
-const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(ProfilePreviewComponent);
+const connectedComponent = connect(mapStateToProps)(ProfilePreviewComponent);
 const ProfilePreview = withTranslation()(connectedComponent);
 
 export { ProfilePreview, ProfilePreviewComponent, IProps as IProfilePreviewProps };

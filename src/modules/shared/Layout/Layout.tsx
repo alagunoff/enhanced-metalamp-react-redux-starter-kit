@@ -1,11 +1,12 @@
 import React from 'react';
 import block from 'bem-cn';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
+import { actionCreators } from 'features/login/redux';
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
-import { SessionContext } from 'core/session';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
@@ -22,7 +23,12 @@ interface IFeatureProps {
   profileFeatureEntry: features.profile.Entry;
 }
 
-type IProps = IOwnProps & IFeatureProps & RouteComponentProps & ITranslationProps;
+type IActionProps = typeof mapDispatchToProps;
+type IProps = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
+
+const mapDispatchToProps = {
+  logout: actionCreators.logout,
+};
 
 const b = block('layout');
 const { header, footer } = tKeys.shared;
@@ -49,31 +55,27 @@ class LayoutComponent extends React.Component<IProps> {
               />
             </div>
             <div className={b('right-menu')}>
-              <SessionContext.Consumer>
-                {authUser =>
-                  authUser ? (
-                    <ProfilePreview onEditClick={this.handleEditProfileClick} />
-                  ) : (
-                    <div className={b('buttons')}>
-                      <button
-                        className={b('login-link')}
-                        type='button'
-                        onClick={this.handleLoginLinkClick}
-                      >
-                        Войти
-                      </button>
-                      {' / '}
-                      <button
-                        className={b('registration-link')}
-                        type='button'
-                        onClick={this.handleRegistrationLinkClick}
-                      >
-                        Зарегистрироваться
-                      </button>
-                    </div>
-                  )
-                }
-              </SessionContext.Consumer>
+              <ProfilePreview
+                onEditClick={this.handleEditProfileClick}
+                onLogoutLinkClick={this.handleLogoutLinkClick}
+              />
+              <div className={b('buttons')}>
+                <button
+                  className={b('login-link')}
+                  type='button'
+                  onClick={this.handleLoginLinkClick}
+                >
+                  {t(header.login)}
+                </button>
+                {' / '}
+                <button
+                  className={b('registration-link')}
+                  type='button'
+                  onClick={this.handleRegistrationLinkClick}
+                >
+                  {t(header.registration)}
+                </button>
+              </div>
               <div className={b('language-selector')}>
                 <LanguageSelector />
               </div>
@@ -130,8 +132,16 @@ class LayoutComponent extends React.Component<IProps> {
   }
 
   @autobind
+  private handleLogoutLinkClick() {
+    const { logout } = this.props;
+
+    logout();
+  }
+
+  @autobind
   private handleEditProfileClick() {
     const { history } = this.props;
+
     history.push(routes.profile.getRoutePath());
   }
 }
@@ -139,6 +149,6 @@ class LayoutComponent extends React.Component<IProps> {
 const wrappedComponent = withTranslation()(withRouter(LayoutComponent));
 const Layout = withAsyncFeatures({
   profileFeatureEntry: features.profile.loadEntry,
-})(wrappedComponent);
+})(connect(null, mapDispatchToProps)(wrappedComponent));
 
 export { Layout, LayoutComponent, IProps as ILayoutProps };

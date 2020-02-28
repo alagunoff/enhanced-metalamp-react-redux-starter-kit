@@ -91,6 +91,10 @@
       animation: none;
     }
 
+    .MuiFormLabel-root.Mui-error {
+      color: #3c485e;
+    }
+
     .MuiFormHelperText-root {
       position: absolute;
       top: 0;

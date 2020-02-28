@@ -14,6 +14,8 @@ export const en = {
       searchFor: 'Search for:',
       users: 'Users',
       repositories: 'Repositories',
+      login: 'Sign in',
+      registration: 'Sign up',
     },
     footer: {
       fsd: 'Fullstack Development',
@@ -31,6 +33,7 @@ export const en = {
       editProfile: 'Edit profile',
       yearsOld: '{{count}} y.o.',
       edit: 'Edit',
+      logout: 'Sign out',
     },
     repositoriesSearch: {
       minStars: 'Min stars',

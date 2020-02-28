@@ -34,9 +34,9 @@ export type ILoginSuccess = IPlainAction<'LOGIN:LOGIN_SUCCESS'>;
 export type ILoginFail = IPlainFailAction<'LOGIN:LOGIN_FAIL'>;
 export type ILoginAction = ILogin | ILoginSuccess | ILoginFail;
 
-export type ILogout = IPlainAction<'LOGOUT:LOGOUT'>;
-export type ILogoutSuccess = IPlainAction<'LOGOUT:LOGOUT_SUCCESS'>;
-export type ILogoutFail = IPlainFailAction<'LOGOUT:LOGOUT_FAIL'>;
+export type ILogout = IPlainAction<'LOGIN:LOGOUT'>;
+export type ILogoutSuccess = IPlainAction<'LOGIN:LOGOUT_SUCCESS'>;
+export type ILogoutFail = IPlainFailAction<'LOGIN:LOGOUT_FAIL'>;
 export type ILogoutAction = ILogout | ILogoutSuccess | ILogoutFail;
 
 export type IRestorePassword = IAction<

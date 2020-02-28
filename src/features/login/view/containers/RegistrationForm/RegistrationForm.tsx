@@ -17,8 +17,8 @@ type IStateProps = {
   registrationCommunication: ICommunication;
 };
 type OwnProps = {
-  handleLoginLikClick: () => void;
-  handleSuccessfulRegistration: () => void;
+  onLoginLikClick: () => void;
+  onSuccessfulRegistration: () => void;
 };
 type RegistrationFormFields = {
   email: string;
@@ -41,26 +41,30 @@ const mapDispatchToProps = {
 const b = block('registration-form');
 
 class RegistrationForm extends React.PureComponent<IProps> {
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: IProps) {
     const {
-      handleSuccessfulRegistration,
+      onSuccessfulRegistration,
       registrationCommunication: { isRequesting, error },
     } = this.props;
+    const {
+      registrationCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+    const isSuccessfulRegistration = error === '' && !isRequesting && isPrevRequesting;
 
-    if (error === '' && !isRequesting) {
-      setTimeout(() => handleSuccessfulRegistration(), 1000);
+    if (isSuccessfulRegistration) {
+      onSuccessfulRegistration();
     }
   }
 
   public render() {
     const {
-      handleLoginLikClick,
+      onLoginLikClick,
       registrationCommunication: { error },
     } = this.props;
 
     return (
       <div className={b()}>
-        <button type='button' className={b('login-link')} onClick={handleLoginLikClick}>
+        <button type='button' className={b('login-link')} onClick={onLoginLikClick}>
           Войти
         </button>
         <div className={b('title')}>Регистрация</div>

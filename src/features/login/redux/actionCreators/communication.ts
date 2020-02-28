@@ -17,9 +17,9 @@ export const {
   completed: logoutSuccess,
   failed: logoutFail,
 } = makeCommunicationActionCreators<NS.ILogout, NS.ILogoutSuccess, NS.ILogoutFail>(
-  'LOGOUT:LOGOUT',
-  'LOGOUT:LOGOUT_SUCCESS',
-  'LOGOUT:LOGOUT_FAIL',
+  'LOGIN:LOGOUT',
+  'LOGIN:LOGOUT_SUCCESS',
+  'LOGIN:LOGOUT_FAIL',
 );
 
 export const {

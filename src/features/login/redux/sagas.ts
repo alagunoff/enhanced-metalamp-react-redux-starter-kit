@@ -3,13 +3,14 @@ import { SagaIterator } from 'redux-saga';
 
 import { IDependencies } from 'shared/types/app';
 import { getErrorMsg } from 'shared/helpers';
+import { actionCreators as userActions } from 'services/user';
 
 import * as NS from '../namespace';
 import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
   const loginType: NS.ILogin['type'] = 'LOGIN:LOGIN';
-  const logoutType: NS.ILogout['type'] = 'LOGOUT:LOGOUT';
+  const logoutType: NS.ILogout['type'] = 'LOGIN:LOGOUT';
   const restorePasswordType: NS.IRestorePassword['type'] = 'RESTORE_PASSWORD:RESTORE_PASSWORD';
   const registrationType: NS.IRegistration['type'] = 'REGISTRATION:REGISTRATION';
 
@@ -25,8 +26,9 @@ function getSaga(deps: IDependencies) {
 
 function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   try {
-    yield call(api.login, payload);
+    const user = yield call(api.login, payload);
     yield put(actionCreators.loginSuccess());
+    yield put(userActions.updateUser(user));
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
   }

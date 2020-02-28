@@ -28,9 +28,9 @@ class LoginLayout extends React.PureComponent<IProps> {
       <div className={b()}>
         <div className={b('login-form')}>
           <LoginForm
-            handleRestoreLinkClick={this.handleRestoreLinkClick}
-            handleRegistrationLinkClick={this.handleRegistrationLinkClick}
-            handleSuccessfulLogin={this.handleSuccessfulLogin}
+            onRestoreLinkClick={this.handleRestoreLinkClick}
+            onRegistrationLinkClick={this.handleRegistrationLinkClick}
+            onSuccessfulLogin={this.handleSuccessfulLogin}
           />
         </div>
       </div>

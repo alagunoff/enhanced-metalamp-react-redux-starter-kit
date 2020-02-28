@@ -1,5 +1,5 @@
 import { autobind } from 'core-decorators';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import {
@@ -36,6 +36,10 @@ class Api {
     const { email, password } = params;
 
     await firebase.auth().signInWithEmailAndPassword(email, password);
+
+    const user = await firebase.auth().currentUser;
+
+    return user;
   }
 
   @autobind
@@ -49,9 +53,13 @@ class Api {
   }
 
   @autobind
-  public async registration(params: { email: string; password: string; refusalToSubscription: boolean }) {
+  public async registration(params: {
+    email: string;
+    password: string;
+    refusalToSubscription: boolean;
+  }) {
     const { email, password } = params;
-    
+
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     await firebase.auth().signOut();
   }

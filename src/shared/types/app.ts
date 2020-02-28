@@ -7,6 +7,7 @@ import * as features from 'features';
 import { Api } from 'services/api/Api';
 import * as ThemeProviderNS from 'services/theme/namespace'; // TODO: УДОЛИ
 import { namespace as NotificationNamespace } from 'services/notification';
+import { namespace as UserNamespace } from 'services/user';
 
 export abstract class IModule {
   public getRoutes?(): ReactElement<RouteProps> | Array<ReactElement<RouteProps>>;
@@ -39,6 +40,7 @@ export interface IAppReduxState {
   // services
   theme: ThemeProviderNS.IReduxState;
   notification: NotificationNamespace.IReduxState;
+  user: UserNamespace.IReduxState;
   // features
   usersSearch: features.usersSearch.namespace.IReduxState;
   repositoriesSearch: features.repositoriesSearch.namespace.IReduxState;

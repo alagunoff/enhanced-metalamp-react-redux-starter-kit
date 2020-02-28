@@ -18,9 +18,9 @@ interface IStateProps {
 }
 
 type OwnProps = {
-  handleRestoreLinkClick: () => void;
-  handleRegistrationLinkClick: () => void;
-  handleSuccessfulLogin: () => void;
+  onRestoreLinkClick: () => void;
+  onRegistrationLinkClick: () => void;
+  onSuccessfulLogin: () => void;
 };
 type LoginFormFields = {
   email: string;
@@ -42,20 +42,24 @@ const mapDispatchToProps = {
 const b = block('login-form');
 
 class LoginForm extends React.PureComponent<IProps> {
-  componentDidUpdate() {
+  componentDidUpdate(prevProps: IProps) {
     const {
-      handleSuccessfulLogin,
+      onSuccessfulLogin,
       loginCommunication: { isRequesting, error },
     } = this.props;
+    const {
+      loginCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+    const isSuccessfulLogin = error === '' && !isRequesting && isPrevRequesting;
 
-    if (error === '' && !isRequesting) {
-      setTimeout(() => handleSuccessfulLogin(), 1000);
+    if (isSuccessfulLogin) {
+      onSuccessfulLogin();
     }
   }
 
   public render() {
     const {
-      handleRegistrationLinkClick,
+      onRegistrationLinkClick,
       loginCommunication: { error },
     } = this.props;
 
@@ -64,7 +68,7 @@ class LoginForm extends React.PureComponent<IProps> {
         <button
           type='button'
           className={b('registration-link')}
-          onClick={handleRegistrationLinkClick}
+          onClick={onRegistrationLinkClick}
         >
           Зарегистрироваться
         </button>
@@ -85,7 +89,7 @@ class LoginForm extends React.PureComponent<IProps> {
   @autobind
   private renderForm({ handleSubmit }: FormRenderProps) {
     const {
-      handleRestoreLinkClick,
+      onRestoreLinkClick,
       loginCommunication: { isRequesting },
     } = this.props;
 
@@ -93,7 +97,12 @@ class LoginForm extends React.PureComponent<IProps> {
       <form onSubmit={handleSubmit} className={b('content')}>
         <div className={b('fields')}>
           <div className={b('field')}>
-            <TextInputField name='email' label='Email' validate={validateEmail} disabled={isRequesting} />
+            <TextInputField
+              name='email'
+              label='Email'
+              validate={validateEmail}
+              disabled={isRequesting}
+            />
           </div>
           <div className={b('field')}>
             <TextInputField
@@ -109,7 +118,7 @@ class LoginForm extends React.PureComponent<IProps> {
           <button
             type='button'
             className={b('password-restore-link')}
-            onClick={handleRestoreLinkClick}
+            onClick={onRestoreLinkClick}
             disabled={isRequesting}
           >
             Восстановить пароль

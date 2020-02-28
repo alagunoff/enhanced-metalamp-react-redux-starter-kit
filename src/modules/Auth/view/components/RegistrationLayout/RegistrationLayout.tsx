@@ -28,8 +28,8 @@ class RegistrationLayout extends React.PureComponent<IProps> {
       <div className={b()}>
         <div className={b('registration-form')}>
           <RegistrationForm
-            handleLoginLikClick={this.handleLoginLikClick}
-            handleSuccessfulRegistration={this.handleSuccessfulRegistration}
+            onLoginLikClick={this.handleLoginLikClick}
+            onSuccessfulRegistration={this.handleSuccessfulRegistration}
           />
         </div>
       </div>
