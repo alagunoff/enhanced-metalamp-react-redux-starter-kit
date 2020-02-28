@@ -27,6 +27,7 @@ function getSaga(deps: IDependencies) {
 function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   try {
     const user = yield call(api.login, payload);
+    
     yield put(actionCreators.loginSuccess());
     yield put(userActions.updateUser(user));
   } catch (error) {
@@ -36,8 +37,10 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
 
 function* executeLogout({ api }: IDependencies) {
   try {
-    yield call(api.logout);
+    const user = yield call(api.logout);
+
     yield put(actionCreators.logoutSuccess());
+    yield put(userActions.updateUser(user));
   } catch (error) {
     yield put(actionCreators.logoutFail(getErrorMsg(error)));
   }

@@ -6,10 +6,10 @@ import { reduxEntry as userReduxEntry } from 'services/user';
 import { IAppData, IModule, RootSaga, IAppReduxState, IReduxEntry } from 'shared/types/app';
 import { initializeI18n } from 'services/i18n/i18nContainer';
 
+import { configureFirebase } from './firebase';
 import { configureStore, createReducer } from './configureStore';
 import { TYPES, container } from './configureIoc';
 import { configureDeps } from './configureDeps';
-import { createFirebaseStore } from './createFirebaseStore';
 
 type ReducerName = keyof IAppReduxState;
 
@@ -37,10 +37,10 @@ function configureApp(data?: IAppData): IAppData {
     container.bind(TYPES.connectEntryToStore).toConstantValue(connectEntryToStore);
     container.bind(TYPES.Store).toConstantValue(store);
   }
-  
+
   const dependencies = configureDeps();
   initializeI18n();
-  createFirebaseStore();
+  configureFirebase();
 
   sharedReduxEntries.forEach(connectEntryToStore);
   modules.forEach((module: IModule) => {

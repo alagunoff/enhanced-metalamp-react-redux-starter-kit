@@ -5,6 +5,7 @@ import { LayoutComponent, ILayoutProps } from '../Layout';
 import { routes } from '../../../routes';
 
 const props: ILayoutProps = {
+  user: null,
   logout: jest.fn(),
   title: 'Title',
   profileFeatureEntry: makeMockEntry({

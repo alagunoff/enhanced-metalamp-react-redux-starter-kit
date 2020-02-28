@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
+import { IAppReduxState } from 'shared/types/app';
 import { actionCreators } from 'features/login/redux';
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
+import { namespace as UserNamespace } from 'services/user';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
@@ -15,16 +17,29 @@ import { LayoutHeaderMenu, IHeaderMenuItem } from './LayoutHeaderMenu/LayoutHead
 
 import './Layout.scss';
 
-interface IOwnProps {
+type IStateProps = {
+  user: UserNamespace.IUser;
+};
+type IOwnProps = {
   title: string;
-}
-
-interface IFeatureProps {
+};
+type IFeatureProps = {
   profileFeatureEntry: features.profile.Entry;
-}
+};
 
 type IActionProps = typeof mapDispatchToProps;
-type IProps = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
+type IProps = IOwnProps &
+  IStateProps &
+  IActionProps &
+  IFeatureProps &
+  RouteComponentProps &
+  ITranslationProps;
+
+function mapStateToProps(state: IAppReduxState): IStateProps {
+  return {
+    user: state.user.data.user,
+  };
+}
 
 const mapDispatchToProps = {
   logout: actionCreators.logout,
@@ -41,6 +56,7 @@ class LayoutComponent extends React.Component<IProps> {
       profileFeatureEntry: { containers },
       location,
       t,
+      user,
     } = this.props;
     const { ProfilePreview } = containers;
 
@@ -55,27 +71,31 @@ class LayoutComponent extends React.Component<IProps> {
               />
             </div>
             <div className={b('right-menu')}>
-              <ProfilePreview
-                onEditClick={this.handleEditProfileClick}
-                onLogoutLinkClick={this.handleLogoutLinkClick}
-              />
-              <div className={b('buttons')}>
-                <button
-                  className={b('login-link')}
-                  type='button'
-                  onClick={this.handleLoginLinkClick}
-                >
-                  {t(header.login)}
-                </button>
-                {' / '}
-                <button
-                  className={b('registration-link')}
-                  type='button'
-                  onClick={this.handleRegistrationLinkClick}
-                >
-                  {t(header.registration)}
-                </button>
-              </div>
+              {user ? (
+                <ProfilePreview
+                  onEditClick={this.handleEditProfileClick}
+                  onLogoutLinkClick={this.handleLogoutLinkClick}
+                />
+              ) : (
+                <div className={b('buttons')}>
+                  <button
+                    className={b('login-link')}
+                    type='button'
+                    onClick={this.handleLoginLinkClick}
+                  >
+                    {t(header.login)}
+                  </button>
+                  {' / '}
+                  <button
+                    className={b('registration-link')}
+                    type='button'
+                    onClick={this.handleRegistrationLinkClick}
+                  >
+                    {t(header.registration)}
+                  </button>
+                </div>
+              )}
+
               <div className={b('language-selector')}>
                 <LanguageSelector />
               </div>
@@ -149,6 +169,6 @@ class LayoutComponent extends React.Component<IProps> {
 const wrappedComponent = withTranslation()(withRouter(LayoutComponent));
 const Layout = withAsyncFeatures({
   profileFeatureEntry: features.profile.loadEntry,
-})(connect(null, mapDispatchToProps)(wrappedComponent));
+})(connect(mapStateToProps, mapDispatchToProps)(wrappedComponent));
 
 export { Layout, LayoutComponent, IProps as ILayoutProps };

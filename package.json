@@ -276,7 +276,6 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-text-mask": "^5.4.3",
-    "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-make-communication": "^1.0.1",
     "redux-saga": "^0.16.2",

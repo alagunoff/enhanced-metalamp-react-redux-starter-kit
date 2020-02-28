@@ -5,6 +5,7 @@ import { profile } from 'shared/mocks';
 import { ProfilePreviewComponent, IProfilePreviewProps } from '../ProfilePreview';
 
 const props: IProfilePreviewProps = {
+  user: null,
   onLogoutLinkClick: jest.fn(),
   onEditClick: jest.fn(),
   profile,

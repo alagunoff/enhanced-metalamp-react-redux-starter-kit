@@ -39,12 +39,20 @@ class Api {
 
     const user = await firebase.auth().currentUser;
 
+    localStorage.setItem('authUser', JSON.stringify(user));
+
     return user;
   }
 
   @autobind
   public async logout() {
     await firebase.auth().signOut();
+
+    const user = await firebase.auth().currentUser;
+
+    localStorage.removeItem('authUser');
+
+    return user;
   }
 
   @autobind

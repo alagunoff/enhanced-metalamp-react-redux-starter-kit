@@ -28,7 +28,7 @@ interface IStateProps {
   user: UserNamespace.IUser;
 }
 
-type IProps = IOwnProps & IStateProps & ITranslationProps;
+type IProps = IStateProps & IOwnProps & ITranslationProps;
 
 const b = block('profile-preview');
 const { profile: intl } = tKeys.features;
@@ -56,8 +56,6 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
       user,
     } = this.props;
     const { isOpen } = this.state;
-
-    console.log(user);
 
     return (
       <div className={b()} ref={this.blockRef}>
@@ -95,9 +93,11 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
               >
                 {t(intl.edit)}
               </span>
-              <button type='button' className={b('logout-link')} onClick={onLogoutLinkClick}>
-                {t(intl.logout)}
-              </button>
+              {user ? (
+                <button type='button' className={b('logout-link')} onClick={onLogoutLinkClick}>
+                  {t(intl.logout)}
+                </button>
+              ) : null}
             </div>
           </div>
         </Popover>
