@@ -5,7 +5,6 @@ export interface IReduxState {
     login: ICommunication;
     logout: ICommunication;
     restorePassword: ICommunication;
-    confirmRestorePassword: ICommunication;
     registration: ICommunication;
   };
 }
@@ -17,10 +16,6 @@ export type ILoginPayload = {
 
 export type IRestorePasswordPayload = {
   email: string;
-};
-
-export type IConfirmRestorePasswordPayload = {
-  password: string;
 };
 
 export type IRegistrationPayload = {
@@ -39,33 +34,15 @@ export type ILogoutSuccess = IPlainAction<'LOGIN:LOGOUT_SUCCESS'>;
 export type ILogoutFail = IPlainFailAction<'LOGIN:LOGOUT_FAIL'>;
 export type ILogoutAction = ILogout | ILogoutSuccess | ILogoutFail;
 
-export type IRestorePassword = IAction<
-  'RESTORE_PASSWORD:RESTORE_PASSWORD',
-  IRestorePasswordPayload
->;
-export type IRestorePasswordSuccess = IPlainAction<'RESTORE_PASSWORD:RESTORE_PASSWORD_SUCCESS'>;
-export type IRestorePasswordFail = IPlainFailAction<'RESTORE_PASSWORD:RESTORE_PASSWORD_FAIL'>;
+export type IRestorePassword = IAction<'LOGIN:RESTORE_PASSWORD', IRestorePasswordPayload>;
+export type IRestorePasswordSuccess = IPlainAction<'LOGIN:RESTORE_PASSWORD_SUCCESS'>;
+export type IRestorePasswordFail = IPlainFailAction<'LOGIN:RESTORE_PASSWORD_FAIL'>;
 export type IRestorePasswordAction =
   | IRestorePassword
   | IRestorePasswordSuccess
   | IRestorePasswordFail;
 
-export type IConfirmRestorePassword = IAction<
-  'CONFIRM_RESTORE_PASSWORD:CONFIRM_RESTORE_PASSWORD',
-  IConfirmRestorePasswordPayload
->;
-export type IConfirmRestorePasswordSuccess = IPlainAction<
-  'CONFIRM_RESTORE_PASSWORD:CONFIRM_RESTORE_PASSWORD_SUCCESS'
->;
-export type IConfirmRestorePasswordFail = IPlainFailAction<
-  'CONFIRM_RESTORE_PASSWORD:CONFIRM_RESTORE_PASSWORD_FAIL'
->;
-export type IConfirmRestorePasswordAction =
-  | IConfirmRestorePassword
-  | IConfirmRestorePasswordSuccess
-  | IConfirmRestorePasswordFail;
-
-export type IRegistration = IAction<'REGISTRATION:REGISTRATION', IRegistrationPayload>;
-export type IRegistrationSuccess = IPlainAction<'REGISTRATION:REGISTRATION_SUCCESS'>;
-export type IRegistrationFail = IPlainFailAction<'REGISTRATION:REGISTRATION_FAIL'>;
+export type IRegistration = IAction<'LOGIN:REGISTRATION', IRegistrationPayload>;
+export type IRegistrationSuccess = IPlainAction<'LOGIN:REGISTRATION_SUCCESS'>;
+export type IRegistrationFail = IPlainFailAction<'LOGIN:REGISTRATION_FAIL'>;
 export type IRegistrationAction = IRegistration | IRegistrationSuccess | IRegistrationFail;

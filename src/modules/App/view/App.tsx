@@ -11,7 +11,9 @@ type IActionProps = typeof mapDispatchToProps;
 type IProps = IActionProps;
 
 class App extends React.Component<IProps> {
-  componentDidMount() {
+  constructor(props: IProps) {
+    super(props);
+
     const { updateUser } = this.props;
     const user = localStorage.getItem('authUser');
 

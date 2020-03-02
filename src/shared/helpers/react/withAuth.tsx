@@ -20,7 +20,9 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
 
 function withAuth(Component: React.ComponentType) {
   class WithAuth extends React.PureComponent<IProps> {
-    componentWillMount() {
+    constructor(props: IProps) {
+      super(props);
+  
       const { user, history } = this.props;
 
       if (user === null) {

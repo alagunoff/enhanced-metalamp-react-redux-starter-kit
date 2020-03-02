@@ -18,6 +18,7 @@ type IStateProps = {
 };
 type OwnProps = {
   onLoginLinkClick: () => void;
+  onSuccessfulRestorePassword: () => void;
 };
 type RestorePasswordFormFields = {
   email: string;
@@ -38,8 +39,26 @@ const mapDispatchToProps = {
 const b = block('restore-password-form');
 
 class RestorePasswordForm extends React.PureComponent<IProps> {
+  componentDidUpdate(prevProps: IProps) {
+    const {
+      onSuccessfulRestorePassword,
+      restorePasswordCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      restorePasswordCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+    const isSuccessfulRestorePassword = error === '' && !isRequesting && isPrevRequesting;
+
+    if (isSuccessfulRestorePassword) {
+      onSuccessfulRestorePassword();
+    }
+  }
+
   public render() {
-    const { onLoginLinkClick } = this.props;
+    const {
+      onLoginLinkClick,
+      restorePasswordCommunication: { error },
+    } = this.props;
 
     return (
       <div className={b()}>
@@ -47,7 +66,11 @@ class RestorePasswordForm extends React.PureComponent<IProps> {
           Войти
         </button>
         <div className={b('title')}>Восстановить пароль</div>
+        <div className={b('text')}>
+          Напомните нам вашу почту, и мы поможем вам восстановить пароль
+        </div>
         <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
+        {error !== '' ? error : null}
       </div>
     );
   }
@@ -61,13 +84,21 @@ class RestorePasswordForm extends React.PureComponent<IProps> {
 
   @autobind
   private renderForm({ handleSubmit }: FormRenderProps) {
+    const {
+      restorePasswordCommunication: { isRequesting },
+    } = this.props;
+
     return (
       <form onSubmit={handleSubmit} className={b('content')}>
-        <div className={b('text')}>Напомните нам вашу почту, и мы пришлем новый пароль</div>
         <div className={b('field')}>
-          <TextInputField name='email' label='Email' validate={validateEmail} />
+          <TextInputField
+            name='email'
+            label='Email'
+            validate={validateEmail}
+            disabled={isRequesting}
+          />
         </div>
-        <button type='submit' className={b('button')}>
+        <button type='submit' className={b('button')} disabled={isRequesting}>
           Отправить новый пароль
         </button>
       </form>

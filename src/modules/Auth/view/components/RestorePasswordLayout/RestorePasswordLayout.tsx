@@ -27,10 +27,23 @@ class RestorePasswordLayout extends React.PureComponent<IProps> {
     return (
       <div className={b()}>
         <div className={b('restore-password-form')}>
-          <RestorePasswordForm onLoginLinkClick={this.redirectToLogin} />
+          <RestorePasswordForm
+            onLoginLinkClick={this.handleLoginLinkClick}
+            onSuccessfulRestorePassword={this.handleSuccessfulRestorePassword}
+          />
         </div>
       </div>
     );
+  }
+
+  @autobind
+  private handleSuccessfulRestorePassword() {
+    this.redirectToLogin();
+  }
+
+  @autobind
+  private handleLoginLinkClick() {
+    this.redirectToLogin();
   }
 
   @autobind

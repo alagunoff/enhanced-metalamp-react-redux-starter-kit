@@ -11,8 +11,8 @@ import * as actionCreators from './actionCreators';
 function getSaga(deps: IDependencies) {
   const loginType: NS.ILogin['type'] = 'LOGIN:LOGIN';
   const logoutType: NS.ILogout['type'] = 'LOGIN:LOGOUT';
-  const restorePasswordType: NS.IRestorePassword['type'] = 'RESTORE_PASSWORD:RESTORE_PASSWORD';
-  const registrationType: NS.IRegistration['type'] = 'REGISTRATION:REGISTRATION';
+  const restorePasswordType: NS.IRestorePassword['type'] = 'LOGIN:RESTORE_PASSWORD';
+  const registrationType: NS.IRegistration['type'] = 'LOGIN:REGISTRATION';
 
   return function* saga(): SagaIterator {
     yield all([

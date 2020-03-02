@@ -12,7 +12,6 @@ const initialState: IReduxState = {
     login: initalCommunication,
     logout: initalCommunication,
     restorePassword: initalCommunication,
-    confirmRestorePassword: initalCommunication,
     registration: initalCommunication,
   },
 };
