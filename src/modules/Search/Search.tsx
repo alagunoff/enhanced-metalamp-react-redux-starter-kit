@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import { withAuth } from 'shared/helpers/react/withAuth';
 import { routes } from 'modules/routes';
 import { IModule } from 'shared/types/app';
 
@@ -17,12 +18,12 @@ const Search: IModule = {
           <Route
             key={routes.search.users.getElementKey()}
             path={routes.search.users.getRoutePath()}
-            component={UsersSearchLayout}
+            component={withAuth(UsersSearchLayout)}
           />
           <Route
             key={routes.search.repositories.getElementKey()}
             path={routes.search.repositories.getRoutePath()}
-            component={RepositoriesSearchLayout}
+            component={withAuth(RepositoriesSearchLayout)}
           />
         </Switch>
       </Route>

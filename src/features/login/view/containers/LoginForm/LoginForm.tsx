@@ -53,7 +53,7 @@ class LoginForm extends React.PureComponent<IProps> {
     const isSuccessfulLogin = error === '' && !isRequesting && isPrevRequesting;
 
     if (isSuccessfulLogin) {
-      onSuccessfulLogin();
+      setTimeout(() => onSuccessfulLogin(), 1000);
     }
   }
 

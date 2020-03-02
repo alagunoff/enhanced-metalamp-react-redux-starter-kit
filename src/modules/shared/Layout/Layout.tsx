@@ -140,9 +140,7 @@ class LayoutComponent extends React.Component<IProps> {
 
   @autobind
   private handleLoginLinkClick() {
-    const { history } = this.props;
-
-    history.push(routes.auth.login.getRedirectPath());
+    this.redirectToLogin();
   }
 
   @autobind
@@ -157,6 +155,7 @@ class LayoutComponent extends React.Component<IProps> {
     const { logout } = this.props;
 
     logout();
+    this.redirectToLogin();
   }
 
   @autobind
@@ -164,6 +163,13 @@ class LayoutComponent extends React.Component<IProps> {
     const { history } = this.props;
 
     history.push(routes.profile.getRoutePath());
+  }
+
+  @autobind
+  private redirectToLogin() {
+    const { history } = this.props;
+
+    history.push(routes.auth.login.getRedirectPath());
   }
 }
 
