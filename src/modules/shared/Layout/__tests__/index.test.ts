@@ -11,6 +11,9 @@ const props: ILayoutProps = {
   profileFeatureEntry: makeMockEntry({
     ProfilePreview: makeMockComponent('ProfilePreview'),
   }),
+  loginFeatureEntry: makeMockEntry({
+    LoginForm: makeMockComponent('LoginForm'),
+  }),
   ...withRouterProps,
   ...getMockedLocaleProps(),
 };

@@ -38,7 +38,7 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
 function* executeLogout({ api }: IDependencies) {
   try {
     const user = yield call(api.logout);
-
+    
     yield put(actionCreators.logoutSuccess());
     yield put(userActions.updateUser(user));
   } catch (error) {

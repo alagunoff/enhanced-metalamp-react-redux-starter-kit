@@ -25,13 +25,14 @@ type IOwnProps = {
 };
 type IFeatureProps = {
   profileFeatureEntry: features.profile.Entry;
+  loginFeatureEntry: features.login.Entry;
 };
 
 type IActionProps = typeof mapDispatchToProps;
 type IProps = IOwnProps &
   IStateProps &
-  IActionProps &
   IFeatureProps &
+  IActionProps &
   RouteComponentProps &
   ITranslationProps;
 
@@ -169,6 +170,7 @@ class LayoutComponent extends React.Component<IProps> {
 const wrappedComponent = withTranslation()(withRouter(LayoutComponent));
 const Layout = withAsyncFeatures({
   profileFeatureEntry: features.profile.loadEntry,
+  loginFeatureEntry: features.login.loadEntry,
 })(connect(mapStateToProps, mapDispatchToProps)(wrappedComponent));
 
 export { Layout, LayoutComponent, IProps as ILayoutProps };
