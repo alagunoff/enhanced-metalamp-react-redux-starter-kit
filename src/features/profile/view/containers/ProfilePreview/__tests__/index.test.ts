@@ -6,7 +6,7 @@ import { ProfilePreviewComponent, IProfilePreviewProps } from '../ProfilePreview
 
 const props: IProfilePreviewProps = {
   user: null,
-  onLogoutLinkClick: jest.fn(),
+  onLogoutButtonClick: jest.fn(),
   onEditClick: jest.fn(),
   profile,
   ...getMockedLocaleProps(),

@@ -7,6 +7,7 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { TextInputField } from 'shared/view/form';
+import { namespace as UserNamespace } from 'services/user';
 
 import { actionCreators } from './../../../redux';
 import { validateEmail, validatePassword } from '../constants';
@@ -15,12 +16,13 @@ import './LoginForm.scss';
 
 interface IStateProps {
   loginCommunication: ICommunication;
+  user: UserNamespace.IUser;
 }
 
 type OwnProps = {
   onRestoreLinkClick: () => void;
   onRegistrationLinkClick: () => void;
-  onSuccessfulLogin: () => void;
+  onSuccessfulLogin: (user: UserNamespace.IUser) => void;
 };
 type LoginFormFields = {
   email: string;
@@ -31,6 +33,7 @@ type IProps = IActionProps & IStateProps & OwnProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
+    user: state.user.data.user,
     loginCommunication: state.login.communication.login,
   };
 }
@@ -42,18 +45,11 @@ const mapDispatchToProps = {
 const b = block('login-form');
 
 class LoginForm extends React.PureComponent<IProps> {
-  componentDidUpdate(prevProps: IProps) {
-    const {
-      onSuccessfulLogin,
-      loginCommunication: { isRequesting, error },
-    } = this.props;
-    const {
-      loginCommunication: { isRequesting: isPrevRequesting },
-    } = prevProps;
-    const isSuccessfulLogin = error === '' && !isRequesting && isPrevRequesting;
+  componentDidUpdate() {
+    const { user, onSuccessfulLogin } = this.props;
 
-    if (isSuccessfulLogin) {
-      setTimeout(() => onSuccessfulLogin(), 1000);
+    if (user !== null) {
+      onSuccessfulLogin(user);
     }
   }
 
@@ -65,11 +61,7 @@ class LoginForm extends React.PureComponent<IProps> {
 
     return (
       <div className={b()}>
-        <button
-          type='button'
-          className={b('registration-link')}
-          onClick={onRegistrationLinkClick}
-        >
+        <button type='button' className={b('registration-link')} onClick={onRegistrationLinkClick}>
           Зарегистрироваться
         </button>
         <div className={b('title')}>Войти</div>

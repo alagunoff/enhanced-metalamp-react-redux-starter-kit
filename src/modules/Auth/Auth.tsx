@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import { withoutAuth } from 'shared/helpers/react/withoutAuth';
 import { routes } from 'modules/routes';
 import { NotFound } from 'modules/shared';
 import { IModule } from 'shared/types/app';
@@ -16,7 +17,7 @@ const Auth: IModule = {
             exact
             key={routes.auth.login.getElementKey()}
             path={routes.auth.login.getRoutePath()}
-            component={LoginLayout}
+            component={withoutAuth(LoginLayout)}
           />
           <Route
             exact

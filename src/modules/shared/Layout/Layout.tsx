@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
-import { IAppReduxState } from 'shared/types/app';
 import { actionCreators } from 'features/login/redux';
+import { IAppReduxState } from 'shared/types/app';
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
 import { namespace as UserNamespace } from 'services/user';
@@ -27,12 +27,12 @@ type IFeatureProps = {
   profileFeatureEntry: features.profile.Entry;
   loginFeatureEntry: features.login.Entry;
 };
-
 type IActionProps = typeof mapDispatchToProps;
+
 type IProps = IOwnProps &
+  IActionProps &
   IStateProps &
   IFeatureProps &
-  IActionProps &
   RouteComponentProps &
   ITranslationProps;
 
@@ -50,6 +50,14 @@ const b = block('layout');
 const { header, footer } = tKeys.shared;
 
 class LayoutComponent extends React.Component<IProps> {
+  public componentDidUpdate() {
+    const { user } = this.props;
+
+    if (user === null) {
+      this.handleSuccessfulLogout();
+    }
+  }
+
   public render() {
     const {
       children,
@@ -75,7 +83,7 @@ class LayoutComponent extends React.Component<IProps> {
               {user ? (
                 <ProfilePreview
                   onEditClick={this.handleEditProfileClick}
-                  onLogoutLinkClick={this.handleLogoutLinkClick}
+                  onLogoutButtonClick={this.handleLogoutButtonClick}
                 />
               ) : (
                 <div className={b('buttons')}>
@@ -151,10 +159,19 @@ class LayoutComponent extends React.Component<IProps> {
   }
 
   @autobind
-  private handleLogoutLinkClick() {
+  private handleLogoutButtonClick() {
     const { logout } = this.props;
 
     logout();
+    localStorage.removeItem('authUser');
+
+    this.redirectToLogin();
+  }
+
+  @autobind
+  private handleSuccessfulLogout() {
+    localStorage.removeItem('authUser');
+
     this.redirectToLogin();
   }
 

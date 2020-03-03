@@ -83,16 +83,16 @@
       }
     }
 
-    .MuiInputBase-root.Mui-error {
-      border-color: #e90c14;
-    }
-
     .MuiInputBase-input {
       padding: 0.8125rem 0.6875rem;
       color: #3c485e;
       font-size: 1rem;
       line-height: 1.5rem;
       animation: none;
+    }
+
+    .MuiFormLabel-root.Mui-error {
+      color: #3c485e;
     }
 
     .MuiFormHelperText-root {

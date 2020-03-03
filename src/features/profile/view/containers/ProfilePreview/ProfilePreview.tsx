@@ -20,7 +20,7 @@ interface IState {
 
 interface IOwnProps {
   onEditClick(): void;
-  onLogoutLinkClick: () => void;
+  onLogoutButtonClick: () => void;
 }
 
 interface IStateProps {
@@ -52,8 +52,8 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
       profile: { avatarURL, name, nickname, age, bio },
       onEditClick,
       t,
-      onLogoutLinkClick,
       user,
+      onLogoutButtonClick,
     } = this.props;
     const { isOpen } = this.state;
 
@@ -94,7 +94,11 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
                 {t(intl.edit)}
               </span>
               {user ? (
-                <button type='button' className={b('logout-link')} onClick={onLogoutLinkClick}>
+                <button
+                  type='button'
+                  className={b('logout-link')}
+                  onClick={onLogoutButtonClick}
+                >
                   {t(intl.logout)}
                 </button>
               ) : null}

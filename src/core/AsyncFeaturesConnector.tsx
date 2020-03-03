@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-unresolved
 import { SubSet } from '_helpers';
 
 import { makeCancelable, ICancellablePromise } from 'shared/helpers/makeCancelable';
