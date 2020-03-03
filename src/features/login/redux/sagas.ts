@@ -10,6 +10,9 @@ import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
   const loginType: NS.ILogin['type'] = 'LOGIN:LOGIN';
+  const loginGoogleType: NS.ILoginGoogle['type'] = 'LOGIN:LOGIN_GOOGLE';
+  const loginTwitterType: NS.ILoginTwitter['type'] = 'LOGIN:LOGIN_TWITTER';
+  const loginFacebookType: NS.ILoginFacebook['type'] = 'LOGIN:LOGIN_FACEBOOK';
   const logoutType: NS.ILogout['type'] = 'LOGIN:LOGOUT';
   const restorePasswordType: NS.IRestorePassword['type'] = 'LOGIN:RESTORE_PASSWORD';
   const registrationType: NS.IRegistration['type'] = 'LOGIN:REGISTRATION';
@@ -17,6 +20,9 @@ function getSaga(deps: IDependencies) {
   return function* saga(): SagaIterator {
     yield all([
       takeLatest(loginType, executeLogin, deps),
+      takeLatest(loginGoogleType, executeLoginGoogle, deps),
+      takeLatest(loginTwitterType, executeLoginTwitter, deps),
+      takeLatest(loginFacebookType, executeLoginFacebook, deps),
       takeLatest(logoutType, executeLogout, deps),
       takeLatest(registrationType, executeRegistration, deps),
       takeLatest(restorePasswordType, executeRestorePassword, deps),
@@ -29,6 +35,39 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
     const user = yield call(api.login, payload);
     
     yield put(actionCreators.loginSuccess());
+    yield put(userActions.updateUser(user));
+  } catch (error) {
+    yield put(actionCreators.loginFail(getErrorMsg(error)));
+  }
+}
+
+function* executeLoginGoogle({ api }: IDependencies) {
+  try {
+    const user = yield call(api.loginGoogle);
+
+    yield put(actionCreators.loginGoogleSuccess());
+    yield put(userActions.updateUser(user));
+  } catch (error) {
+    yield put(actionCreators.loginGoogleFail(getErrorMsg(error)));
+  }
+}
+
+function* executeLoginTwitter({ api }: IDependencies) {
+  try {
+    const user = yield call(api.loginTwitter);
+
+    yield put(actionCreators.loginTwitterSuccess());
+    yield put(userActions.updateUser(user));
+  } catch (error) {
+    yield put(actionCreators.loginFail(getErrorMsg(error)));
+  }
+}
+
+function* executeLoginFacebook({ api }: IDependencies) {
+  try {
+    const user = yield call(api.loginFacebook);
+
+    yield put(actionCreators.loginFacebookSuccess());
     yield put(userActions.updateUser(user));
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));

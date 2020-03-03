@@ -11,6 +11,36 @@ const communicationReducer = combineReducers<NS.IReduxState['communication']>({
     'LOGIN:LOGIN_FAIL',
     initialState.communication.login,
   ),
+  loginGoogle: makeCommunicationReducer<
+    NS.ILoginGoogle,
+    NS.ILoginGoogleSuccess,
+    NS.ILoginGoogleFail
+  >(
+    'LOGIN:LOGIN_GOOGLE',
+    'LOGIN:LOGIN_GOOGLE_SUCCESS',
+    'LOGIN:LOGIN_GOOGLE_FAIL',
+    initialState.communication.loginGoogle,
+  ),
+  loginTwitter: makeCommunicationReducer<
+    NS.ILoginTwitter,
+    NS.ILoginTwitterSuccess,
+    NS.ILoginTwitterFail
+  >(
+    'LOGIN:LOGIN_TWITTER',
+    'LOGIN:LOGIN_TWITTER_SUCCESS',
+    'LOGIN:LOGIN_TWITTER_FAIL',
+    initialState.communication.loginTwitter,
+  ),
+  loginFacebook: makeCommunicationReducer<
+    NS.ILoginFacebook,
+    NS.ILoginFacebookSuccess,
+    NS.ILoginFacebookFail
+  >(
+    'LOGIN:LOGIN_FACEBOOK',
+    'LOGIN:LOGIN_FACEBOOK_SUCCESS',
+    'LOGIN:LOGIN_FACEBOOK_FAIL',
+    initialState.communication.loginFacebook,
+  ),
   logout: makeCommunicationReducer<NS.ILogout, NS.ILogoutSuccess, NS.ILogoutFail>(
     'LOGIN:LOGOUT',
     'LOGIN:LOGOUT_SUCCESS',

@@ -1,6 +1,6 @@
 .registration-form {
   position: relative;
-  padding: 4rem 6rem 3rem;
+  padding: 4.375rem 7rem 3.75rem;
   border-radius: 0.5rem;
   background-color: white;
 
@@ -45,11 +45,57 @@
   }
 
   &__title {
-    margin-bottom: 2rem;
+    margin-bottom: 1.3rem;
     color: #3c485e;
     text-align: center;
     font-size: 1.6714rem;
     line-height: 2rem;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 1.6875rem;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  &__social-item {
+    font-size: 0;
+  }
+
+  &__social-item + &__social-item {
+    margin-left: 1rem;
+  }
+
+  &__social-link {
+    margin: 0;
+    padding: 0;
+    width: 3.125rem;
+    height: 3.125rem;
+    border: 0;
+    background: no-repeat center/cover;
+    cursor: pointer;
+
+    &_theme_google {
+      background-image: url('./img/google.svg');
+    }
+
+    &_theme_twitter {
+      background-image: url('./img/twitter.svg');
+    }
+
+    &_theme_facebook {
+      background-image: url('./img/facebook.svg');
+    }
+  }
+
+  &__text {
+    margin-bottom: 0.625rem;
+    color: #3c485e;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.5rem;
   }
 
   &__fields {
@@ -74,8 +120,8 @@
 
     .MuiInputBase-root {
       margin-top: 0.625rem;
-      border: 0.5px solid #b3b9d1;
-      border-radius: 4px;
+      border: 0.0313rem solid #b3b9d1;
+      border-radius: 0.25rem;
 
       &::after,
       &::before {

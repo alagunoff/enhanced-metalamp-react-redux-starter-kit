@@ -13,6 +13,36 @@ export const {
 );
 
 export const {
+  execute: loginGoogle,
+  completed: loginGoogleSuccess,
+  failed: loginGoogleFail,
+} = makeCommunicationActionCreators<NS.ILoginGoogle, NS.ILoginGoogleSuccess, NS.ILoginGoogleFail>(
+  'LOGIN:LOGIN_GOOGLE',
+  'LOGIN:LOGIN_GOOGLE_SUCCESS',
+  'LOGIN:LOGIN_GOOGLE_FAIL',
+);
+
+export const {
+  execute: loginTwitter,
+  completed: loginTwitterSuccess,
+  failed: loginTwitterFail,
+} = makeCommunicationActionCreators<
+  NS.ILoginTwitter,
+  NS.ILoginTwitterSuccess,
+  NS.ILoginTwitterFail
+>('LOGIN:LOGIN_TWITTER', 'LOGIN:LOGIN_TWITTER_SUCCESS', 'LOGIN:LOGIN_TWITTER_FAIL');
+
+export const {
+  execute: loginFacebook,
+  completed: loginFacebookSuccess,
+  failed: loginFacebookFail,
+} = makeCommunicationActionCreators<NS.ILoginFacebook, NS.ILoginFacebookSuccess, NS.ILoginFacebookFail>(
+  'LOGIN:LOGIN_FACEBOOK',
+  'LOGIN:LOGIN_FACEBOOK_SUCCESS',
+  'LOGIN:LOGIN_FACEBOOK_FAIL',
+);
+
+export const {
   execute: logout,
   completed: logoutSuccess,
   failed: logoutFail,

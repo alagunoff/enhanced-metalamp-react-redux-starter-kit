@@ -3,6 +3,7 @@ import block from 'bem-cn';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
+import { namespace as UserNamespace } from 'services/user';
 import { routes } from 'modules/routes';
 import * as features from 'features';
 import { withAsyncFeatures } from 'core';
@@ -30,6 +31,9 @@ class RegistrationLayout extends React.PureComponent<IProps> {
           <RegistrationForm
             onLoginLikClick={this.handleLoginLikClick}
             onSuccessfulRegistration={this.handleSuccessfulRegistration}
+            onSuccessfulLoginGoogle={this.handleSuccessfulLoginGoogle}
+            onSuccessfulLoginTwitter={this.handleSuccessfulLoginTwitter}
+            onSuccessfulLoginFacebook={this.handleSuccessfulLoginFacebook}
           />
         </div>
       </div>
@@ -47,10 +51,38 @@ class RegistrationLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
+  private handleSuccessfulLoginGoogle(user: UserNamespace.IUser) {
+    localStorage.setItem('authUser', JSON.stringify(user));
+
+    this.redirectToSearchRepositories();
+  }
+
+  @autobind
+  private handleSuccessfulLoginTwitter(user: UserNamespace.IUser) {
+    localStorage.setItem('authUser', JSON.stringify(user));
+
+    this.redirectToSearchRepositories();
+  }
+
+  @autobind
+  private handleSuccessfulLoginFacebook(user: UserNamespace.IUser) {
+    localStorage.setItem('authUser', JSON.stringify(user));
+    
+    this.redirectToSearchRepositories();
+  }
+
+  @autobind
   private redirectToLogin() {
     const { history } = this.props;
 
     history.push(routes.auth.login.getRedirectPath());
+  }
+
+  @autobind
+  private redirectToSearchRepositories() {
+    const { history } = this.props;
+
+    history.push(routes.search.repositories.getRedirectPath());
   }
 }
 

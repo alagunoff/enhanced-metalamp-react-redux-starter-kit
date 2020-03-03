@@ -8,6 +8,12 @@ import {
   IUsersSearchResults,
   IRepositoriesSearchResults,
 } from 'shared/types/githubSearch';
+import {
+  configureFirebase,
+  googleProvider,
+  twitterProvider,
+  facebookProvider,
+} from 'core/firebase';
 
 import { SearchUserResponse, IDetailedServerUser, SearchRepositoriesResponse } from './types';
 import {
@@ -18,6 +24,8 @@ import {
 } from './helpers';
 import { convertUser, convertUserDetails, convertRepository } from './converters';
 import { HttpActions } from './HttpActions';
+
+configureFirebase();
 
 class Api {
   private actions: HttpActions;
@@ -36,6 +44,27 @@ class Api {
     const { email, password } = params;
 
     await firebase.auth().signInWithEmailAndPassword(email, password);
+
+    return firebase.auth().currentUser;
+  }
+
+  @autobind
+  public async loginGoogle() {
+    await firebase.auth().signInWithPopup(googleProvider);
+
+    return firebase.auth().currentUser;
+  }
+
+  @autobind
+  public async loginTwitter() {
+    await firebase.auth().signInWithPopup(twitterProvider);
+
+    return firebase.auth().currentUser;
+  }
+
+  @autobind
+  public async loginFacebook() {
+    await firebase.auth().signInWithPopup(facebookProvider);
 
     return firebase.auth().currentUser;
   }
