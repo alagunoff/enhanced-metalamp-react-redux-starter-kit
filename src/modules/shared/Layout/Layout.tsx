@@ -1,14 +1,10 @@
 import React from 'react';
 import block from 'bem-cn';
-import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
-import { actionCreators } from 'features/login/redux';
-import { IAppReduxState } from 'shared/types/app';
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
-import { namespace as UserNamespace } from 'services/user';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
@@ -17,9 +13,6 @@ import { LayoutHeaderMenu, IHeaderMenuItem } from './LayoutHeaderMenu/LayoutHead
 
 import './Layout.scss';
 
-type IStateProps = {
-  user: UserNamespace.IUser;
-};
 type IOwnProps = {
   title: string;
 };
@@ -27,37 +20,13 @@ type IFeatureProps = {
   profileFeatureEntry: features.profile.Entry;
   loginFeatureEntry: features.login.Entry;
 };
-type IActionProps = typeof mapDispatchToProps;
 
-type IProps = IOwnProps &
-  IActionProps &
-  IStateProps &
-  IFeatureProps &
-  RouteComponentProps &
-  ITranslationProps;
-
-function mapStateToProps(state: IAppReduxState): IStateProps {
-  return {
-    user: state.user.data.user,
-  };
-}
-
-const mapDispatchToProps = {
-  logout: actionCreators.logout,
-};
+type IProps = IOwnProps & IFeatureProps & RouteComponentProps & ITranslationProps;
 
 const b = block('layout');
 const { header, footer } = tKeys.shared;
 
 class LayoutComponent extends React.Component<IProps> {
-  public componentDidUpdate() {
-    const { user } = this.props;
-
-    if (user === null) {
-      this.handleSuccessfulLogout();
-    }
-  }
-
   public render() {
     const {
       children,
@@ -65,7 +34,6 @@ class LayoutComponent extends React.Component<IProps> {
       profileFeatureEntry: { containers },
       location,
       t,
-      user,
     } = this.props;
     const { ProfilePreview } = containers;
 
@@ -80,31 +48,10 @@ class LayoutComponent extends React.Component<IProps> {
               />
             </div>
             <div className={b('right-menu')}>
-              {user ? (
-                <ProfilePreview
-                  onEditClick={this.handleEditProfileClick}
-                  onLogoutButtonClick={this.handleLogoutButtonClick}
-                />
-              ) : (
-                <div className={b('buttons')}>
-                  <button
-                    className={b('login-link')}
-                    type='button'
-                    onClick={this.handleLoginLinkClick}
-                  >
-                    {t(header.login)}
-                  </button>
-                  {' / '}
-                  <button
-                    className={b('registration-link')}
-                    type='button'
-                    onClick={this.handleRegistrationLinkClick}
-                  >
-                    {t(header.registration)}
-                  </button>
-                </div>
-              )}
-
+              <ProfilePreview
+                onEditClick={this.handleEditProfileClick}
+                onSuccessfulLogout={this.handleSuccessfulLogout}
+              />
               <div className={b('language-selector')}>
                 <LanguageSelector />
               </div>
@@ -147,32 +94,12 @@ class LayoutComponent extends React.Component<IProps> {
   }
 
   @autobind
-  private handleLoginLinkClick() {
-    this.redirectToLogin();
-  }
-
-  @autobind
-  private handleRegistrationLinkClick() {
-    const { history } = this.props;
-
-    history.push(routes.auth.registration.getRedirectPath());
-  }
-
-  @autobind
-  private handleLogoutButtonClick() {
-    const { logout } = this.props;
-
-    logout();
-    localStorage.removeItem('authUser');
-
-    this.redirectToLogin();
-  }
-
-  @autobind
   private handleSuccessfulLogout() {
-    localStorage.removeItem('authUser');
+    const { history } = this.props
 
-    this.redirectToLogin();
+    localStorage.removeItem('authUser');
+    
+    history.push(routes.auth.login.getRedirectPath());
   }
 
   @autobind
@@ -181,19 +108,12 @@ class LayoutComponent extends React.Component<IProps> {
 
     history.push(routes.profile.getRoutePath());
   }
-
-  @autobind
-  private redirectToLogin() {
-    const { history } = this.props;
-
-    history.push(routes.auth.login.getRedirectPath());
-  }
 }
 
 const wrappedComponent = withTranslation()(withRouter(LayoutComponent));
 const Layout = withAsyncFeatures({
   profileFeatureEntry: features.profile.loadEntry,
   loginFeatureEntry: features.login.loadEntry,
-})(connect(mapStateToProps, mapDispatchToProps)(wrappedComponent));
+})(wrappedComponent);
 
 export { Layout, LayoutComponent, IProps as ILayoutProps };

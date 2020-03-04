@@ -3,7 +3,7 @@ import { SagaIterator } from 'redux-saga';
 
 import { IDependencies } from 'shared/types/app';
 import { getErrorMsg } from 'shared/helpers';
-import { actionCreators as userActions } from 'services/user';
+import { actionCreators as userActions, defaultUser } from 'services/user';
 
 import * as NS from '../namespace';
 import * as actionCreators from './actionCreators';
@@ -11,7 +11,6 @@ import * as actionCreators from './actionCreators';
 function getSaga(deps: IDependencies) {
   const loginType: NS.ILogin['type'] = 'LOGIN:LOGIN';
   const loginGoogleType: NS.ILoginGoogle['type'] = 'LOGIN:LOGIN_GOOGLE';
-  const loginTwitterType: NS.ILoginTwitter['type'] = 'LOGIN:LOGIN_TWITTER';
   const loginFacebookType: NS.ILoginFacebook['type'] = 'LOGIN:LOGIN_FACEBOOK';
   const logoutType: NS.ILogout['type'] = 'LOGIN:LOGOUT';
   const restorePasswordType: NS.IRestorePassword['type'] = 'LOGIN:RESTORE_PASSWORD';
@@ -21,7 +20,6 @@ function getSaga(deps: IDependencies) {
     yield all([
       takeLatest(loginType, executeLogin, deps),
       takeLatest(loginGoogleType, executeLoginGoogle, deps),
-      takeLatest(loginTwitterType, executeLoginTwitter, deps),
       takeLatest(loginFacebookType, executeLoginFacebook, deps),
       takeLatest(logoutType, executeLogout, deps),
       takeLatest(registrationType, executeRegistration, deps),
@@ -32,10 +30,18 @@ function getSaga(deps: IDependencies) {
 
 function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   try {
-    const user = yield call(api.login, payload);
-    
+    const user: firebase.User | null = yield call(api.login, payload);
+
     yield put(actionCreators.loginSuccess());
-    yield put(userActions.updateUser(user));
+
+    if (user !== null) {
+      const { displayName, email } = user;
+      const { name: defaultName, email: defaultEmail } = defaultUser;
+      const newName = displayName === null ? defaultName : displayName;
+      const newEmail = email === null ? defaultEmail : email;
+
+      yield put(userActions.updateUser({ ...defaultUser, name: newName, email: newEmail }));
+    }
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
   }
@@ -52,17 +58,6 @@ function* executeLoginGoogle({ api }: IDependencies) {
   }
 }
 
-function* executeLoginTwitter({ api }: IDependencies) {
-  try {
-    const user = yield call(api.loginTwitter);
-
-    yield put(actionCreators.loginTwitterSuccess());
-    yield put(userActions.updateUser(user));
-  } catch (error) {
-    yield put(actionCreators.loginFail(getErrorMsg(error)));
-  }
-}
-
 function* executeLoginFacebook({ api }: IDependencies) {
   try {
     const user = yield call(api.loginFacebook);
@@ -76,10 +71,9 @@ function* executeLoginFacebook({ api }: IDependencies) {
 
 function* executeLogout({ api }: IDependencies) {
   try {
-    const user = yield call(api.logout);
-    
+    yield call(api.logout);
     yield put(actionCreators.logoutSuccess());
-    yield put(userActions.updateUser(user));
+    yield put(userActions.updateUser(null));
   } catch (error) {
     yield put(actionCreators.logoutFail(getErrorMsg(error)));
   }

@@ -16,13 +16,13 @@ import './LoginForm.scss';
 
 interface IStateProps {
   loginCommunication: ICommunication;
-  user: UserNamespace.IUser;
+  user: UserNamespace.IUserType;
 }
 
 type OwnProps = {
   onRestoreLinkClick: () => void;
   onRegistrationLinkClick: () => void;
-  onSuccessfulLogin: (user: UserNamespace.IUser) => void;
+  onSuccessfulLogin: (user: UserNamespace.IUserType) => void;
 };
 type LoginFormFields = {
   email: string;
@@ -46,7 +46,10 @@ const b = block('login-form');
 
 class LoginForm extends React.PureComponent<IProps> {
   componentDidUpdate() {
-    const { user, onSuccessfulLogin } = this.props;
+    const {
+      user,
+      onSuccessfulLogin,
+    } = this.props;
 
     if (user !== null) {
       onSuccessfulLogin(user);

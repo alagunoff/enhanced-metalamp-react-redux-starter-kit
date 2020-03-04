@@ -11,7 +11,6 @@ const initialState: IReduxState = {
   communication: {
     login: initalCommunication,
     loginGoogle: initalCommunication,
-    loginTwitter: initalCommunication,
     loginFacebook: initalCommunication,
     logout: initalCommunication,
     restorePassword: initalCommunication,

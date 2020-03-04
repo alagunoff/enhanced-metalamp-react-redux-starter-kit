@@ -11,7 +11,6 @@ import {
 import {
   configureFirebase,
   googleProvider,
-  twitterProvider,
   facebookProvider,
 } from 'core/firebase';
 
@@ -56,13 +55,6 @@ class Api {
   }
 
   @autobind
-  public async loginTwitter() {
-    await firebase.auth().signInWithPopup(twitterProvider);
-
-    return firebase.auth().currentUser;
-  }
-
-  @autobind
   public async loginFacebook() {
     await firebase.auth().signInWithPopup(facebookProvider);
 
@@ -72,8 +64,6 @@ class Api {
   @autobind
   public async logout() {
     await firebase.auth().signOut();
-
-    return firebase.auth().currentUser;
   }
 
   @autobind

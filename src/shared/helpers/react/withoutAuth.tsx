@@ -7,7 +7,7 @@ import { routes } from 'modules/routes';
 import { namespace as UserNamespace, actionCreators as userActions } from 'services/user';
 
 type IStateProps = {
-  user: UserNamespace.IUser;
+  user: UserNamespace.IUserType;
 };
 type IActionProps = typeof mapDispatchToProps;
 
@@ -25,18 +25,12 @@ const mapDispatchToProps = {
 
 function withoutAuth(Component: React.ComponentType) {
   class WithoutAuth extends React.PureComponent<IProps> {
-    constructor(props: IProps) {
-      super(props);
-
-      this.initWithAuth();
-    }
-
-    initWithAuth() {
+    componentDidMount() {
       const { updateUser, history } = this.props;
       const user = localStorage.getItem('authUser');
 
       if (user !== null) {
-        history.push(routes.auth.registration.getRedirectPath());
+        history.push(routes.search.repositories.getRedirectPath());
       } else {
         updateUser(user);
       }

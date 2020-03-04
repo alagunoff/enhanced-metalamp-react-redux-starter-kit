@@ -39,7 +39,7 @@ class LoginLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private handleSuccessfulLogin(user: UserNamespace.IUser) {
+  private handleSuccessfulLogin(user: UserNamespace.IUserType) {
     const { history } = this.props;
 
     localStorage.setItem('authUser', JSON.stringify(user));

@@ -15,18 +15,16 @@ import { validateEmail, validatePassword } from './../constants';
 import './RegistrationForm.scss';
 
 type IStateProps = {
-  user: UserNamespace.IUser;
+  user: UserNamespace.IUserType;
   registrationCommunication: ICommunication;
   loginGoogleCommunication: ICommunication;
-  loginTwitterCommunication: ICommunication;
   loginFacebookCommunication: ICommunication;
 };
 type OwnProps = {
   onLoginLikClick: () => void;
   onSuccessfulRegistration: () => void;
-  onSuccessfulLoginGoogle: (user: UserNamespace.IUser) => void;
-  onSuccessfulLoginTwitter: (user: UserNamespace.IUser) => void;
-  onSuccessfulLoginFacebook: (user: UserNamespace.IUser) => void;
+  onSuccessfulLoginGoogle: (user: UserNamespace.IUserType) => void;
+  onSuccessfulLoginFacebook: (user: UserNamespace.IUserType) => void;
 };
 type RegistrationFormFields = {
   email: string;
@@ -41,7 +39,6 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
     user: state.user.data.user,
     registrationCommunication: state.login.communication.registration,
     loginGoogleCommunication: state.login.communication.loginGoogle,
-    loginTwitterCommunication: state.login.communication.loginTwitter,
     loginFacebookCommunication: state.login.communication.loginFacebook,
   };
 }
@@ -49,7 +46,6 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
 const mapDispatchToProps = {
   registration: actionCreators.registration,
   loginGoogle: actionCreators.loginGoogle,
-  loginTwitter: actionCreators.loginTwitter,
   loginFacebook: actionCreators.loginFacebook,
 };
 
@@ -61,46 +57,18 @@ class RegistrationForm extends React.PureComponent<IProps> {
       user,
       onSuccessfulRegistration,
       onSuccessfulLoginGoogle,
-      onSuccessfulLoginTwitter,
       onSuccessfulLoginFacebook,
-      registrationCommunication: { isRequesting, error },
-      loginGoogleCommunication: { isRequesting: isLoginGoogleRequesting, error: loginGoggleError },
-      loginTwitterCommunication: {
-        isRequesting: isLoginTwitterRequesting,
-        error: loginTwitterError,
-      },
-      loginFacebookCommunication: {
-        isRequesting: isLoginFacebookRequesting,
-        error: loginFacebookError,
-      },
     } = this.props;
-    const {
-      registrationCommunication: { isRequesting: isPrevRequesting },
-      loginGoogleCommunication: { isRequesting: isPrevLoginGoogleRequesting },
-      loginTwitterCommunication: { isRequesting: isPrevLoginTwitterRequesting },
-      loginFacebookCommunication: { isRequesting: isPrevLoginFacebookRequesting },
-    } = prevProps;
-    const isSuccessfulRegistration = error === '' && !isRequesting && isPrevRequesting;
-    const isSuccessfulLoginGoogle =
-      loginGoggleError === '' && !isLoginGoogleRequesting && isPrevLoginGoogleRequesting;
-    const isSuccessfulLoginTwitter =
-      loginTwitterError === '' && !isLoginTwitterRequesting && isPrevLoginTwitterRequesting;
-    const isSuccessfulLoginFacebook =
-      loginFacebookError === '' && !isLoginFacebookRequesting && isPrevLoginFacebookRequesting;
 
-    if (isSuccessfulRegistration) {
+    if (this.isSuccessfulRegistration(prevProps)) {
       onSuccessfulRegistration();
     }
 
-    if (isSuccessfulLoginGoogle) {
+    if (this.isSuccessfulLoginGoogle(prevProps)) {
       onSuccessfulLoginGoogle(user);
     }
 
-    if (isSuccessfulLoginTwitter) {
-      onSuccessfulLoginTwitter(user);
-    }
-
-    if (isSuccessfulLoginFacebook) {
+    if (this.isSuccessfulLoginFacebook(prevProps)) {
       onSuccessfulLoginFacebook(user);
     }
   }
@@ -124,13 +92,6 @@ class RegistrationForm extends React.PureComponent<IProps> {
               type='button'
               aria-label='sign in via google'
               onClick={this.handleGoogleLinkClick}
-            ></button>
-          </li>
-          <li className={b('social-item')}>
-            <button
-              className={b('social-link registration-form__social-link_theme_twitter')}
-              type='button'
-              aria-label='sign in via twitter'
             ></button>
           </li>
           <li className={b('social-item')}>
@@ -216,6 +177,42 @@ class RegistrationForm extends React.PureComponent<IProps> {
         </div>
       </form>
     );
+  }
+
+  @autobind
+  private isSuccessfulRegistration(prevProps: IProps) {
+    const {
+      registrationCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      registrationCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && isPrevRequesting;
+  }
+
+  @autobind
+  private isSuccessfulLoginGoogle(prevProps: IProps) {
+    const {
+      loginGoogleCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      loginGoogleCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && isPrevRequesting;
+  }
+
+  @autobind
+  private isSuccessfulLoginFacebook(prevProps: IProps) {
+    const {
+      loginFacebookCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      loginFacebookCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && isPrevRequesting;
   }
 }
 

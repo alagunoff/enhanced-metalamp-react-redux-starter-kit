@@ -4,7 +4,6 @@ export interface IReduxState {
   communication: {
     login: ICommunication;
     loginGoogle: ICommunication;
-    loginTwitter: ICommunication;
     loginFacebook: ICommunication;
     logout: ICommunication;
     restorePassword: ICommunication;
@@ -36,11 +35,6 @@ export type ILoginGoogle = IPlainAction<'LOGIN:LOGIN_GOOGLE'>;
 export type ILoginGoogleSuccess = IPlainAction<'LOGIN:LOGIN_GOOGLE_SUCCESS'>;
 export type ILoginGoogleFail = IPlainFailAction<'LOGIN:LOGIN_GOOGLE_FAIL'>;
 export type ILoginGoogleAction = ILoginGoogle | ILoginGoogleSuccess | ILoginGoogleFail;
-
-export type ILoginTwitter = IPlainAction<'LOGIN:LOGIN_TWITTER'>;
-export type ILoginTwitterSuccess = IPlainAction<'LOGIN:LOGIN_TWITTER_SUCCESS'>;
-export type ILoginTwitterFail = IPlainFailAction<'LOGIN:LOGIN_TWITTER_FAIL'>;
-export type ILoginTwitterAction = ILoginTwitter | ILoginTwitterSuccess | ILoginTwitterFail;
 
 export type ILoginFacebook = IPlainAction<'LOGIN:LOGIN_FACEBOOK'>;
 export type ILoginFacebookSuccess = IPlainAction<'LOGIN:LOGIN_FACEBOOK_SUCCESS'>;

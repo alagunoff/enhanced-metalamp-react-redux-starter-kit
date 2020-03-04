@@ -7,7 +7,7 @@ import { IAppReduxState } from 'shared/types/app';
 import { namespace as UserNamespace, actionCreators as userActions } from 'services/user';
 
 type IStateProps = {
-  user: UserNamespace.IUser;
+  user: UserNamespace.IUserType;
 };
 type IActionProps = typeof mapDispatchToProps;
 type IProps = IStateProps & IActionProps & RouteComponentProps;
@@ -24,20 +24,16 @@ const mapDispatchToProps = {
 
 function withAuth(Component: React.ComponentType) {
   class WithAuth extends React.PureComponent<IProps> {
-    constructor(props: IProps) {
-      super(props);
-
-      this.initWithAuth();
-    }
-
-    initWithAuth() {
-      const { updateUser, history } = this.props;
+    componentDidMount() {
+      const { user: reduxUser, updateUser, history } = this.props;
       const user = localStorage.getItem('authUser');
 
       if (user === null) {
         history.push(routes.auth.login.getRedirectPath());
       } else {
-        updateUser(JSON.parse(user));
+        if (reduxUser === null) {
+          updateUser(JSON.parse(user));
+        }
       }
     }
 

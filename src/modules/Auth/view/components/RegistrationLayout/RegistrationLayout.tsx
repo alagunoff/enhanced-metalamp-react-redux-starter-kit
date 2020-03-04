@@ -32,7 +32,6 @@ class RegistrationLayout extends React.PureComponent<IProps> {
             onLoginLikClick={this.handleLoginLikClick}
             onSuccessfulRegistration={this.handleSuccessfulRegistration}
             onSuccessfulLoginGoogle={this.handleSuccessfulLoginGoogle}
-            onSuccessfulLoginTwitter={this.handleSuccessfulLoginTwitter}
             onSuccessfulLoginFacebook={this.handleSuccessfulLoginFacebook}
           />
         </div>
@@ -51,21 +50,14 @@ class RegistrationLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private handleSuccessfulLoginGoogle(user: UserNamespace.IUser) {
+  private handleSuccessfulLoginGoogle(user: UserNamespace.IUserType) {
     localStorage.setItem('authUser', JSON.stringify(user));
 
     this.redirectToSearchRepositories();
   }
 
   @autobind
-  private handleSuccessfulLoginTwitter(user: UserNamespace.IUser) {
-    localStorage.setItem('authUser', JSON.stringify(user));
-
-    this.redirectToSearchRepositories();
-  }
-
-  @autobind
-  private handleSuccessfulLoginFacebook(user: UserNamespace.IUser) {
+  private handleSuccessfulLoginFacebook(user: UserNamespace.IUserType) {
     localStorage.setItem('authUser', JSON.stringify(user));
     
     this.redirectToSearchRepositories();

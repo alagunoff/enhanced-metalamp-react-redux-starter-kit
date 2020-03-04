@@ -13,7 +13,6 @@ const firebaseConfig = {
 
 const configureFirebase = () => firebase.initializeApp(firebaseConfig);
 const googleProvider = new firebase.auth.GoogleAuthProvider();
-const twitterProvider = new firebase.auth.TwitterAuthProvider();
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
-export { configureFirebase, googleProvider, twitterProvider, facebookProvider };
+export { configureFirebase, googleProvider, facebookProvider };

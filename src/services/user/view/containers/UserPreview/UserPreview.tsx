@@ -3,17 +3,16 @@ import block from 'bem-cn';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 
-import { actionCreators as userActions } from 'features/login/redux';
+import { actionCreators as loginActions } from 'features/login/redux';
 import { IAppReduxState } from 'shared/types/app';
-import { IProfile } from 'shared/types/models';
 import { ICommunication } from 'shared/types/redux';
 import { Popover } from 'shared/view/components';
 import { withTranslation, ITranslationProps, tKeys } from 'services/i18n';
+import { namespace as UserNamespace } from 'services/user';
 
-import { ProfileAvatar } from '../../components';
-import { selectors } from '../../../redux';
+import { UserAvatar } from '../../components';
 
-import './ProfilePreview.scss';
+import './UserPreview.scss';
 
 interface IState {
   isOpen: boolean;
@@ -25,28 +24,28 @@ interface IOwnProps {
 }
 
 interface IStateProps {
-  profile: IProfile;
+  user: UserNamespace.IUserFields;
   logoutCommunication: ICommunication;
 }
 type IActionProps = typeof mapDispatchToProps;
 
 type IProps = IStateProps & IActionProps & IOwnProps & ITranslationProps;
 
-const b = block('profile-preview');
-const { profile: intl } = tKeys.features;
+const b = block('user-preview');
+const { user: intl } = tKeys.services;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
-    profile: selectors.selectProfile(state),
+    user: state.user.data.user,
     logoutCommunication: state.login.communication.logout,
   };
 }
 
 const mapDispatchToProps = {
-  logout: userActions.logout,
+  logout: loginActions.logout,
 };
 
-class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
+class UserPreview extends React.PureComponent<IProps, IState> {
   public state: IState = {
     isOpen: false,
   };
@@ -63,7 +62,7 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
 
   public render() {
     const {
-      profile: { avatarURL, name, nickname, age, bio },
+      user: { avatarURL, name, nickname, age, bio },
       onEditClick,
       t,
     } = this.props;
@@ -78,7 +77,7 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
           onClick={this.handleAvatarClick}
           onKeyPress={this.handleAvatarKeyPress}
         >
-          <ProfileAvatar avatarURL={avatarURL} size='small' />
+          <UserAvatar avatarURL={avatarURL} size='small' />
         </div>
         <Popover
           open={isOpen}
@@ -105,25 +104,20 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
               >
                 {t(intl.edit)}
               </span>
-              <button
-                type='button'
-                className={b('logout-link')}
-                onClick={this.handleLogoutLinkClick}
-              >
-                {t(intl.logout)}
-              </button>
+              {/* {user ? (
+                <button
+                  type='button'
+                  className={b('logout-link')}
+                  onClick={this.handleLogoutLinkClick}
+                >
+                  {t(intl.logout)}
+                </button>
+              ) : null} */}
             </div>
           </div>
         </Popover>
       </div>
     );
-  }
-
-  @autobind
-  private handleLogoutLinkClick() {
-    const { logout } = this.props;
-
-    logout();
   }
 
   @autobind
@@ -153,6 +147,13 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
   }
 
   @autobind
+  private handleLogoutLinkClick() {
+    const { logout } = this.props;
+
+    logout();
+  }
+
+  @autobind
   private isSuccessfulLogout(prevProps: IProps) {
     const {
       logoutCommunication: { isRequesting, error },
@@ -165,7 +166,8 @@ class ProfilePreviewComponent extends React.PureComponent<IProps, IState> {
   }
 }
 
-const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(ProfilePreviewComponent);
-const ProfilePreview = withTranslation()(connectedComponent);
+const connectedComponent = withTranslation()(
+  connect(mapStateToProps, mapDispatchToProps)(UserPreview),
+);
 
-export { ProfilePreview, ProfilePreviewComponent, IProps as IProfilePreviewProps };
+export { connectedComponent as UserPreview };

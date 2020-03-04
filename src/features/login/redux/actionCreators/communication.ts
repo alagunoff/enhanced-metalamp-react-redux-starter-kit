@@ -23,16 +23,6 @@ export const {
 );
 
 export const {
-  execute: loginTwitter,
-  completed: loginTwitterSuccess,
-  failed: loginTwitterFail,
-} = makeCommunicationActionCreators<
-  NS.ILoginTwitter,
-  NS.ILoginTwitterSuccess,
-  NS.ILoginTwitterFail
->('LOGIN:LOGIN_TWITTER', 'LOGIN:LOGIN_TWITTER_SUCCESS', 'LOGIN:LOGIN_TWITTER_FAIL');
-
-export const {
   execute: loginFacebook,
   completed: loginFacebookSuccess,
   failed: loginFacebookFail,

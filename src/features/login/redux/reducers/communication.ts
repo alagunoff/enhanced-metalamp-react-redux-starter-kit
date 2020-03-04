@@ -21,16 +21,6 @@ const communicationReducer = combineReducers<NS.IReduxState['communication']>({
     'LOGIN:LOGIN_GOOGLE_FAIL',
     initialState.communication.loginGoogle,
   ),
-  loginTwitter: makeCommunicationReducer<
-    NS.ILoginTwitter,
-    NS.ILoginTwitterSuccess,
-    NS.ILoginTwitterFail
-  >(
-    'LOGIN:LOGIN_TWITTER',
-    'LOGIN:LOGIN_TWITTER_SUCCESS',
-    'LOGIN:LOGIN_TWITTER_FAIL',
-    initialState.communication.loginTwitter,
-  ),
   loginFacebook: makeCommunicationReducer<
     NS.ILoginFacebook,
     NS.ILoginFacebookSuccess,

@@ -1,16 +1,22 @@
-import firebase from 'firebase/app';
-
 import { IAction } from 'shared/types/redux';
 
-type IUser = firebase.User | null;
+interface IUserFields {
+  avatarURL: string;
+  name: string;
+  email: string;
+  nickname: string;
+  age: number;
+  bio: string;
+}
 
 interface IReduxState {
   data: {
-    user: IUser;
+    user: IUserType;
   };
 }
 
-type IUpdateUser = IAction<'USER:UPDATE_USER', IUser>;
-type Action = IUpdateUser;
+type IUserType = IUserFields | null;
+type IUpdateUser = IAction<'USER:UPDATE_USER', IUserType>;
+type IUser = IUpdateUser;
 
-export { Action, IUpdateUser, IReduxState, IUser };
+export { IUser, IUpdateUser, IReduxState, IUserFields, IUserType };
