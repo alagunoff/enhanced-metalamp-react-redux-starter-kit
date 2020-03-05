@@ -2,7 +2,7 @@ import * as NS from './namespace';
 
 import avatar from './img/profile_avatar.png';
 
-const user: NS.IUserFields = {
+const user: NS.IUser = {
   avatarURL: avatar,
   name: 'Гость',
   email: '',

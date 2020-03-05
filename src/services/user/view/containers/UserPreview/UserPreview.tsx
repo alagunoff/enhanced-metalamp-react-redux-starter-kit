@@ -24,7 +24,7 @@ interface IOwnProps {
 }
 
 interface IStateProps {
-  user: UserNamespace.IUserFields;
+  user: UserNamespace.IUser | null;
   logoutCommunication: ICommunication;
 }
 type IActionProps = typeof mapDispatchToProps;
@@ -104,15 +104,13 @@ class UserPreview extends React.PureComponent<IProps, IState> {
               >
                 {t(intl.edit)}
               </span>
-              {/* {user ? (
-                <button
-                  type='button'
-                  className={b('logout-link')}
-                  onClick={this.handleLogoutLinkClick}
-                >
-                  {t(intl.logout)}
-                </button>
-              ) : null} */}
+              <button
+                type='button'
+                className={b('logout-link')}
+                onClick={this.handleLogoutLinkClick}
+              >
+                {t(intl.logout)}
+              </button>
             </div>
           </div>
         </Popover>

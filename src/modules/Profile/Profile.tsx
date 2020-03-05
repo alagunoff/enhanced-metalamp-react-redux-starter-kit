@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { withAuth } from 'shared/helpers/react/withAuth';
+import { withAuth } from 'modules/shared';
 import { IModule } from 'shared/types/app';
 import { routes } from 'modules/routes';
 

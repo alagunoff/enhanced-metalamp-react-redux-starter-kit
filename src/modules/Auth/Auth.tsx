@@ -1,9 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { withoutAuth } from 'shared/helpers/react/withoutAuth';
 import { routes } from 'modules/routes';
-import { NotFound } from 'modules/shared';
+import { NotFound, withoutAuth } from 'modules/shared';
 import { IModule } from 'shared/types/app';
 
 import { LoginLayout, RegistrationLayout, RestorePasswordLayout } from './view/components';
@@ -23,13 +22,13 @@ const Auth: IModule = {
             exact
             key={routes.auth.registration.getElementKey()}
             path={routes.auth.registration.getRoutePath()}
-            component={RegistrationLayout}
+            component={withoutAuth(RegistrationLayout)}
           />
           <Route
             exact
             key={routes.auth['restore-password'].getElementKey()}
             path={routes.auth['restore-password'].getRoutePath()}
-            component={RestorePasswordLayout}
+            component={withoutAuth(RestorePasswordLayout)}
           />
           <Route>
             <NotFound />

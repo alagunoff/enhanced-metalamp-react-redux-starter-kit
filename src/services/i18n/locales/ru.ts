@@ -74,6 +74,20 @@ export const ru = {
       repositoriesNumber: 'Количество репозиториев',
     },
   },
+  services: {
+    user: {
+      name: 'Имя',
+      nickname: 'Псевдоним',
+      age: 'Возраст',
+      bio: 'Биография',
+      editProfile: 'Редактировать профиль',
+      yearsOld: '{{count}} лет',
+      yearsOld_1: '{{count}} года',
+      yearsOld_2: '{{count}} год',
+      edit: 'Редактировать',
+      logout: 'Выйти',
+    },
+  },
   documents: {},
   modules: {},
 };

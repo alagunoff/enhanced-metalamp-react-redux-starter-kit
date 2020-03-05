@@ -1,4 +1,3 @@
-// tslint:disable:max-line-length
 export const en = {
   shared: {
     ok: 'Ok',
@@ -70,6 +69,18 @@ export const en = {
       repositoriesLanguage: 'Repositories language',
       resultsPerPage: 'Results per page',
       repositoriesNumber: 'Repositories number',
+    },
+  },
+  services: {
+    user: {
+      name: 'Name',
+      nickname: 'Nickname',
+      age: 'Age',
+      bio: 'Bio',
+      editProfile: 'Edit profile',
+      yearsOld: '{{count}} y.o.',
+      edit: 'Edit',
+      logout: 'Sign out',
     },
   },
   documents: {},

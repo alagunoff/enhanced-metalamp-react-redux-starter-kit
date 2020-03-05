@@ -1,6 +1,6 @@
 import { IAction } from 'shared/types/redux';
 
-interface IUserFields {
+interface IUser {
   avatarURL: string;
   name: string;
   email: string;
@@ -11,12 +11,11 @@ interface IUserFields {
 
 interface IReduxState {
   data: {
-    user: IUserType;
+    user: IUser | null;
   };
 }
 
-type IUserType = IUserFields | null;
-type IUpdateUser = IAction<'USER:UPDATE_USER', IUserType>;
-type IUser = IUpdateUser;
+type IUpdateUser = IAction<'USER:UPDATE_USER', IUser | null>;
+type IUserAction = IUpdateUser;
 
-export { IUser, IUpdateUser, IReduxState, IUserFields, IUserType };
+export { IUserAction, IUpdateUser, IReduxState, IUser };

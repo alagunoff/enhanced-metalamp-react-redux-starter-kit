@@ -50,14 +50,14 @@ class RegistrationLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private handleSuccessfulLoginGoogle(user: UserNamespace.IUserType) {
+  private handleSuccessfulLoginGoogle(user: UserNamespace.IUser) {
     localStorage.setItem('authUser', JSON.stringify(user));
 
     this.redirectToSearchRepositories();
   }
 
   @autobind
-  private handleSuccessfulLoginFacebook(user: UserNamespace.IUserType) {
+  private handleSuccessfulLoginFacebook(user: UserNamespace.IUser) {
     localStorage.setItem('authUser', JSON.stringify(user));
     
     this.redirectToSearchRepositories();

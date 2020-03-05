@@ -1,10 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { withAuth } from 'shared/helpers/react/withAuth';
 import { IModule } from 'shared/types/app';
 import { routes } from 'modules/routes';
-import { NotFound } from 'modules/shared';
+import { NotFound, withAuth } from 'modules/shared';
 
 import { UsersSearchLayout, RepositoriesSearchLayout } from './view/components';
 

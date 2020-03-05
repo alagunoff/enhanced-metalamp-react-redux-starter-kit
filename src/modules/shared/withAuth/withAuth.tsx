@@ -7,10 +7,9 @@ import { routes } from 'modules/routes';
 import { namespace as UserNamespace, actionCreators as userActions } from 'services/user';
 
 type IStateProps = {
-  user: UserNamespace.IUserType;
+  user: UserNamespace.IUser | null;
 };
 type IActionProps = typeof mapDispatchToProps;
-
 type IProps = IStateProps & IActionProps & RouteComponentProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
@@ -23,25 +22,27 @@ const mapDispatchToProps = {
   updateUser: userActions.updateUser,
 };
 
-function withoutAuth(Component: React.ComponentType) {
-  class WithoutAuth extends React.PureComponent<IProps> {
-    componentDidMount() {
-      const { updateUser, history } = this.props;
+function withAuth(Component: React.ComponentType) {
+  class WithAuth extends React.PureComponent<IProps> {
+    public componentDidMount() {
+      const { user: reduxUser, updateUser, history } = this.props;
       const user = localStorage.getItem('authUser');
 
-      if (user !== null) {
-        history.push(routes.search.repositories.getRedirectPath());
+      if (user === null) {
+        history.push(routes.auth.registration.getRedirectPath());
       } else {
-        updateUser(user);
+        if (reduxUser === null) {
+          updateUser(JSON.parse(user));
+        }
       }
     }
 
-    render() {
+    public render() {
       return <Component {...this.props} />;
     }
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(WithoutAuth));
+  return connect(mapStateToProps, mapDispatchToProps)(withRouter(WithAuth));
 }
 
-export { withoutAuth };
+export { withAuth };

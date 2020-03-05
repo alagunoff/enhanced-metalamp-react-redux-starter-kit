@@ -15,7 +15,7 @@ import { validateEmail, validatePassword } from './../constants';
 import './RegistrationForm.scss';
 
 type IStateProps = {
-  user: UserNamespace.IUserType;
+  user: UserNamespace.IUser | null;
   registrationCommunication: ICommunication;
   loginGoogleCommunication: ICommunication;
   loginFacebookCommunication: ICommunication;
@@ -23,8 +23,8 @@ type IStateProps = {
 type OwnProps = {
   onLoginLikClick: () => void;
   onSuccessfulRegistration: () => void;
-  onSuccessfulLoginGoogle: (user: UserNamespace.IUserType) => void;
-  onSuccessfulLoginFacebook: (user: UserNamespace.IUserType) => void;
+  onSuccessfulLoginGoogle: (user: UserNamespace.IUser) => void;
+  onSuccessfulLoginFacebook: (user: UserNamespace.IUser) => void;
 };
 type RegistrationFormFields = {
   email: string;
@@ -64,12 +64,14 @@ class RegistrationForm extends React.PureComponent<IProps> {
       onSuccessfulRegistration();
     }
 
-    if (this.isSuccessfulLoginGoogle(prevProps)) {
-      onSuccessfulLoginGoogle(user);
-    }
+    if (user !== null) {
+      if (this.isSuccessfulLoginGoogle(prevProps)) {
+        onSuccessfulLoginGoogle(user);
+      }
 
-    if (this.isSuccessfulLoginFacebook(prevProps)) {
-      onSuccessfulLoginFacebook(user);
+      if (this.isSuccessfulLoginFacebook(prevProps)) {
+        onSuccessfulLoginFacebook(user);
+      }
     }
   }
 

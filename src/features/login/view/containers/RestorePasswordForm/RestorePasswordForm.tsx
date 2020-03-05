@@ -39,17 +39,10 @@ const mapDispatchToProps = {
 const b = block('restore-password-form');
 
 class RestorePasswordForm extends React.PureComponent<IProps> {
-  componentDidUpdate(prevProps: IProps) {
-    const {
-      onSuccessfulRestorePassword,
-      restorePasswordCommunication: { isRequesting, error },
-    } = this.props;
-    const {
-      restorePasswordCommunication: { isRequesting: isPrevRequesting },
-    } = prevProps;
-    const isSuccessfulRestorePassword = error === '' && !isRequesting && isPrevRequesting;
+  public componentDidUpdate(prevProps: IProps) {
+    const { onSuccessfulRestorePassword } = this.props;
 
-    if (isSuccessfulRestorePassword) {
+    if (this.isSuccessfulRestorePassword(prevProps)) {
       onSuccessfulRestorePassword();
     }
   }
@@ -103,6 +96,18 @@ class RestorePasswordForm extends React.PureComponent<IProps> {
         </button>
       </form>
     );
+  }
+
+  @autobind
+  private isSuccessfulRestorePassword(prevProps: IProps) {
+    const {
+      restorePasswordCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      restorePasswordCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && isPrevRequesting;
   }
 }
 

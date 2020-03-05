@@ -30,22 +30,21 @@ function getSaga(deps: IDependencies) {
 
 function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   try {
-    const user: firebase.User | null = yield call(api.login, payload);
+    const { email: newEmail }: firebase.User = yield call(api.login, payload);
+    const { email: defaultEmail } = defaultUser;
+    const email = newEmail === null ? defaultEmail : newEmail;
 
     yield put(actionCreators.loginSuccess());
-
-    if (user !== null) {
-      const { displayName, email } = user;
-      const { name: defaultName, email: defaultEmail } = defaultUser;
-      const newName = displayName === null ? defaultName : displayName;
-      const newEmail = email === null ? defaultEmail : email;
-
-      yield put(userActions.updateUser({ ...defaultUser, name: newName, email: newEmail }));
-    }
+    yield put(userActions.updateUser({ ...defaultUser, email }));
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
   }
 }
+
+// const { displayName, email } = user;
+//       const { name: defaultName, email: defaultEmail } = defaultUser;
+//       const newName = displayName === null ? defaultName : displayName;
+//       const newEmail = email === null ? defaultEmail : email;
 
 function* executeLoginGoogle({ api }: IDependencies) {
   try {

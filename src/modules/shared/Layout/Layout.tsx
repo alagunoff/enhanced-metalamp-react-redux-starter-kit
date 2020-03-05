@@ -5,6 +5,7 @@ import { autobind } from 'core-decorators';
 
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
+//import { UserPreview } from 'services/user';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
@@ -48,6 +49,10 @@ class LayoutComponent extends React.Component<IProps> {
               />
             </div>
             <div className={b('right-menu')}>
+              {/* <UserPreview
+                onEditClick={this.handleEditProfileClick}
+                onSuccessfulLogout={this.handleSuccessfulLogout}
+              /> */}
               <ProfilePreview
                 onEditClick={this.handleEditProfileClick}
                 onSuccessfulLogout={this.handleSuccessfulLogout}
@@ -95,10 +100,10 @@ class LayoutComponent extends React.Component<IProps> {
 
   @autobind
   private handleSuccessfulLogout() {
-    const { history } = this.props
+    const { history } = this.props;
 
     localStorage.removeItem('authUser');
-    
+
     history.push(routes.auth.login.getRedirectPath());
   }
 
