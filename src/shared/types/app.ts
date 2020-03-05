@@ -44,7 +44,6 @@ export interface IAppReduxState {
   // features
   usersSearch: features.usersSearch.namespace.IReduxState;
   repositoriesSearch: features.repositoriesSearch.namespace.IReduxState;
-  profile: features.profile.namespace.IReduxState;
   login: features.login.namespace.IReduxState;
 }
 

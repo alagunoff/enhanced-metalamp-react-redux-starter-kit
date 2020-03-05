@@ -10,15 +10,15 @@ import { IAppReduxState } from 'shared/types/app';
 import { actionCreators as notificationActionCreators } from 'services/notification';
 import { withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 
-import { IUserFields } from '../../../namespace';
+import { IUser } from '../../../namespace';
 import { actionCreators } from '../../../redux';
 import { UserAvatar } from '../../components';
-import { validateName, validateNickname, validateBio } from './constants';
+import { validateName, validateEmail, validateNickname, validateBio } from './constants';
 
 import './UserEdit.scss';
 
 interface IStateProps {
-  user: IUserFields;
+  user: IUser | null;
 }
 
 type IActionProps = typeof mapDispatchToProps;
@@ -41,15 +41,31 @@ const { user: intl } = tKeys.services;
 
 class UserEdit extends React.PureComponent<IProps> {
   public render() {
-    return <Form onSubmit={this.handleFormSubmit} render={this.renderForm} subscription={{}} />;
+    const { user } = this.props;
+
+    if (user === null) {
+      return;
+    }
+
+    return (
+      <Form
+        onSubmit={this.handleFormSubmit}
+        initialValues={user}
+        render={this.renderForm}
+        subscription={{}}
+      />
+    );
   }
 
   @autobind
   private renderForm({ handleSubmit }: FormRenderProps) {
-    const {
-      user: { avatarURL, name, nickname, age, bio },
-      t,
-    } = this.props;
+    const { user, t } = this.props;
+
+    if (user === null) {
+      return;
+    }
+
+    const { avatarURL } = user;
 
     return (
       <form onSubmit={handleSubmit} className={b()}>
@@ -59,8 +75,7 @@ class UserEdit extends React.PureComponent<IProps> {
         <div className={b('fields')}>
           <div className={b('field')}>
             <TextInputField
-              name={name}
-              defaultValue={name}
+              name='name'
               label={t(intl.name)}
               validate={validateName}
               t={t}
@@ -68,20 +83,27 @@ class UserEdit extends React.PureComponent<IProps> {
           </div>
           <div className={b('field')}>
             <TextInputField
-              name={nickname}
-              defaultValue={nickname}
+              name='email'
+              label={t(intl.email)}
+              validate={validateEmail}
+              t={t}
+            />
+          </div>
+          <div className={b('field')}>
+            <TextInputField
+              name='nickname'
               label={t(intl.nickname)}
               validate={validateNickname}
               t={t}
             />
           </div>
           <div className={b('field')}>
-            <NumberInputField name='age' defaultValue={age} label={t(intl.age)} t={t} />
+            <NumberInputField name='age' label={t(intl.age)} t={t} />
           </div>
           <div className={b('field')}>
             <TextInputField
-              name={bio}
-              defaultValue={bio}
+              name='bio'
+              label={t(intl.bio)}
               multiline
               rowsMax={10}
               validate={validateBio}
@@ -99,7 +121,7 @@ class UserEdit extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private handleFormSubmit(values: IUserFields) {
+  private handleFormSubmit(values: IUser) {
     const { updateUser, setNotification, t } = this.props;
 
     updateUser(values);

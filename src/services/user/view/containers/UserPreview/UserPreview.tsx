@@ -3,7 +3,6 @@ import block from 'bem-cn';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 
-import { actionCreators as loginActions } from 'features/login/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { ICommunication } from 'shared/types/redux';
 import { Popover } from 'shared/view/components';
@@ -20,6 +19,7 @@ interface IState {
 
 interface IOwnProps {
   onEditClick(): void;
+  onLogoutLinkClick: () => void;
   onSuccessfulLogout: () => void;
 }
 
@@ -27,9 +27,8 @@ interface IStateProps {
   user: UserNamespace.IUser | null;
   logoutCommunication: ICommunication;
 }
-type IActionProps = typeof mapDispatchToProps;
 
-type IProps = IStateProps & IActionProps & IOwnProps & ITranslationProps;
+type IProps = IStateProps & IOwnProps & ITranslationProps;
 
 const b = block('user-preview');
 const { user: intl } = tKeys.services;
@@ -40,10 +39,6 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
     logoutCommunication: state.login.communication.logout,
   };
 }
-
-const mapDispatchToProps = {
-  logout: loginActions.logout,
-};
 
 class UserPreview extends React.PureComponent<IProps, IState> {
   public state: IState = {
@@ -61,11 +56,13 @@ class UserPreview extends React.PureComponent<IProps, IState> {
   }
 
   public render() {
-    const {
-      user: { avatarURL, name, nickname, age, bio },
-      onEditClick,
-      t,
-    } = this.props;
+    const { user, onEditClick, onLogoutLinkClick, t } = this.props;
+
+    if (user === null) {
+      return;
+    }
+
+    const { avatarURL, name, nickname, age, bio } = user;
     const { isOpen } = this.state;
 
     return (
@@ -104,11 +101,7 @@ class UserPreview extends React.PureComponent<IProps, IState> {
               >
                 {t(intl.edit)}
               </span>
-              <button
-                type='button'
-                className={b('logout-link')}
-                onClick={this.handleLogoutLinkClick}
-              >
+              <button type='button' className={b('logout-link')} onClick={onLogoutLinkClick}>
                 {t(intl.logout)}
               </button>
             </div>
@@ -145,13 +138,6 @@ class UserPreview extends React.PureComponent<IProps, IState> {
   }
 
   @autobind
-  private handleLogoutLinkClick() {
-    const { logout } = this.props;
-
-    logout();
-  }
-
-  @autobind
   private isSuccessfulLogout(prevProps: IProps) {
     const {
       logoutCommunication: { isRequesting, error },
@@ -164,8 +150,6 @@ class UserPreview extends React.PureComponent<IProps, IState> {
   }
 }
 
-const connectedComponent = withTranslation()(
-  connect(mapStateToProps, mapDispatchToProps)(UserPreview),
-);
+const connectedComponent = withTranslation()(connect(mapStateToProps)(UserPreview));
 
 export { connectedComponent as UserPreview };

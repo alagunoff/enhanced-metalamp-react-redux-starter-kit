@@ -1,11 +1,15 @@
 import React from 'react';
 import block from 'bem-cn';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
+import { actionCreators as loginActions } from 'features/login/redux';
+import { IAppReduxState } from 'shared/types/app';
+import { ICommunication } from 'shared/types/redux';
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
-//import { UserPreview } from 'services/user';
+import { namespace as UserNamespace, UserPreview } from 'services/user';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
@@ -18,25 +22,38 @@ type IOwnProps = {
   title: string;
 };
 type IFeatureProps = {
-  profileFeatureEntry: features.profile.Entry;
   loginFeatureEntry: features.login.Entry;
 };
+type IStateProps = {
+  user: UserNamespace.IUser | null;
+  logoutCommunication: ICommunication;
+}
+type IActionProps = typeof mapDispatchToProps;
 
-type IProps = IOwnProps & IFeatureProps & RouteComponentProps & ITranslationProps;
+type IProps = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
 
 const b = block('layout');
 const { header, footer } = tKeys.shared;
+
+function mapStateToProps(state: IAppReduxState): IStateProps {
+  return {
+    user: state.user.data.user,
+    logoutCommunication: state.login.communication.logout,
+  };
+}
+
+const mapDispatchToProps = {
+  logout: loginActions.logout,
+};
 
 class LayoutComponent extends React.Component<IProps> {
   public render() {
     const {
       children,
       title,
-      profileFeatureEntry: { containers },
       location,
       t,
     } = this.props;
-    const { ProfilePreview } = containers;
 
     return (
       <div className={b()}>
@@ -49,12 +66,9 @@ class LayoutComponent extends React.Component<IProps> {
               />
             </div>
             <div className={b('right-menu')}>
-              {/* <UserPreview
+              <UserPreview
                 onEditClick={this.handleEditProfileClick}
-                onSuccessfulLogout={this.handleSuccessfulLogout}
-              /> */}
-              <ProfilePreview
-                onEditClick={this.handleEditProfileClick}
+                onLogoutLinkClick={this.handleLogoutLinkClick}
                 onSuccessfulLogout={this.handleSuccessfulLogout}
               />
               <div className={b('language-selector')}>
@@ -108,6 +122,13 @@ class LayoutComponent extends React.Component<IProps> {
   }
 
   @autobind
+  private handleLogoutLinkClick() {
+    const { logout } = this.props;
+
+    logout();
+  }
+
+  @autobind
   private handleEditProfileClick() {
     const { history } = this.props;
 
@@ -116,9 +137,9 @@ class LayoutComponent extends React.Component<IProps> {
 }
 
 const wrappedComponent = withTranslation()(withRouter(LayoutComponent));
+const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(wrappedComponent);
 const Layout = withAsyncFeatures({
-  profileFeatureEntry: features.profile.loadEntry,
   loginFeatureEntry: features.login.loadEntry,
-})(wrappedComponent);
+})(connectedComponent);
 
 export { Layout, LayoutComponent, IProps as ILayoutProps };

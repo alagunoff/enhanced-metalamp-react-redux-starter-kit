@@ -14,6 +14,9 @@ import { validateEmail, validatePassword } from './../constants';
 
 import './RegistrationForm.scss';
 
+type IState = {
+  registrationType: 'google' | 'facebook' | null;
+};
 type IStateProps = {
   user: UserNamespace.IUser | null;
   registrationCommunication: ICommunication;
@@ -51,7 +54,11 @@ const mapDispatchToProps = {
 
 const b = block('registration-form');
 
-class RegistrationForm extends React.PureComponent<IProps> {
+class RegistrationForm extends React.PureComponent<IProps, IState> {
+  public state: IState = {
+    registrationType: null,
+  };
+
   public componentDidUpdate(prevProps: IProps) {
     const {
       user,
@@ -64,12 +71,20 @@ class RegistrationForm extends React.PureComponent<IProps> {
       onSuccessfulRegistration();
     }
 
+    if (this.isSuccessfulLoginGoogle(prevProps)) {
+      this.setState({ registrationType: 'google' });
+    }
+
+    if (this.isSuccessfulLoginFacebook(prevProps)) {
+      this.setState({ registrationType: 'facebook' });
+    }
+
     if (user !== null) {
-      if (this.isSuccessfulLoginGoogle(prevProps)) {
+      if (this.state.registrationType === 'google') {
         onSuccessfulLoginGoogle(user);
       }
 
-      if (this.isSuccessfulLoginFacebook(prevProps)) {
+      if (this.state.registrationType === 'facebook') {
         onSuccessfulLoginFacebook(user);
       }
     }
@@ -101,6 +116,7 @@ class RegistrationForm extends React.PureComponent<IProps> {
               className={b('social-link registration-form__social-link_theme_facebook')}
               type='button'
               aria-label='sign in via facebook'
+              onClick={this.handleFacebookLinkClick}
             ></button>
           </li>
         </ul>
@@ -123,6 +139,13 @@ class RegistrationForm extends React.PureComponent<IProps> {
     const { loginGoogle } = this.props;
 
     loginGoogle();
+  }
+
+  @autobind
+  private handleFacebookLinkClick() {
+    const { loginFacebook } = this.props;
+
+    loginFacebook();
   }
 
   @autobind

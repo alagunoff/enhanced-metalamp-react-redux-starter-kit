@@ -1,5 +1,9 @@
 import {
-  composeValidators, makeRequired, makeMinCharactersValidator, makeMaxCharactersValidator,
+  composeValidators,
+  makeRequired,
+  makeMinCharactersValidator,
+  makeMaxCharactersValidator,
+  makeEmailValidator,
 } from 'shared/validators';
 import { tKeys } from 'services/i18n';
 
@@ -19,6 +23,11 @@ export const validateName = composeValidators(
     key: tKeys.shared.fieldMaxLengthError,
     options: { maxCharacters: MAX_NAME_LENGTH },
   }),
+);
+
+export const validateEmail = composeValidators(
+  makeRequired(tKeys.shared.fieldIsRequiredError),
+  makeEmailValidator(tKeys.shared.fieldIsEmailError),
 );
 
 export const validateNickname = composeValidators(

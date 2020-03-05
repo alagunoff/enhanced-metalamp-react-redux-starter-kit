@@ -9,6 +9,7 @@ export const en = {
     fieldIsRequiredError: 'Field is required',
     fieldMinLengthError: 'Field must be at least {{minCharacters}} characters long',
     fieldMaxLengthError: 'Field must be less than {{maxCharacters}} characters long',
+    fieldIsEmailError: 'Email is incorrect',
     header: {
       searchFor: 'Search for:',
       users: 'Users',
@@ -74,6 +75,7 @@ export const en = {
   services: {
     user: {
       name: 'Name',
+      email: 'Email',
       nickname: 'Nickname',
       age: 'Age',
       bio: 'Bio',

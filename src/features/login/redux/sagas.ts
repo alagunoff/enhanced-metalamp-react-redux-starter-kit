@@ -41,17 +41,20 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   }
 }
 
-// const { displayName, email } = user;
-//       const { name: defaultName, email: defaultEmail } = defaultUser;
-//       const newName = displayName === null ? defaultName : displayName;
-//       const newEmail = email === null ? defaultEmail : email;
-
 function* executeLoginGoogle({ api }: IDependencies) {
   try {
-    const user = yield call(api.loginGoogle);
+    const {
+      displayName: newName,
+      email: newEmail,
+      photoURL: newAvatarURL,
+    }: firebase.User = yield call(api.loginGoogle);
+    const { name: defaultName, email: defaultEmail, avatarURL: defaultAvatarURL } = defaultUser;
+    const name = newName === null ? defaultName : newName;
+    const email = newEmail === null ? defaultEmail : newEmail;
+    const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
 
     yield put(actionCreators.loginGoogleSuccess());
-    yield put(userActions.updateUser(user));
+    yield put(userActions.updateUser({ ...defaultUser, name, email, avatarURL }));
   } catch (error) {
     yield put(actionCreators.loginGoogleFail(getErrorMsg(error)));
   }
@@ -59,10 +62,18 @@ function* executeLoginGoogle({ api }: IDependencies) {
 
 function* executeLoginFacebook({ api }: IDependencies) {
   try {
-    const user = yield call(api.loginFacebook);
+    const {
+      displayName: newName,
+      email: newEmail,
+      photoURL: newAvatarURL,
+    }: firebase.User = yield call(api.loginFacebook);
+    const { name: defaultName, email: defaultEmail, avatarURL: defaultAvatarURL } = defaultUser;
+    const name = newName === null ? defaultName : newName;
+    const email = newEmail === null ? defaultEmail : newEmail;
+    const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
 
     yield put(actionCreators.loginFacebookSuccess());
-    yield put(userActions.updateUser(user));
+    yield put(userActions.updateUser({ ...defaultUser, name, email, avatarURL }));
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
   }

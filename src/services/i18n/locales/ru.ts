@@ -10,6 +10,7 @@ export const ru = {
     fieldIsRequiredError: 'Поле обязательно',
     fieldMinLengthError: 'Поле должно быть не меньше {{minCharacters}} символов',
     fieldMaxLengthError: 'Поле должно быть не более {{maxCharacters}} символов',
+    fieldIsEmailError: 'Неверный email',
     header: {
       searchFor: 'Искать:',
       users: 'Пользователей',
@@ -77,6 +78,7 @@ export const ru = {
   services: {
     user: {
       name: 'Имя',
+      email: 'Email',
       nickname: 'Псевдоним',
       age: 'Возраст',
       bio: 'Биография',
