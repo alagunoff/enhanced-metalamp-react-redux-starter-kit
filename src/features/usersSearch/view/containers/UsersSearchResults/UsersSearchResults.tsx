@@ -48,7 +48,7 @@ const mapDispatch = {
 
 const b = block('users-search-results');
 
-class UsersSearchResultsComponent extends React.PureComponent<IProps> {
+class UsersSearchResultsComponent extends React.Component<IProps> {
   public state: IState = {
     displayedUser: null,
   };

@@ -17,7 +17,7 @@ type IProps = IFeatureProps & RouteComponentProps;
 
 const b = block('restore-password-layout');
 
-class RestorePasswordLayout extends React.PureComponent<IProps> {
+class RestorePasswordLayout extends React.Component<IProps> {
   public render() {
     const {
       loginFeatureEntry: { containers },

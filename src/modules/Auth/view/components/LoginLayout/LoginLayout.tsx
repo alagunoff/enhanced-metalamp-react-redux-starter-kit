@@ -18,7 +18,7 @@ type IProps = IFeatureProps & RouteComponentProps;
 
 const b = block('login-layout');
 
-class LoginLayout extends React.PureComponent<IProps> {
+class LoginLayout extends React.Component<IProps> {
   public render() {
     const {
       loginFeatureEntry: { containers },
@@ -39,10 +39,8 @@ class LoginLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private handleSuccessfulLogin(user: UserNamespace.IUser) {
+  private handleSuccessfulLogin() {
     const { history } = this.props;
-
-    localStorage.setItem('authUser', JSON.stringify(user));
     
     history.push(routes.search.repositories.getRedirectPath());
   }

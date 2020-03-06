@@ -27,7 +27,7 @@ type IProps = ITranslationProps & IOwnProps;
 const b = block('layout-header-menu');
 const { header } = tKeys.shared;
 
-class LayoutHeaderMenuComponent extends React.PureComponent<IProps, IState> {
+class LayoutHeaderMenuComponent extends React.Component<IProps, IState> {
   public state: IState = {
     isMenuOpen: false,
   };

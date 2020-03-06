@@ -54,7 +54,7 @@ const mapDispatch = {
 
 const b = block('repositories-search-results');
 
-class RepositoriesSearchResultsComponent extends React.PureComponent<IProps> {
+class RepositoriesSearchResultsComponent extends React.Component<IProps> {
   public state: IState = {
     displayedRepositoryOwner: null,
   };

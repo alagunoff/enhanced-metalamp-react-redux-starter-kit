@@ -38,7 +38,7 @@ const mapDispatchToProps = {
 
 const b = block('restore-password-form');
 
-class RestorePasswordForm extends React.PureComponent<IProps> {
+class RestorePasswordForm extends React.Component<IProps> {
   public componentDidUpdate(prevProps: IProps) {
     const { onSuccessfulRestorePassword } = this.props;
 

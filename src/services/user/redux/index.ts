@@ -1,4 +1,5 @@
 import * as actionCreators from './actionCreators';
+import { rootReducer } from './reducers';
+import { getSaga } from './sagas';
 
-export { reducer } from './reducers';
-export { actionCreators };
+export { actionCreators, rootReducer, getSaga };

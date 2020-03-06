@@ -1,15 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
+import { IAppReduxState } from 'shared/types/app';
 import { routes } from 'modules/routes';
+import { namespace as UserNamespace } from 'services/user';
 
-type IProps =  RouteComponentProps;
+type IStateProps = {
+  user: UserNamespace.IUser | null;
+};
+
+function mapStateToProps(state: IAppReduxState): IStateProps {
+  return {
+    user: state.user.data.user,
+  };
+}
+
+type IProps = IStateProps & RouteComponentProps;
 
 function withoutAuth(Component: React.ComponentType) {
-  class WithoutAuth extends React.PureComponent<IProps> {
+  class WithoutAuth extends React.Component<IProps> {
     public componentDidMount() {
-      const { history } = this.props;
-      const user = localStorage.getItem('authUser');
+      const { user, history } = this.props;
 
       if (user !== null) {
         history.push(routes.search.repositories.getRedirectPath());
@@ -21,7 +33,7 @@ function withoutAuth(Component: React.ComponentType) {
     }
   }
 
-  return withRouter(WithoutAuth);
+  return withRouter(connect(mapStateToProps)(WithoutAuth));
 }
 
 export { withoutAuth };

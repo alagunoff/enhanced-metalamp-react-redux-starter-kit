@@ -40,7 +40,7 @@ function mapState(state: IAppReduxState): IStateProps {
 
 const { repositoriesSearch: intl } = tKeys.features;
 
-class RepositoriesSearchFormComponent extends React.PureComponent<IProps> {
+class RepositoriesSearchFormComponent extends React.Component<IProps> {
   public render() {
     const { isRepositoriesSearchRequesting, resetSearchResults, t } = this.props;
     return (

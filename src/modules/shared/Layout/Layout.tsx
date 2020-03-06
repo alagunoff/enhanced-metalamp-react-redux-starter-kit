@@ -9,7 +9,7 @@ import { IAppReduxState } from 'shared/types/app';
 import { ICommunication } from 'shared/types/redux';
 import { LanguageSelector, withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { memoizeByProps } from 'shared/helpers';
-import { namespace as UserNamespace, UserPreview } from 'services/user';
+import { UserPreview } from 'services/user';
 import { withAsyncFeatures } from 'core';
 import * as features from 'features';
 
@@ -25,7 +25,6 @@ type IFeatureProps = {
   loginFeatureEntry: features.login.Entry;
 };
 type IStateProps = {
-  user: UserNamespace.IUser | null;
   logoutCommunication: ICommunication;
 }
 type IActionProps = typeof mapDispatchToProps;
@@ -37,7 +36,6 @@ const { header, footer } = tKeys.shared;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
-    user: state.user.data.user,
     logoutCommunication: state.login.communication.logout,
   };
 }
@@ -116,8 +114,6 @@ class LayoutComponent extends React.Component<IProps> {
   private handleSuccessfulLogout() {
     const { history } = this.props;
 
-    localStorage.removeItem('authUser');
-
     history.push(routes.auth.login.getRedirectPath());
   }
 
@@ -136,10 +132,10 @@ class LayoutComponent extends React.Component<IProps> {
   }
 }
 
-const wrappedComponent = withTranslation()(withRouter(LayoutComponent));
+const wrappedComponent = withTranslation()(LayoutComponent);
 const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(wrappedComponent);
 const Layout = withAsyncFeatures({
   loginFeatureEntry: features.login.loadEntry,
-})(connectedComponent);
+})(withRouter(connectedComponent));
 
 export { Layout, LayoutComponent, IProps as ILayoutProps };

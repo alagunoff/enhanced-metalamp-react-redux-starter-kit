@@ -40,7 +40,7 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
   };
 }
 
-class UserPreview extends React.PureComponent<IProps, IState> {
+class UserPreview extends React.Component<IProps, IState> {
   public state: IState = {
     isOpen: false,
   };
@@ -59,7 +59,7 @@ class UserPreview extends React.PureComponent<IProps, IState> {
     const { user, onEditClick, onLogoutLinkClick, t } = this.props;
 
     if (user === null) {
-      return;
+      return null;
     }
 
     const { avatarURL, name, nickname, age, bio } = user;
@@ -86,11 +86,11 @@ class UserPreview extends React.PureComponent<IProps, IState> {
             <div className={b('main-info')}>
               <div className={b('name')}>{name}</div>
               <div className={b('nickname-age')}>
-                <div className={b('nickname')}>{nickname}</div>
-                <div className={b('age')}>{t(intl.yearsOld, { count: age })}</div>
+                {nickname && <div className={b('nickname')}>{nickname}</div>}
+                {age && <div className={b('age')}>{t(intl.yearsOld, { count: Number(age) })}</div>}
               </div>
             </div>
-            <div className={b('bio')}>{bio}</div>
+            <div className={b('bio')}>{bio ? bio : null}</div>
             <div className={b('buttons')}>
               <span
                 className={b('edit')}

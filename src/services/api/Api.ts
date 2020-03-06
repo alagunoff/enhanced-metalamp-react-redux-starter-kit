@@ -8,11 +8,7 @@ import {
   IUsersSearchResults,
   IRepositoriesSearchResults,
 } from 'shared/types/githubSearch';
-import {
-  configureFirebase,
-  googleProvider,
-  facebookProvider,
-} from 'core/firebase';
+import { configureFirebase, googleProvider, facebookProvider } from 'core/firebase';
 
 import { SearchUserResponse, IDetailedServerUser, SearchRepositoriesResponse } from './types';
 import {
@@ -24,8 +20,6 @@ import {
 import { convertUser, convertUserDetails, convertRepository } from './converters';
 import { HttpActions } from './HttpActions';
 
-configureFirebase();
-
 class Api {
   private actions: HttpActions;
   private headers = {
@@ -35,7 +29,14 @@ class Api {
   };
 
   constructor() {
+    configureFirebase();
+
     this.actions = new HttpActions('https://api.github.com/', this.headers);
+  }
+
+  @autobind
+  public async loadUser() {
+    return firebase.auth().currentUser;
   }
 
   @autobind
@@ -44,21 +45,21 @@ class Api {
 
     await firebase.auth().signInWithEmailAndPassword(email, password);
 
-    return firebase.auth().currentUser;
+    return this.loadUser();
   }
 
   @autobind
   public async loginGoogle() {
     await firebase.auth().signInWithPopup(googleProvider);
 
-    return firebase.auth().currentUser;
+    return this.loadUser();
   }
 
   @autobind
   public async loginFacebook() {
     await firebase.auth().signInWithPopup(facebookProvider);
 
-    return firebase.auth().currentUser;
+    return this.loadUser();
   }
 
   @autobind

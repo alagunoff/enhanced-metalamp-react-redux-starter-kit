@@ -19,7 +19,7 @@ type IProps = IOwnProps & ITranslationProps;
 const b = block('repository-preview');
 const { repositoriesSearch: intl } = tKeys.features;
 
-class RepositoryPreviewComponent extends React.PureComponent<IProps> {
+class RepositoryPreviewComponent extends React.Component<IProps> {
   public render() {
     const {
       t,

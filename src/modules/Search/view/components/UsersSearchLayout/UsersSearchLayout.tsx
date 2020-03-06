@@ -21,7 +21,7 @@ type IProps = IFeatureProps & ITranslationProps;
 
 const b = block('users-search-layout');
 
-class UsersSearchLayoutComponent extends React.PureComponent<IProps, IState> {
+class UsersSearchLayoutComponent extends React.Component<IProps, IState> {
   public state: IState = {
     lastSubmittedFormState: null,
   };

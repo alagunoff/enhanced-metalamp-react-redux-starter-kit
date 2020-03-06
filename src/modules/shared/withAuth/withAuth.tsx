@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { IAppReduxState } from 'shared/types/app';
 import { routes } from 'modules/routes';
-import { namespace as UserNamespace, actionCreators as userActions } from 'services/user';
+import { namespace as UserNamespace } from 'services/user';
 
 type IStateProps = {
   user: UserNamespace.IUser | null;
 };
-type IActionProps = typeof mapDispatchToProps;
-type IProps = IStateProps & IActionProps & RouteComponentProps;
+type IProps = IStateProps & RouteComponentProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -18,22 +18,13 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
   };
 }
 
-const mapDispatchToProps = {
-  updateUser: userActions.updateUser,
-};
-
 function withAuth(Component: React.ComponentType) {
-  class WithAuth extends React.PureComponent<IProps> {
+  class WithAuth extends React.Component<IProps> {
     public componentDidMount() {
-      const { user: reduxUser, updateUser, history } = this.props;
-      const user = localStorage.getItem('authUser');
+      const { user, history } = this.props;
 
       if (user === null) {
         history.push(routes.auth.registration.getRedirectPath());
-      } else {
-        if (reduxUser === null) {
-          updateUser(JSON.parse(user));
-        }
       }
     }
 
@@ -42,7 +33,7 @@ function withAuth(Component: React.ComponentType) {
     }
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(WithAuth));
+  return withRouter(connect(mapStateToProps)(WithAuth));
 }
 
 export { withAuth };

@@ -13,7 +13,7 @@ import { withTranslation, ITranslationProps, tKeys } from 'services/i18n';
 import { IUser } from '../../../namespace';
 import { actionCreators } from '../../../redux';
 import { UserAvatar } from '../../components';
-import { validateName, validateEmail, validateNickname, validateBio } from './constants';
+import { validateName, validateEmail } from './constants';
 
 import './UserEdit.scss';
 
@@ -39,12 +39,12 @@ const mapDispatchToProps = {
 const b = block('user-edit');
 const { user: intl } = tKeys.services;
 
-class UserEdit extends React.PureComponent<IProps> {
+class UserEdit extends React.Component<IProps> {
   public render() {
     const { user } = this.props;
 
     if (user === null) {
-      return;
+      return null;
     }
 
     return (
@@ -62,7 +62,7 @@ class UserEdit extends React.PureComponent<IProps> {
     const { user, t } = this.props;
 
     if (user === null) {
-      return;
+      return null;
     }
 
     const { avatarURL } = user;
@@ -93,7 +93,6 @@ class UserEdit extends React.PureComponent<IProps> {
             <TextInputField
               name='nickname'
               label={t(intl.nickname)}
-              validate={validateNickname}
               t={t}
             />
           </div>
@@ -106,7 +105,6 @@ class UserEdit extends React.PureComponent<IProps> {
               label={t(intl.bio)}
               multiline
               rowsMax={10}
-              validate={validateBio}
               t={t}
             />
           </div>

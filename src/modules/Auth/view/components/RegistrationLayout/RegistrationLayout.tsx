@@ -3,7 +3,6 @@ import block from 'bem-cn';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
-import { namespace as UserNamespace } from 'services/user';
 import { routes } from 'modules/routes';
 import * as features from 'features';
 import { withAsyncFeatures } from 'core';
@@ -18,7 +17,7 @@ type IProps = IFeatureProps & RouteComponentProps;
 
 const b = block('registration-layout');
 
-class RegistrationLayout extends React.PureComponent<IProps> {
+class RegistrationLayout extends React.Component<IProps> {
   public render() {
     const {
       loginFeatureEntry: { containers },
@@ -50,16 +49,12 @@ class RegistrationLayout extends React.PureComponent<IProps> {
   }
 
   @autobind
-  private handleSuccessfulLoginGoogle(user: UserNamespace.IUser) {
-    localStorage.setItem('authUser', JSON.stringify(user));
-
+  private handleSuccessfulLoginGoogle() {
     this.redirectToSearchRepositories();
   }
 
   @autobind
-  private handleSuccessfulLoginFacebook(user: UserNamespace.IUser) {
-    localStorage.setItem('authUser', JSON.stringify(user));
-    
+  private handleSuccessfulLoginFacebook() {
     this.redirectToSearchRepositories();
   }
 

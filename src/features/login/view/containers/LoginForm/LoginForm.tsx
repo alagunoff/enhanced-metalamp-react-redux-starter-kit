@@ -9,27 +9,25 @@ import { IAppReduxState } from 'shared/types/app';
 import { TextInputField } from 'shared/view/form';
 import { namespace as UserNamespace } from 'services/user';
 
-import { actionCreators } from './../../../redux';
+import { actionCreators } from '../../../redux';
 import { validateEmail, validatePassword } from '../constants';
 
 import './LoginForm.scss';
 
-interface IStateProps {
+type IStateProps = {
   loginCommunication: ICommunication;
   user: UserNamespace.IUser | null;
-}
-
+};
 type OwnProps = {
   onRestoreLinkClick: () => void;
   onRegistrationLinkClick: () => void;
-  onSuccessfulLogin: (user: UserNamespace.IUser) => void;
+  onSuccessfulLogin: () => void;
 };
 type LoginFormFields = {
   email: string;
   password: string;
 };
 type IActionProps = typeof mapDispatchToProps;
-type IProps = IActionProps & IStateProps & OwnProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -42,17 +40,16 @@ const mapDispatchToProps = {
   login: actionCreators.login,
 };
 
+type IProps = IActionProps & IStateProps & OwnProps;
+
 const b = block('login-form');
 
-class LoginForm extends React.PureComponent<IProps> {
+class LoginForm extends React.Component<IProps> {
   public componentDidUpdate() {
-    const {
-      user,
-      onSuccessfulLogin,
-    } = this.props;
+    const { user, onSuccessfulLogin } = this.props;
 
     if (user !== null) {
-      onSuccessfulLogin(user);
+      onSuccessfulLogin();
     }
   }
 

@@ -6,9 +6,6 @@ const user: NS.IUser = {
   avatarURL: avatar,
   name: 'Гость',
   email: '',
-  nickname: '',
-  age: 842,
-  bio: '',
 };
 
 export { user };

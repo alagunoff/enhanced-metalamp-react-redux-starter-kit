@@ -21,7 +21,7 @@ type IProps = IFeatureProps & ITranslationProps;
 
 const b = block('repositories-search-layout');
 
-class RepositoriesSearchLayoutComponent extends React.PureComponent<IProps, IState> {
+class RepositoriesSearchLayoutComponent extends React.Component<IProps, IState> {
   public state: IState = {
     lastSubmittedFormState: null,
   };

@@ -26,8 +26,8 @@ type IStateProps = {
 type OwnProps = {
   onLoginLikClick: () => void;
   onSuccessfulRegistration: () => void;
-  onSuccessfulLoginGoogle: (user: UserNamespace.IUser) => void;
-  onSuccessfulLoginFacebook: (user: UserNamespace.IUser) => void;
+  onSuccessfulLoginGoogle: () => void;
+  onSuccessfulLoginFacebook: () => void;
 };
 type RegistrationFormFields = {
   email: string;
@@ -54,7 +54,7 @@ const mapDispatchToProps = {
 
 const b = block('registration-form');
 
-class RegistrationForm extends React.PureComponent<IProps, IState> {
+class RegistrationForm extends React.Component<IProps, IState> {
   public state: IState = {
     registrationType: null,
   };
@@ -81,11 +81,11 @@ class RegistrationForm extends React.PureComponent<IProps, IState> {
 
     if (user !== null) {
       if (this.state.registrationType === 'google') {
-        onSuccessfulLoginGoogle(user);
+        onSuccessfulLoginGoogle();
       }
 
       if (this.state.registrationType === 'facebook') {
-        onSuccessfulLoginFacebook(user);
+        onSuccessfulLoginFacebook();
       }
     }
   }

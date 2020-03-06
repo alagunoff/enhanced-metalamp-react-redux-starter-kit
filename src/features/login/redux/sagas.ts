@@ -34,8 +34,8 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
     const { email: defaultEmail } = defaultUser;
     const email = newEmail === null ? defaultEmail : newEmail;
 
-    yield put(actionCreators.loginSuccess());
     yield put(userActions.updateUser({ ...defaultUser, email }));
+    yield put(actionCreators.loginSuccess());
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
   }
@@ -53,8 +53,8 @@ function* executeLoginGoogle({ api }: IDependencies) {
     const email = newEmail === null ? defaultEmail : newEmail;
     const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
 
-    yield put(actionCreators.loginGoogleSuccess());
     yield put(userActions.updateUser({ ...defaultUser, name, email, avatarURL }));
+    yield put(actionCreators.loginGoogleSuccess());
   } catch (error) {
     yield put(actionCreators.loginGoogleFail(getErrorMsg(error)));
   }
@@ -72,8 +72,8 @@ function* executeLoginFacebook({ api }: IDependencies) {
     const email = newEmail === null ? defaultEmail : newEmail;
     const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
 
-    yield put(actionCreators.loginFacebookSuccess());
     yield put(userActions.updateUser({ ...defaultUser, name, email, avatarURL }));
+    yield put(actionCreators.loginFacebookSuccess());
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
   }

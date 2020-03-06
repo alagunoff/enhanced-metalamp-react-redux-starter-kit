@@ -1,6 +1,16 @@
-import * as NS from '../namespace';
+import { ICommunication } from 'shared/types/redux';
 
-const initial: NS.IReduxState = {
+import { IReduxState } from '../namespace';
+
+const initalCommunication: ICommunication = {
+  isRequesting: false,
+  error: '',
+};
+
+const initial: IReduxState = {
+  communication: {
+    loadUser: initalCommunication,
+  },
   data: {
     user: null,
   },

@@ -50,7 +50,7 @@ function mapState(state: IAppReduxState): IStateProps {
 
 const { userSearch: intl } = tKeys.features;
 
-export class UsersSearchFormComponent extends React.PureComponent<IProps> {
+export class UsersSearchFormComponent extends React.Component<IProps> {
   public render() {
     const { isUsersSearchRequesting, resetSearchResults, t } = this.props;
 

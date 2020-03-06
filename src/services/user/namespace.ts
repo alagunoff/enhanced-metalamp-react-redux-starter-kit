@@ -1,21 +1,26 @@
-import { IAction } from 'shared/types/redux';
+import { ICommunication, IPlainFailAction, IAction, IPlainAction } from 'shared/types/redux';
 
-interface IUser {
+export interface IUser {
   avatarURL: string;
   name: string;
   email: string;
-  nickname: string;
-  age: number;
-  bio: string;
+  nickname?: string;
+  age?: number;
+  bio?: string;
 }
 
-interface IReduxState {
+export interface IReduxState {
+  communication: {
+    loadUser: ICommunication;
+  };
   data: {
     user: IUser | null;
   };
 }
 
-type IUpdateUser = IAction<'USER:UPDATE_USER', IUser | null>;
-type IUserAction = IUpdateUser;
+export type IUpdateUser = IAction<'USER:UPDATE_USER', IUser | null>;
 
-export { IUserAction, IUpdateUser, IReduxState, IUser };
+export type ILoadUser = IPlainAction<'USER:LOAD_USER'>;
+export type ILoadUserSuccess = IPlainAction<'USER:LOAD_USER_SUCCESS'>;
+export type ILoadUserFail = IPlainFailAction<'USER:LOAD_USER_FAIL'>;
+export type ILoadUserAction = ILoadUser | ILoadUserSuccess | ILoadUserFail;

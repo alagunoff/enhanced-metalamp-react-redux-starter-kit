@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
 import { dataReducer } from './data';
+import { communicationReducer } from './communication';
 import * as NS from '../../namespace';
 
-export const reducer = combineReducers<NS.IReduxState>({
+const rootReducer = combineReducers<NS.IReduxState>({
+  communication: communicationReducer,
   data: dataReducer,
 });
 
-export { dataReducer };
+export { rootReducer };
