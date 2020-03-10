@@ -4,9 +4,9 @@ import { SagaIterator } from 'redux-saga';
 import { IDependencies } from 'shared/types/app';
 import { getErrorMsg } from 'shared/helpers';
 
-import * as actionCreators from './actionCreators';
 import * as NS from '../namespace'
 import { user as defaultUser } from '../constants';
+import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
   const loadUserType: NS.ILoadUser['type'] = 'USER:LOAD_USER';

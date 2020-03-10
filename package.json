@@ -2,7 +2,7 @@
   "name": "training-project",
   "version": "1.0.0",
   "description": "Training project",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "check-types": "tsc -p . --noEmit",
     "dev": "npm run watch:dev",

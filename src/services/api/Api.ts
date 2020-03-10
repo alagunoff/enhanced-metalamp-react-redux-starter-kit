@@ -44,22 +44,16 @@ class Api {
     const { email, password } = params;
 
     await firebase.auth().signInWithEmailAndPassword(email, password);
-
-    return this.loadUser();
   }
 
   @autobind
   public async loginGoogle() {
     await firebase.auth().signInWithPopup(googleProvider);
-
-    return this.loadUser();
   }
 
   @autobind
   public async loginFacebook() {
     await firebase.auth().signInWithPopup(facebookProvider);
-
-    return this.loadUser();
   }
 
   @autobind

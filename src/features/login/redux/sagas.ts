@@ -3,7 +3,6 @@ import { SagaIterator } from 'redux-saga';
 
 import { IDependencies } from 'shared/types/app';
 import { getErrorMsg } from 'shared/helpers';
-import { actionCreators as userActions, defaultUser } from 'services/user';
 
 import * as NS from '../namespace';
 import * as actionCreators from './actionCreators';
@@ -30,11 +29,7 @@ function getSaga(deps: IDependencies) {
 
 function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
   try {
-    const { email: newEmail }: firebase.User = yield call(api.login, payload);
-    const { email: defaultEmail } = defaultUser;
-    const email = newEmail === null ? defaultEmail : newEmail;
-
-    yield put(userActions.updateUser({ ...defaultUser, email }));
+    yield call(api.login, payload);
     yield put(actionCreators.loginSuccess());
   } catch (error) {
     yield put(actionCreators.loginFail(getErrorMsg(error)));
@@ -43,17 +38,7 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
 
 function* executeLoginGoogle({ api }: IDependencies) {
   try {
-    const {
-      displayName: newName,
-      email: newEmail,
-      photoURL: newAvatarURL,
-    }: firebase.User = yield call(api.loginGoogle);
-    const { name: defaultName, email: defaultEmail, avatarURL: defaultAvatarURL } = defaultUser;
-    const name = newName === null ? defaultName : newName;
-    const email = newEmail === null ? defaultEmail : newEmail;
-    const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
-
-    yield put(userActions.updateUser({ ...defaultUser, name, email, avatarURL }));
+    yield call(api.loginGoogle)
     yield put(actionCreators.loginGoogleSuccess());
   } catch (error) {
     yield put(actionCreators.loginGoogleFail(getErrorMsg(error)));
@@ -62,20 +47,10 @@ function* executeLoginGoogle({ api }: IDependencies) {
 
 function* executeLoginFacebook({ api }: IDependencies) {
   try {
-    const {
-      displayName: newName,
-      email: newEmail,
-      photoURL: newAvatarURL,
-    }: firebase.User = yield call(api.loginFacebook);
-    const { name: defaultName, email: defaultEmail, avatarURL: defaultAvatarURL } = defaultUser;
-    const name = newName === null ? defaultName : newName;
-    const email = newEmail === null ? defaultEmail : newEmail;
-    const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
-
-    yield put(userActions.updateUser({ ...defaultUser, name, email, avatarURL }));
+    yield call(api.loginFacebook);
     yield put(actionCreators.loginFacebookSuccess());
   } catch (error) {
-    yield put(actionCreators.loginFail(getErrorMsg(error)));
+    yield put(actionCreators.loginFacebookFail(getErrorMsg(error)));
   }
 }
 
@@ -83,7 +58,6 @@ function* executeLogout({ api }: IDependencies) {
   try {
     yield call(api.logout);
     yield put(actionCreators.logoutSuccess());
-    yield put(userActions.updateUser(null));
   } catch (error) {
     yield put(actionCreators.logoutFail(getErrorMsg(error)));
   }

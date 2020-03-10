@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+
 import { IAppReduxState } from 'shared/types/app';
 import { routes } from 'modules/routes';
 import { namespace as UserNamespace } from 'services/user';

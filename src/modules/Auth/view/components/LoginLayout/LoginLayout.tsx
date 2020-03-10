@@ -3,7 +3,6 @@ import block from 'bem-cn';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { autobind } from 'core-decorators';
 
-import { namespace as UserNamespace } from 'services/user';
 import { routes } from 'modules/routes';
 import * as features from 'features';
 import { withAsyncFeatures } from 'core';

@@ -7,7 +7,6 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { TextInputField } from 'shared/view/form';
-import { namespace as UserNamespace } from 'services/user';
 
 import { actionCreators } from '../../../redux';
 import { validateEmail, validatePassword } from '../constants';
@@ -16,7 +15,6 @@ import './LoginForm.scss';
 
 type IStateProps = {
   loginCommunication: ICommunication;
-  user: UserNamespace.IUser | null;
 };
 type OwnProps = {
   onRestoreLinkClick: () => void;
@@ -31,7 +29,6 @@ type IActionProps = typeof mapDispatchToProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
-    user: state.user.data.user,
     loginCommunication: state.login.communication.login,
   };
 }
@@ -45,10 +42,10 @@ type IProps = IActionProps & IStateProps & OwnProps;
 const b = block('login-form');
 
 class LoginForm extends React.Component<IProps> {
-  public componentDidUpdate() {
-    const { user, onSuccessfulLogin } = this.props;
+  public componentDidUpdate(prevProps: IProps) {
+    const { onSuccessfulLogin } = this.props;
 
-    if (user !== null) {
+    if (this.isSuccessfulLogin(prevProps)) {
       onSuccessfulLogin();
     }
   }
@@ -121,6 +118,18 @@ class LoginForm extends React.Component<IProps> {
         </div>
       </form>
     );
+  }
+
+  @autobind
+  private isSuccessfulLogin(prevProps: IProps) {
+    const {
+      loginCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      loginCommunication: { isRequesting: isPrevRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && isPrevRequesting;
   }
 }
 

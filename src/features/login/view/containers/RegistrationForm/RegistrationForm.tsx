@@ -7,18 +7,13 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { TextInputField, CheckboxInputField } from 'shared/view/form';
-import { namespace as UserNamespace } from 'services/user';
 
 import { actionCreators } from './../../../redux';
 import { validateEmail, validatePassword } from './../constants';
 
 import './RegistrationForm.scss';
 
-type IState = {
-  registrationType: 'google' | 'facebook' | null;
-};
 type IStateProps = {
-  user: UserNamespace.IUser | null;
   registrationCommunication: ICommunication;
   loginGoogleCommunication: ICommunication;
   loginFacebookCommunication: ICommunication;
@@ -39,7 +34,6 @@ type IProps = IActionProps & IStateProps & OwnProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
-    user: state.user.data.user,
     registrationCommunication: state.login.communication.registration,
     loginGoogleCommunication: state.login.communication.loginGoogle,
     loginFacebookCommunication: state.login.communication.loginFacebook,
@@ -54,14 +48,9 @@ const mapDispatchToProps = {
 
 const b = block('registration-form');
 
-class RegistrationForm extends React.Component<IProps, IState> {
-  public state: IState = {
-    registrationType: null,
-  };
-
+class RegistrationForm extends React.Component<IProps> {
   public componentDidUpdate(prevProps: IProps) {
     const {
-      user,
       onSuccessfulRegistration,
       onSuccessfulLoginGoogle,
       onSuccessfulLoginFacebook,
@@ -72,28 +61,20 @@ class RegistrationForm extends React.Component<IProps, IState> {
     }
 
     if (this.isSuccessfulLoginGoogle(prevProps)) {
-      this.setState({ registrationType: 'google' });
+      onSuccessfulLoginGoogle();
     }
 
     if (this.isSuccessfulLoginFacebook(prevProps)) {
-      this.setState({ registrationType: 'facebook' });
-    }
-
-    if (user !== null) {
-      if (this.state.registrationType === 'google') {
-        onSuccessfulLoginGoogle();
-      }
-
-      if (this.state.registrationType === 'facebook') {
-        onSuccessfulLoginFacebook();
-      }
+      onSuccessfulLoginFacebook();
     }
   }
 
   public render() {
     const {
       onLoginLikClick,
-      registrationCommunication: { error },
+      registrationCommunication: { error: registrationError },
+      loginGoogleCommunication: { error: loginGoogleError },
+      loginFacebookCommunication: { error: loginFacebookError },
     } = this.props;
 
     return (
@@ -122,7 +103,9 @@ class RegistrationForm extends React.Component<IProps, IState> {
         </ul>
         <div className={b('text')}>или</div>
         <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
-        {error !== '' ? error : null}
+        {registrationError !== '' ? registrationError : null}
+        {loginGoogleError !== '' ? loginGoogleError : null}
+        {loginFacebookError !== '' ? loginFacebookError : null}
       </div>
     );
   }
