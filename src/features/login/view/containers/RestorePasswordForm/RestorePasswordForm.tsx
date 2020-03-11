@@ -7,6 +7,7 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { TextInputField } from 'shared/view/form';
+import { Button } from 'shared/view/elements';
 
 import { actionCreators } from './../../../redux';
 import { validateEmail } from './../constants';
@@ -59,9 +60,9 @@ class RestorePasswordForm extends React.Component<IProps> {
 
     return (
       <div className={b()}>
-        <button type='button' className={b('login-link')} onClick={onLoginLinkClick}>
+        <Button type='button' theme='with-arrow' onClick={onLoginLinkClick}>
           Войти
-        </button>
+        </Button>
         <div className={b('title')}>Восстановить пароль</div>
         <div className={b('text')}>
           Напомните нам вашу почту, и мы поможем вам восстановить пароль
@@ -95,9 +96,9 @@ class RestorePasswordForm extends React.Component<IProps> {
             disabled={isRequesting}
           />
         </div>
-        <button type='submit' className={b('button')} disabled={isRequesting}>
+        <Button type='submit' disabled={isRequesting}>
           Отправить новый пароль
-        </button>
+        </Button>
       </form>
     );
   }

@@ -1,7 +1,7 @@
 export * from './Input';
 export * from './Icons';
 export { Typography } from './Typography/Typography';
-export { Button } from './Button/Button';
+export { MuiButton } from './MuiButton/MuiButton';
 export { IconButton } from './IconButton/IconButton';
 export { RadioGroupInput } from './RadioGroupInput/RadioGroupInput';
 export { FormControlLabel } from './FormControlLabel/FormControlLabel';
@@ -18,3 +18,4 @@ export { TotalSearchResults } from './TotalSearchResults/TotalSearchResults';
 export { KeysToValues } from './KeysToValues/KeysToValues';
 export { Card } from './Card/Card';
 export { Link } from './Link/Link';
+export { Button } from './Button/Button';

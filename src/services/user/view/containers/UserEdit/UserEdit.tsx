@@ -5,7 +5,7 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { autobind } from 'core-decorators';
 
 import { TextInputField, NumberInputField } from 'shared/view/form';
-import { Button } from 'shared/view/elements';
+import { MuiButton } from 'shared/view/elements';
 import { IAppReduxState } from 'shared/types/app';
 import { actionCreators as notificationActionCreators } from 'services/notification';
 import { withTranslation, ITranslationProps, tKeys } from 'services/i18n';
@@ -109,9 +109,9 @@ class UserEdit extends React.Component<IProps> {
             />
           </div>
           <div className={b('button')}>
-            <Button variant='outlined' type='submit'>
+            <MuiButton variant='outlined' type='submit'>
               {t(tKeys.shared.save)}
-            </Button>
+            </MuiButton>
           </div>
         </div>
       </form>

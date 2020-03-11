@@ -28,7 +28,7 @@ class RegistrationLayout extends React.Component<IProps> {
       <div className={b()}>
         <div className={b('registration-form')}>
           <RegistrationForm
-            onLoginLikClick={this.handleLoginLikClick}
+            onLoginLinkClick={this.handleLoginLinkClick}
             onSuccessfulRegistration={this.handleSuccessfulRegistration}
             onSuccessfulLoginGoogle={this.handleSuccessfulLoginGoogle}
             onSuccessfulLoginFacebook={this.handleSuccessfulLoginFacebook}
@@ -39,7 +39,7 @@ class RegistrationLayout extends React.Component<IProps> {
   }
 
   @autobind
-  private handleLoginLikClick() {
+  private handleLoginLinkClick() {
     this.redirectToLogin();
   }
 

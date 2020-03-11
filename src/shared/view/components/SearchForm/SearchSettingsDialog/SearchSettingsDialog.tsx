@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from 'shared/view/elements';
+import { MuiButton } from 'shared/view/elements';
 
 import { Dialog } from '../../Dialog/Dialog';
 
@@ -24,9 +24,9 @@ function SearchSettingsDialog(props: IProps) {
         {renderContent()}
       </Dialog.Content>
       <Dialog.Actions>
-        <Button variant="outlined" onClick={onClose}>
+        <MuiButton variant="outlined" onClick={onClose}>
           {dialogSubmitText}
-        </Button>
+        </MuiButton>
       </Dialog.Actions>
     </Dialog>
   );

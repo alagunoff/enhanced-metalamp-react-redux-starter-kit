@@ -1,0 +1,51 @@
+.button {
+  display: inline-block;
+  padding: 0.8125rem 0.625rem;
+  width: 100%;
+  border: 0;
+  border-radius: 6.25rem;
+  background: #e31e24;
+  color: white;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+  cursor: pointer;
+
+  &_theme_with-arrow {
+    position: absolute;
+    top: 1.4286rem;
+    right: 1rem;
+    padding: 0 1.2286rem 0 0;
+    width: auto;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: #5867dd;
+    text-decoration: none;
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 0.6429rem;
+      height: 0.0714rem;
+      background-color: #5867dd;
+      content: '';
+      font-size: 1rem;
+      line-height: 1.5714rem;
+      transform: translateY(-50%);
+    }
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 0.2857rem;
+      height: 0.2857rem;
+      border: 0.0714rem solid #5867dd;
+      border-top: none;
+      border-left: none;
+      content: '';
+      transform: translateY(-50%) rotate(-45deg);
+    }
+  }
+}

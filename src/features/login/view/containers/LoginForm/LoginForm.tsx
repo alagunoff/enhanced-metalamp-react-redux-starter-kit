@@ -7,6 +7,7 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { TextInputField } from 'shared/view/form';
+import { Button } from 'shared/view/elements';
 
 import { actionCreators } from '../../../redux';
 import { validateEmail, validatePassword } from '../constants';
@@ -34,7 +35,7 @@ const mapStateToProps = (state: IAppReduxState): IStateProps => {
   return {
     loginCommunication: state.login.communication.login,
   };
-}
+};
 
 const mapDispatchToProps = {
   login: actionCreators.login,
@@ -61,9 +62,9 @@ class LoginForm extends React.Component<IProps> {
 
     return (
       <div className={b()}>
-        <button type='button' className={b('registration-link')} onClick={onRegistrationLinkClick}>
+        <Button type='button' theme='with-arrow' onClick={onRegistrationLinkClick}>
           Зарегистрироваться
-        </button>
+        </Button>
         <div className={b('title')}>Войти</div>
         <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
         {error !== '' ? error : null}
@@ -115,9 +116,11 @@ class LoginForm extends React.Component<IProps> {
           >
             Восстановить пароль
           </button>
-          <button type='submit' className={b('button')} disabled={isRequesting}>
-            Войти
-          </button>
+          <div className={b('button')}>
+            <Button type='submit' disabled={isRequesting}>
+              Войти
+            </Button>
+          </div>
         </div>
       </form>
     );

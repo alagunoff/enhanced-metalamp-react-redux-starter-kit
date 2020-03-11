@@ -4,7 +4,7 @@ import block from 'bem-cn';
 import { autobind } from 'core-decorators';
 
 import { TextInputField } from 'shared/view/form';
-import { Button, KeysToValues } from 'shared/view/elements';
+import { MuiButton, KeysToValues } from 'shared/view/elements';
 import { TranslateFunction, ITranslateObject, ITranslateKey } from 'services/i18n';
 
 import { SearchSettingsDialog } from './SearchSettingsDialog/SearchSettingsDialog';
@@ -84,23 +84,23 @@ class SearchForm<
           t={t}
         />
         <div className={b('buttons')}>
-          <Button
+          <MuiButton
             type="submit"
             variant="outlined"
             disabled={isSearchRequesting}
           >
             {submitButtonText}
-          </Button>
+          </MuiButton>
           {renderSettings !== undefined
             && (
               <div className={b('settings-button')}>
-                <Button
+                <MuiButton
                   variant="outlined"
                   onClick={this.handleSettingsButtonClick}
                   disabled={isSearchRequesting}
                 >
                   {settingsButtonText}
-                </Button>
+                </MuiButton>
                 <SearchSettingsDialog
                   isOpen={isSettingsDialogOpen}
                   dialogTitleText={dialogTitleText}

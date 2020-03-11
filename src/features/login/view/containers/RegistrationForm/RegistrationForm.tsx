@@ -7,6 +7,7 @@ import { Form, FormRenderProps } from 'react-final-form';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { TextInputField, CheckboxInputField } from 'shared/view/form';
+import { Button } from 'shared/view/elements';
 
 import { actionCreators } from './../../../redux';
 import { validateEmail, validatePassword } from './../constants';
@@ -20,7 +21,7 @@ type IStateProps = {
 };
 
 type OwnProps = {
-  onLoginLikClick: () => void;
+  onLoginLinkClick: () => void;
   onSuccessfulRegistration: () => void;
   onSuccessfulLoginGoogle: () => void;
   onSuccessfulLoginFacebook: () => void;
@@ -75,7 +76,7 @@ class RegistrationForm extends React.Component<IProps> {
 
   public render() {
     const {
-      onLoginLikClick,
+      onLoginLinkClick,
       registrationCommunication: { error: registrationError },
       loginGoogleCommunication: { error: loginGoogleError },
       loginFacebookCommunication: { error: loginFacebookError },
@@ -83,9 +84,9 @@ class RegistrationForm extends React.Component<IProps> {
 
     return (
       <div className={b()}>
-        <button type='button' className={b('login-link')} onClick={onLoginLikClick}>
+        <Button type='button' theme='with-arrow' onClick={onLoginLinkClick}>
           Войти
-        </button>
+        </Button>
         <div className={b('title')}>Регистрация</div>
         <ul className={b('list')}>
           <li className={b('social-item')}>
@@ -168,14 +169,16 @@ class RegistrationForm extends React.Component<IProps> {
           <li className={b('password-tips-item')}>Одна заглавная буква</li>
           <li className={b('password-tips-item')}>Минимум 8 знаков</li>
         </ul>
-        <button type='submit' className={b('button')} disabled={isRequesting}>
-          Зарегистрироваться
-        </button>
+        <div className={b('button')}>
+          <Button type='submit' disabled={isRequesting}>
+            Зарегистрироваться
+          </Button>
+        </div>
         <div className={b('agreement')}>
           Нажимая на кнопку «Зарегистрироваться», вы подтверждаете свое согласие с условиями
           предоставления услуг (
           <a className={b('agreement-link')} href='/mock-address/change-me/' target='_blank'>
-            Пользовательское соглашение
+            Пользовательское&nbsp;соглашение
           </a>
           )
         </div>

@@ -1,5 +1,5 @@
 import { makeMountRenderer } from 'shared/helpers';
-import { Button } from 'shared/view/elements';
+import { MuiButton } from 'shared/view/elements';
 import { makeRequired } from 'shared/validators';
 
 import { SearchSettingsDialog } from '../SearchSettingsDialog/SearchSettingsDialog';
@@ -68,7 +68,7 @@ describe('(shared/view) SearchForm component', () => {
   it('should open SettingsDialog on settings button click & hide on onClose call', () => {
     const component = getComponent({ renderSettings: jest.fn() });
 
-    const settingsButton = component.find('.search-form__settings-button').find(Button);
+    const settingsButton = component.find('.search-form__settings-button').find(MuiButton);
     settingsButton.simulate('click');
     component.update();
     const settingsDialog = component.find(SearchSettingsDialog);
