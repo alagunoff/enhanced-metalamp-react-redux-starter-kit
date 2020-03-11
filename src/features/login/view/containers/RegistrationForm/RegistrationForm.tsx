@@ -196,10 +196,10 @@ class RegistrationForm extends React.Component<IProps> {
       registrationCommunication: { isRequesting, error },
     } = this.props;
     const {
-      registrationCommunication: { isRequesting: isPrevRequesting },
+      registrationCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 
   private isSuccessfulLoginGoogle(prevProps: IProps) {
@@ -207,10 +207,10 @@ class RegistrationForm extends React.Component<IProps> {
       loginGoogleCommunication: { isRequesting, error },
     } = this.props;
     const {
-      loginGoogleCommunication: { isRequesting: isPrevRequesting },
+      loginGoogleCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 
   private isSuccessfulLoginFacebook(prevProps: IProps) {
@@ -218,10 +218,10 @@ class RegistrationForm extends React.Component<IProps> {
       loginFacebookCommunication: { isRequesting, error },
     } = this.props;
     const {
-      loginFacebookCommunication: { isRequesting: isPrevRequesting },
+      loginFacebookCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 }
 

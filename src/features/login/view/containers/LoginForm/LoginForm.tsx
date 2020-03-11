@@ -128,10 +128,10 @@ class LoginForm extends React.Component<IProps> {
       loginCommunication: { isRequesting, error },
     } = this.props;
     const {
-      loginCommunication: { isRequesting: isPrevRequesting },
+      loginCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 }
 

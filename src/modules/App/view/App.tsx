@@ -65,10 +65,10 @@ class App extends React.Component<IProps, IState> {
       loadUserCommunication: { isRequesting, error },
     } = this.props;
     const {
-      loadUserCommunication: { isRequesting: isPrevRequesting },
+      loadUserCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 }
 

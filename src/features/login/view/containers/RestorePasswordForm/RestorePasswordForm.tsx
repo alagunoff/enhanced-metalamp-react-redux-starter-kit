@@ -107,10 +107,10 @@ class RestorePasswordForm extends React.Component<IProps> {
       restorePasswordCommunication: { isRequesting, error },
     } = this.props;
     const {
-      restorePasswordCommunication: { isRequesting: isPrevRequesting },
+      restorePasswordCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 }
 

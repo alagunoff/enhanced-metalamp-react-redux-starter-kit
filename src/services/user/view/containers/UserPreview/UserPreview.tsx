@@ -142,10 +142,10 @@ class UserPreview extends React.Component<IProps, IState> {
       logoutCommunication: { isRequesting, error },
     } = this.props;
     const {
-      logoutCommunication: { isRequesting: isPrevRequesting },
+      logoutCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
-    return error === '' && !isRequesting && isPrevRequesting;
+    return error === '' && !isRequesting && prevIsRequesting;
   }
 }
 
