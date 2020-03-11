@@ -29,9 +29,16 @@ class Api {
   };
 
   constructor() {
-    configureFirebase();
+    if (!firebase.apps.length) {
+      configureFirebase();
+    }
 
     this.actions = new HttpActions('https://api.github.com/', this.headers);
+  }
+
+  @autobind
+  public onInitUser(cb: () => void) {
+    firebase.auth().onAuthStateChanged(() => cb());
   }
 
   @autobind

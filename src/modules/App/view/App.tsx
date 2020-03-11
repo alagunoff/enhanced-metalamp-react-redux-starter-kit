@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { Preloader } from 'shared/view/elements';
+import { Api } from 'services/api/Api';
 import { actionCreators as userActions } from 'services/user';
 
 type IStateProps = {
@@ -28,16 +27,12 @@ const mapDispatchToProps = {
 type IProps = IStateProps & IActionProps & RouteComponentProps;
 
 class App extends React.Component<IProps> {
+  private api: Api = new Api();
+
   public componentDidMount() {
     const { loadUser } = this.props;
 
-    firebase.auth().onAuthStateChanged(() => loadUser());
-  }
-
-  public componentDidUpdate(prevProps: IProps) {
-    if (this.isSuccessfulLoadUser(prevProps)) {
-      this.setState({ isLoadingUser: false });
-    }
+    this.api.onInitUser(loadUser);
   }
 
   public render() {
@@ -50,17 +45,6 @@ class App extends React.Component<IProps> {
     ) : (
       <>{this.props.children}</>
     );
-  }
-
-  private isSuccessfulLoadUser(prevProps: IProps) {
-    const {
-      loadUserCommunication: { isRequesting, error },
-    } = this.props;
-    const {
-      loadUserCommunication: { isRequesting: prevIsRequesting },
-    } = prevProps;
-
-    return error === '' && !isRequesting && prevIsRequesting;
   }
 }
 
