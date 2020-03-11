@@ -3,7 +3,7 @@ import { ICommunication } from 'shared/types/redux';
 import { IReduxState } from '../namespace';
 
 const initalCommunication: ICommunication = {
-  isRequesting: false,
+  isRequesting: true,
   error: '',
 };
 

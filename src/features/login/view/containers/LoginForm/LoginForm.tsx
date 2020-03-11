@@ -10,7 +10,6 @@ import { TextInputField } from 'shared/view/form';
 import { Button } from 'shared/view/elements';
 
 import { actionCreators } from '../../../redux';
-import { validateEmail, validatePassword } from '../constants';
 
 import './LoginForm.scss';
 
@@ -93,7 +92,6 @@ class LoginForm extends React.Component<IProps> {
             <TextInputField
               name='email'
               label='Email'
-              validate={validateEmail}
               disabled={isRequesting}
             />
           </div>
@@ -102,7 +100,6 @@ class LoginForm extends React.Component<IProps> {
               name='password'
               type='password'
               label='Пароль'
-              validate={validatePassword}
               disabled={isRequesting}
             />
           </div>

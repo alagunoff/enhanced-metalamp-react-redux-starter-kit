@@ -7,12 +7,12 @@ import {
 
 const validateEmail = composeValidators(
   makeRequired('Поле обязательно'),
-  makeEmailValidator('Неверный email'),
+  makeEmailValidator('Некорректный email'),
 );
 
 const validatePassword = composeValidators(
   makeRequired('Поле обязательно'),
-  makePasswordValidator('Неверный пароль'),
+  makePasswordValidator('Пароль не удовлетворяет требованиям'),
 );
 
 export { validateEmail, validatePassword };
