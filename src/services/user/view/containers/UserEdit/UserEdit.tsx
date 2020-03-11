@@ -17,13 +17,11 @@ import { validateName, validateEmail } from './constants';
 
 import './UserEdit.scss';
 
-interface IStateProps {
+type IStateProps = {
   user: IUser | null;
 }
 
 type IActionProps = typeof mapDispatchToProps;
-
-type IProps = IStateProps & IActionProps & ITranslationProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -35,6 +33,8 @@ const mapDispatchToProps = {
   updateUser: actionCreators.updateUser,
   setNotification: notificationActionCreators.setNotification,
 };
+
+type IProps = IStateProps & IActionProps & ITranslationProps;
 
 const b = block('user-edit');
 const { user: intl } = tKeys.services;

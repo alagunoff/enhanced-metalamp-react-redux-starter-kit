@@ -13,25 +13,20 @@ import { UserAvatar } from '../../components';
 
 import './UserPreview.scss';
 
-interface IState {
+type IState = {
   isOpen: boolean;
 }
 
-interface IOwnProps {
+type IOwnProps = {
   onEditClick(): void;
   onLogoutLinkClick: () => void;
   onSuccessfulLogout: () => void;
 }
 
-interface IStateProps {
+type IStateProps = {
   user: UserNamespace.IUser | null;
   logoutCommunication: ICommunication;
 }
-
-type IProps = IStateProps & IOwnProps & ITranslationProps;
-
-const b = block('user-preview');
-const { user: intl } = tKeys.services;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -39,6 +34,11 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
     logoutCommunication: state.login.communication.logout,
   };
 }
+
+type IProps = IStateProps & IOwnProps & ITranslationProps;
+
+const b = block('user-preview');
+const { user: intl } = tKeys.services;
 
 class UserPreview extends React.Component<IProps, IState> {
   public state: IState = {
@@ -137,7 +137,6 @@ class UserPreview extends React.Component<IProps, IState> {
     }
   }
 
-  @autobind
   private isSuccessfulLogout(prevProps: IProps) {
     const {
       logoutCommunication: { isRequesting, error },

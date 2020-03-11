@@ -9,7 +9,7 @@ import { withAsyncFeatures } from 'core';
 
 import './RestorePasswordLayout.scss';
 
-interface IFeatureProps {
+type IFeatureProps = {
   loginFeatureEntry: features.login.Entry;
 }
 
@@ -46,7 +46,6 @@ class RestorePasswordLayout extends React.Component<IProps> {
     this.redirectToLogin();
   }
 
-  @autobind
   private redirectToLogin() {
     const { history } = this.props;
 

@@ -21,18 +21,16 @@ import './Layout.scss';
 type IOwnProps = {
   title: string;
 };
+
 type IFeatureProps = {
   loginFeatureEntry: features.login.Entry;
 };
+
 type IStateProps = {
   logoutCommunication: ICommunication;
-}
+};
+
 type IActionProps = typeof mapDispatchToProps;
-
-type IProps = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
-
-const b = block('layout');
-const { header, footer } = tKeys.shared;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -44,14 +42,14 @@ const mapDispatchToProps = {
   logout: loginActions.logout,
 };
 
+type IProps = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
+
+const b = block('layout');
+const { header, footer } = tKeys.shared;
+
 class LayoutComponent extends React.Component<IProps> {
   public render() {
-    const {
-      children,
-      title,
-      location,
-      t,
-    } = this.props;
+    const { children, title, location, t } = this.props;
 
     return (
       <div className={b()}>

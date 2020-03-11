@@ -9,13 +9,14 @@ import { namespace as UserNamespace } from 'services/user';
 type IStateProps = {
   user: UserNamespace.IUser | null;
 };
-type IProps = IStateProps & RouteComponentProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
     user: state.user.data.user,
   };
 }
+
+type IProps = IStateProps & RouteComponentProps;
 
 function withAuth(Component: React.ComponentType) {
   class WithAuth extends React.Component<IProps> {

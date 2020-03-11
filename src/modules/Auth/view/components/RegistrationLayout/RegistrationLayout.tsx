@@ -9,7 +9,7 @@ import { withAsyncFeatures } from 'core';
 
 import './RegistrationLayout.scss';
 
-interface IFeatureProps {
+type IFeatureProps = {
   loginFeatureEntry: features.login.Entry;
 }
 
@@ -58,14 +58,12 @@ class RegistrationLayout extends React.Component<IProps> {
     this.redirectToSearchRepositories();
   }
 
-  @autobind
   private redirectToLogin() {
     const { history } = this.props;
 
     history.push(routes.auth.login.getRedirectPath());
   }
 
-  @autobind
   private redirectToSearchRepositories() {
     const { history } = this.props;
 

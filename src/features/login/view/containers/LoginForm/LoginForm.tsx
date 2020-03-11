@@ -16,18 +16,21 @@ import './LoginForm.scss';
 type IStateProps = {
   loginCommunication: ICommunication;
 };
+
 type OwnProps = {
   onRestoreLinkClick: () => void;
   onRegistrationLinkClick: () => void;
   onSuccessfulLogin: () => void;
 };
+
 type LoginFormFields = {
   email: string;
   password: string;
 };
+
 type IActionProps = typeof mapDispatchToProps;
 
-function mapStateToProps(state: IAppReduxState): IStateProps {
+const mapStateToProps = (state: IAppReduxState): IStateProps => {
   return {
     loginCommunication: state.login.communication.login,
   };
@@ -120,7 +123,6 @@ class LoginForm extends React.Component<IProps> {
     );
   }
 
-  @autobind
   private isSuccessfulLogin(prevProps: IProps) {
     const {
       loginCommunication: { isRequesting, error },

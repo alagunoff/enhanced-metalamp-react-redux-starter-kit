@@ -16,15 +16,17 @@ import './RestorePasswordForm.scss';
 type IStateProps = {
   restorePasswordCommunication: ICommunication;
 };
+
 type OwnProps = {
   onLoginLinkClick: () => void;
   onSuccessfulRestorePassword: () => void;
 };
+
 type RestorePasswordFormFields = {
   email: string;
 };
+
 type IActionProps = typeof mapDispatchToProps;
-type IProps = IActionProps & IStateProps & OwnProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -35,6 +37,8 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
 const mapDispatchToProps = {
   restorePassword: actionCreators.restorePassword,
 };
+
+type IProps = IActionProps & IStateProps & OwnProps;
 
 const b = block('restore-password-form');
 
@@ -98,7 +102,6 @@ class RestorePasswordForm extends React.Component<IProps> {
     );
   }
 
-  @autobind
   private isSuccessfulRestorePassword(prevProps: IProps) {
     const {
       restorePasswordCommunication: { isRequesting, error },

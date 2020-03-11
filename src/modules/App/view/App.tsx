@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { autobind } from 'core-decorators';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -13,10 +12,12 @@ import { namespace as UserNamespace, actionCreators as userActions } from 'servi
 type IState = {
   isLoadingUser: boolean;
 };
+
 type IStateProps = {
   user: UserNamespace.IUser | null;
   loadUserCommunication: ICommunication;
 };
+
 type IActionProps = typeof mapDispatchToProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
@@ -59,7 +60,6 @@ class App extends React.Component<IProps, IState> {
     );
   }
 
-  @autobind
   private isSuccessfulLoadUser(prevProps: IProps) {
     const {
       loadUserCommunication: { isRequesting, error },

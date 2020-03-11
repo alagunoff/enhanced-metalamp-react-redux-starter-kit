@@ -18,19 +18,21 @@ type IStateProps = {
   loginGoogleCommunication: ICommunication;
   loginFacebookCommunication: ICommunication;
 };
+
 type OwnProps = {
   onLoginLikClick: () => void;
   onSuccessfulRegistration: () => void;
   onSuccessfulLoginGoogle: () => void;
   onSuccessfulLoginFacebook: () => void;
 };
+
 type RegistrationFormFields = {
   email: string;
   password: string;
   refusalToSubscription: boolean;
 };
+
 type IActionProps = typeof mapDispatchToProps;
-type IProps = IActionProps & IStateProps & OwnProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -45,6 +47,8 @@ const mapDispatchToProps = {
   loginGoogle: actionCreators.loginGoogle,
   loginFacebook: actionCreators.loginFacebook,
 };
+
+type IProps = IActionProps & IStateProps & OwnProps;
 
 const b = block('registration-form');
 
@@ -187,7 +191,6 @@ class RegistrationForm extends React.Component<IProps> {
     );
   }
 
-  @autobind
   private isSuccessfulRegistration(prevProps: IProps) {
     const {
       registrationCommunication: { isRequesting, error },
@@ -199,7 +202,6 @@ class RegistrationForm extends React.Component<IProps> {
     return error === '' && !isRequesting && isPrevRequesting;
   }
 
-  @autobind
   private isSuccessfulLoginGoogle(prevProps: IProps) {
     const {
       loginGoogleCommunication: { isRequesting, error },
@@ -211,7 +213,6 @@ class RegistrationForm extends React.Component<IProps> {
     return error === '' && !isRequesting && isPrevRequesting;
   }
 
-  @autobind
   private isSuccessfulLoginFacebook(prevProps: IProps) {
     const {
       loginFacebookCommunication: { isRequesting, error },

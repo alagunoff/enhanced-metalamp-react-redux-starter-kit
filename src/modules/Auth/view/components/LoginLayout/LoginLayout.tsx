@@ -9,7 +9,7 @@ import { withAsyncFeatures } from 'core';
 
 import './LoginLayout.scss';
 
-interface IFeatureProps {
+type IFeatureProps = {
   loginFeatureEntry: features.login.Entry;
 }
 
