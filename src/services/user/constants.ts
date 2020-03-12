@@ -1,9 +1,7 @@
 import * as NS from './namespace';
 
-import avatar from './img/profile_avatar.png';
-
 const user: NS.IUser = {
-  avatarURL: avatar,
+  avatarURL: 'https://via.placeholder.com/234',
   name: 'Гость',
   email: '',
 };

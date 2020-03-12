@@ -76,6 +76,7 @@ export const en = {
     user: {
       name: 'Name',
       email: 'Email',
+      avatarURL: 'Profile photo',
       nickname: 'Nickname',
       age: 'Age',
       bio: 'Bio',

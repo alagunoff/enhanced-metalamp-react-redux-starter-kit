@@ -79,6 +79,7 @@ export const ru = {
     user: {
       name: 'Имя',
       email: 'Email',
+      avatarURL: 'Фото профиля',
       nickname: 'Псевдоним',
       age: 'Возраст',
       bio: 'Биография',

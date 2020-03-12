@@ -19,7 +19,7 @@ import './UserEdit.scss';
 
 type IStateProps = {
   user: IUser | null;
-}
+};
 
 type IActionProps = typeof mapDispatchToProps;
 
@@ -69,17 +69,15 @@ class UserEdit extends React.Component<IProps> {
 
     return (
       <form onSubmit={handleSubmit} className={b()}>
-        <div className={b('avatar')}>
-          <UserAvatar avatarURL={avatarURL} size='big' />
+        <div className={b('user-avatar')}>
+          <UserAvatar
+            avatarURL={avatarURL}
+            size='big'
+          />
         </div>
         <div className={b('fields')}>
           <div className={b('field')}>
-            <TextInputField
-              name='name'
-              label={t(intl.name)}
-              validate={validateName}
-              t={t}
-            />
+            <TextInputField name='name' label={t(intl.name)} validate={validateName} t={t} />
           </div>
           <div className={b('field')}>
             <TextInputField
@@ -87,26 +85,20 @@ class UserEdit extends React.Component<IProps> {
               label={t(intl.email)}
               validate={validateEmail}
               t={t}
+              disabled={true}
             />
           </div>
           <div className={b('field')}>
-            <TextInputField
-              name='nickname'
-              label={t(intl.nickname)}
-              t={t}
-            />
+            <TextInputField name='avatarURL' label={t(intl.avatarURL)} t={t} />
+          </div>
+          <div className={b('field')}>
+            <TextInputField name='nickname' label={t(intl.nickname)} t={t} />
           </div>
           <div className={b('field')}>
             <NumberInputField name='age' label={t(intl.age)} t={t} />
           </div>
           <div className={b('field')}>
-            <TextInputField
-              name='bio'
-              label={t(intl.bio)}
-              multiline
-              rowsMax={10}
-              t={t}
-            />
+            <TextInputField name='bio' label={t(intl.bio)} multiline rowsMax={10} t={t} />
           </div>
           <div className={b('button')}>
             <MuiButton variant='outlined' type='submit'>
