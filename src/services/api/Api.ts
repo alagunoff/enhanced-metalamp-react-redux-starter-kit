@@ -37,12 +37,14 @@ class Api {
   }
 
   @autobind
-  public onInitUser(cb: () => void) {
-    firebase.auth().onAuthStateChanged(() => cb());
+  public initUser(params: { loadUser: () => void }) {
+    const { loadUser } = params;
+
+    firebase.auth().onAuthStateChanged(() => loadUser());
   }
 
   @autobind
-  public async loadUser() {
+  public loadUser() {
     return firebase.auth().currentUser;
   }
 

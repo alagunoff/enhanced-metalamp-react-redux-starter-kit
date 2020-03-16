@@ -2,7 +2,7 @@ import { makeCommunicationActionCreators } from 'redux-make-communication';
 
 import * as NS from '../../namespace';
 
-const {
+export const {
   execute: loadUser,
   completed: loadUserSuccess,
   failed: loadUserFail,
@@ -12,4 +12,12 @@ const {
   'USER:LOAD_USER_FAIL',
 );
 
-export { loadUser, loadUserSuccess, loadUserFail };
+export const {
+  execute: initUser,
+  completed: initUserSuccess,
+  failed: initUserFail,
+} = makeCommunicationActionCreators<NS.IInitUser, NS.IInitUserSuccess, NS.IInitUserFail>(
+  'USER:INIT_USER',
+  'USER:INIT_USER_SUCCESS',
+  'USER:INIT_USER_FAIL',
+);

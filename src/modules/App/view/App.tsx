@@ -5,7 +5,6 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { ICommunication } from 'shared/types/redux';
 import { IAppReduxState } from 'shared/types/app';
 import { Preloader } from 'shared/view/elements';
-import { Api } from 'services/api/Api';
 import { actionCreators as userActions } from 'services/user';
 
 type IStateProps = {
@@ -21,18 +20,17 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
 }
 
 const mapDispatchToProps = {
+  initUser: userActions.initUser,
   loadUser: userActions.loadUser,
 };
 
 type IProps = IStateProps & IActionProps & RouteComponentProps;
 
 class App extends React.Component<IProps> {
-  private api: Api = new Api();
-
   public componentDidMount() {
-    const { loadUser } = this.props;
+    const { initUser, loadUser } = this.props;
 
-    this.api.onInitUser(loadUser);
+    initUser({ loadUser });
   }
 
   public render() {

@@ -4,16 +4,27 @@ import { SagaIterator } from 'redux-saga';
 import { IDependencies } from 'shared/types/app';
 import { getErrorMsg } from 'shared/helpers';
 
-import * as NS from '../namespace'
+import * as NS from '../namespace';
 import { user as defaultUser } from '../constants';
 import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
+  const initUserType: NS.IInitUser['type'] = 'USER:INIT_USER';
   const loadUserType: NS.ILoadUser['type'] = 'USER:LOAD_USER';
 
   return function* saga(): SagaIterator {
+    yield all([takeLatest(initUserType, executeInitUser, deps)]);
     yield all([takeLatest(loadUserType, executeLoadUser, deps)]);
   };
+}
+
+function* executeInitUser({ api }: IDependencies, { payload }: NS.IInitUser) {
+  try {
+    yield call(api.initUser, payload);
+    yield put(actionCreators.initUserSuccess());
+  } catch (error) {
+    yield put(actionCreators.initUserFail(getErrorMsg(error)));
+  }
 }
 
 function* executeLoadUser({ api }: IDependencies) {
@@ -31,7 +42,7 @@ function* executeLoadUser({ api }: IDependencies) {
     } else {
       yield put(actionCreators.updateUser(null));
     }
-    
+
     yield put(actionCreators.loadUserSuccess());
   } catch (error) {
     yield put(actionCreators.loadUserFail(getErrorMsg(error)));
