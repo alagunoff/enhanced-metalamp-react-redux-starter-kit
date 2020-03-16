@@ -15,12 +15,16 @@ import './LoginForm.scss';
 
 type IStateProps = {
   loginCommunication: ICommunication;
+  loginGoogleCommunication: ICommunication;
+  loginFacebookCommunication: ICommunication;
 };
 
 type OwnProps = {
   onRestoreLinkClick: () => void;
   onRegistrationLinkClick: () => void;
   onSuccessfulLogin: () => void;
+  onSuccessfulLoginGoogle: () => void;
+  onSuccessfulLoginFacebook: () => void;
 };
 
 type LoginFormFields = {
@@ -33,11 +37,15 @@ type IActionProps = typeof mapDispatchToProps;
 const mapStateToProps = (state: IAppReduxState): IStateProps => {
   return {
     loginCommunication: state.login.communication.login,
+    loginGoogleCommunication: state.login.communication.loginGoogle,
+    loginFacebookCommunication: state.login.communication.loginFacebook,
   };
 };
 
 const mapDispatchToProps = {
   login: actionCreators.login,
+  loginGoogle: actionCreators.loginGoogle,
+  loginFacebook: actionCreators.loginFacebook,
 };
 
 type IProps = IActionProps & IStateProps & OwnProps;
@@ -46,17 +54,27 @@ const b = block('login-form');
 
 class LoginForm extends React.Component<IProps> {
   public componentDidUpdate(prevProps: IProps) {
-    const { onSuccessfulLogin } = this.props;
+    const { onSuccessfulLogin, onSuccessfulLoginGoogle, onSuccessfulLoginFacebook } = this.props;
 
     if (this.isSuccessfulLogin(prevProps)) {
       onSuccessfulLogin();
+    }
+
+    if (this.isSuccessfulLoginGoogle(prevProps)) {
+      onSuccessfulLoginGoogle();
+    }
+
+    if (this.isSuccessfulLoginFacebook(prevProps)) {
+      onSuccessfulLoginFacebook();
     }
   }
 
   public render() {
     const {
       onRegistrationLinkClick,
-      loginCommunication: { error },
+      loginCommunication: { error: loginError },
+      loginGoogleCommunication: { error: loginGoogleError },
+      loginFacebookCommunication: { error: loginFacebookError },
     } = this.props;
 
     return (
@@ -65,8 +83,29 @@ class LoginForm extends React.Component<IProps> {
           Зарегистрироваться
         </Button>
         <div className={b('title')}>Войти</div>
+        <ul className={b('list')}>
+          <li className={b('social-item')}>
+            <button
+              className={b('social-link registration-form__social-link_theme_google')}
+              type='button'
+              aria-label='sign in via google'
+              onClick={this.handleGoogleLinkClick}
+            ></button>
+          </li>
+          <li className={b('social-item')}>
+            <button
+              className={b('social-link registration-form__social-link_theme_facebook')}
+              type='button'
+              aria-label='sign in via facebook'
+              onClick={this.handleFacebookLinkClick}
+            ></button>
+          </li>
+        </ul>
+        <div className={b('text')}>или</div>
         <Form onSubmit={this.handleFormSubmit} render={this.renderForm} />
-        {error !== '' ? error : null}
+        {loginError !== '' ? loginError : null}
+        {loginGoogleError !== '' ? loginGoogleError : null}
+        {loginFacebookError !== '' ? loginFacebookError : null}
       </div>
     );
   }
@@ -76,6 +115,20 @@ class LoginForm extends React.Component<IProps> {
     const { login } = this.props;
 
     login(formValues);
+  }
+
+  @autobind
+  private handleGoogleLinkClick() {
+    const { loginGoogle } = this.props;
+
+    loginGoogle();
+  }
+
+  @autobind
+  private handleFacebookLinkClick() {
+    const { loginFacebook } = this.props;
+
+    loginFacebook();
   }
 
   @autobind
@@ -89,11 +142,7 @@ class LoginForm extends React.Component<IProps> {
       <form onSubmit={handleSubmit} className={b('content')}>
         <div className={b('fields')}>
           <div className={b('field')}>
-            <TextInputField
-              name='email'
-              label='Email'
-              disabled={isRequesting}
-            />
+            <TextInputField name='email' label='Email' disabled={isRequesting} />
           </div>
           <div className={b('field')}>
             <TextInputField
@@ -129,6 +178,28 @@ class LoginForm extends React.Component<IProps> {
     } = this.props;
     const {
       loginCommunication: { isRequesting: prevIsRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && prevIsRequesting;
+  }
+
+  private isSuccessfulLoginGoogle(prevProps: IProps) {
+    const {
+      loginGoogleCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      loginGoogleCommunication: { isRequesting: prevIsRequesting },
+    } = prevProps;
+
+    return error === '' && !isRequesting && prevIsRequesting;
+  }
+
+  private isSuccessfulLoginFacebook(prevProps: IProps) {
+    const {
+      loginFacebookCommunication: { isRequesting, error },
+    } = this.props;
+    const {
+      loginFacebookCommunication: { isRequesting: prevIsRequesting },
     } = prevProps;
 
     return error === '' && !isRequesting && prevIsRequesting;

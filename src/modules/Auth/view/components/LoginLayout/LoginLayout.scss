@@ -7,5 +7,9 @@
 
   &__login-form {
     width: 35rem;
+
+    @media (max-width: 560px) {
+      width: 100%;
+    }
   }
 }

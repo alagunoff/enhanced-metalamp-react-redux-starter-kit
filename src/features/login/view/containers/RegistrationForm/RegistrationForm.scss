@@ -4,6 +4,10 @@
   border-radius: 0.5rem;
   background-color: white;
 
+  @media (max-width: 560px) {
+    padding: 4rem 2rem 2rem;
+  }
+
   &__title {
     margin-bottom: 1.3rem;
     color: #3c485e;

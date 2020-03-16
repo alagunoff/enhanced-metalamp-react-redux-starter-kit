@@ -4,12 +4,58 @@
   border-radius: 0.5rem;
   background-color: white;
 
+  @media (max-width: 560px) {
+    padding: 4rem 2rem 2rem;
+  }
+
   &__title {
     margin-bottom: 2rem;
     color: #3c485e;
     text-align: center;
     font-size: 1.6714rem;
     line-height: 2rem;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 1.6875rem;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  &__social-item {
+    font-size: 0;
+  }
+
+  &__social-item + &__social-item {
+    margin-left: 1rem;
+  }
+
+  &__social-link {
+    margin: 0;
+    padding: 0;
+    width: 3.125rem;
+    height: 3.125rem;
+    border: 0;
+    background: no-repeat center/cover;
+    cursor: pointer;
+
+    &_theme_google {
+      background-image: url('../RegistrationForm/img/google.svg');
+    }
+
+    &_theme_facebook {
+      background-image: url('../RegistrationForm/img/facebook.svg');
+    }
+  }
+
+  &__text {
+    margin-bottom: 0.625rem;
+    color: #3c485e;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.5rem;
   }
 
   &__fields {

@@ -11,7 +11,7 @@ import './LoginLayout.scss';
 
 type IFeatureProps = {
   loginFeatureEntry: features.login.Entry;
-}
+};
 
 type IProps = IFeatureProps & RouteComponentProps;
 
@@ -31,6 +31,8 @@ class LoginLayout extends React.Component<IProps> {
             onRestoreLinkClick={this.handleRestoreLinkClick}
             onRegistrationLinkClick={this.handleRegistrationLinkClick}
             onSuccessfulLogin={this.handleSuccessfulLogin}
+            onSuccessfulLoginGoogle={this.handleSuccessfulLoginGoogle}
+            onSuccessfulLoginFacebook={this.handleSuccessfulLoginFacebook}
           />
         </div>
       </div>
@@ -39,9 +41,17 @@ class LoginLayout extends React.Component<IProps> {
 
   @autobind
   private handleSuccessfulLogin() {
-    const { history } = this.props;
-    
-    history.push(routes.search.repositories.getRedirectPath());
+    this.redirectToSearchRepositories();
+  }
+
+  @autobind
+  private handleSuccessfulLoginGoogle() {
+    this.redirectToSearchRepositories();
+  }
+
+  @autobind
+  private handleSuccessfulLoginFacebook() {
+    this.redirectToSearchRepositories();
   }
 
   @autobind
@@ -56,6 +66,12 @@ class LoginLayout extends React.Component<IProps> {
     const { history } = this.props;
 
     history.push(routes.auth.registration.getRedirectPath());
+  }
+
+  private redirectToSearchRepositories() {
+    const { history } = this.props;
+
+    history.push(routes.search.repositories.getRedirectPath());
   }
 }
 
