@@ -8,8 +8,8 @@ import {
   IUsersSearchResults,
   IRepositoriesSearchResults,
 } from 'shared/types/githubSearch';
-import { configureFirebase, googleProvider, facebookProvider } from 'core/firebase';
 
+import { configureFirebase, googleProvider, facebookProvider } from './firebase';
 import { SearchUserResponse, IDetailedServerUser, SearchRepositoriesResponse } from './types';
 import {
   constructUsersSearchQuery,

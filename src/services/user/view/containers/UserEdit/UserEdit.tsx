@@ -85,7 +85,6 @@ class UserEdit extends React.Component<IProps> {
               label={t(intl.email)}
               validate={validateEmail}
               t={t}
-              disabled={true}
             />
           </div>
           <div className={b('field')}>
