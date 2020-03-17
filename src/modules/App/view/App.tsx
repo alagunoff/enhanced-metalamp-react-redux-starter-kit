@@ -8,34 +8,33 @@ import { Preloader } from 'shared/view/elements';
 import { actionCreators as userActions } from 'services/user';
 
 type IStateProps = {
-  loadUserCommunication: ICommunication;
+  initUserCommunication: ICommunication;
 };
 
 type IActionProps = typeof mapDispatchToProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
-    loadUserCommunication: state.user.communication.loadUser,
+    initUserCommunication: state.user.communication.initUser,
   };
 }
 
 const mapDispatchToProps = {
   initUser: userActions.initUser,
-  loadUser: userActions.loadUser,
 };
 
 type IProps = IStateProps & IActionProps & RouteComponentProps;
 
 class App extends React.Component<IProps> {
   public componentDidMount() {
-    const { initUser, loadUser } = this.props;
+    const { initUser } = this.props;
 
-    initUser({ loadUser });
+    initUser();
   }
 
   public render() {
     const {
-      loadUserCommunication: { isRequesting },
+      initUserCommunication: { isRequesting },
     } = this.props;
 
     return isRequesting ? (

@@ -1,5 +1,7 @@
-import { put, call, all, takeLatest } from 'redux-saga/effects';
+import { put, call, all, takeLatest, cancelled } from 'redux-saga/effects';
 import { SagaIterator } from 'redux-saga';
+//import firebase from 'firebase/app';
+//import 'firebase/auth';
 
 import { IDependencies } from 'shared/types/app';
 import { getErrorMsg } from 'shared/helpers';
@@ -18,16 +20,40 @@ function getSaga(deps: IDependencies) {
   };
 }
 
-function* executeInitUser({ api }: IDependencies, { payload }: NS.IInitUser) {
-  try {
-    yield call(api.initUser, payload);
-    yield put(actionCreators.initUserSuccess());
-  } catch (error) {
-    yield put(actionCreators.initUserFail(getErrorMsg(error)));
+function* handleUserInit(firebaseUser: { user: firebase.User | null }) {
+  const { user } = firebaseUser;
+
+  if (user !== null) {
+    const { displayName: newName, email: newEmail, photoURL: newAvatarURL } = user;
+    const { name: defaultName, email: defaultEmail, avatarURL: defaultAvatarURL } = defaultUser;
+    const name = newName === null ? defaultName : newName;
+    const email = newEmail === null ? defaultEmail : newEmail;
+    const avatarURL = newAvatarURL === null ? defaultAvatarURL : newAvatarURL;
+
+    yield put(actionCreators.updateUser({ ...defaultUser, name, email, avatarURL }));
+  } else {
+    yield put(actionCreators.updateUser(null));
   }
 }
 
-function* executeLoadUser({ api }: IDependencies) {
+function* executeInitUser({ api }: IDependencies) {
+  const channel = yield call(api.initUser);
+
+  try {
+    yield takeLatest(channel, handleUserInit);
+    yield put(actionCreators.initUserSuccess());
+  } catch (error) {
+    yield put(actionCreators.initUserFail(getErrorMsg(error)));
+  } finally {
+    if (yield cancelled()) {
+      channel.close();
+    }
+  }
+}
+
+function* executeLoadUser(firebaseUser: { user: firebase.User | null }) {
+  const { user } = firebaseUser;
+
   try {
     const user: firebase.User | null = yield call(api.loadUser);
 

@@ -1,4 +1,5 @@
 import { autobind } from 'core-decorators';
+import { eventChannel } from 'redux-saga';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -22,6 +23,7 @@ import { HttpActions } from './HttpActions';
 
 class Api {
   private actions: HttpActions;
+  private authChannel;
   private headers = {
     get: {
       Accept: 'application/vnd.github.v3+json',
@@ -37,10 +39,14 @@ class Api {
   }
 
   @autobind
-  public initUser(params: { loadUser: () => void }) {
-    const { loadUser } = params;
+  public initUser() {
+    if (!this.authChannel) {
+      this.authChannel = eventChannel(emit =>
+        firebase.auth().onAuthStateChanged(user => emit({ user })),
+      );
+    }
 
-    firebase.auth().onAuthStateChanged(() => loadUser());
+    return this.authChannel;
   }
 
   @autobind
