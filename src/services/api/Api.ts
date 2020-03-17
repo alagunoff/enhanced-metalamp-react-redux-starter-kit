@@ -23,7 +23,6 @@ import { HttpActions } from './HttpActions';
 
 class Api {
   private actions: HttpActions;
-  private authChannel;
   private headers = {
     get: {
       Accept: 'application/vnd.github.v3+json',
@@ -39,19 +38,8 @@ class Api {
   }
 
   @autobind
-  public initUser() {
-    if (!this.authChannel) {
-      this.authChannel = eventChannel(emit =>
-        firebase.auth().onAuthStateChanged(user => emit({ user })),
-      );
-    }
-
-    return this.authChannel;
-  }
-
-  @autobind
   public loadUser() {
-    return firebase.auth().currentUser;
+    return eventChannel(emit => firebase.auth().onAuthStateChanged(user => emit({ user })));
   }
 
   @autobind

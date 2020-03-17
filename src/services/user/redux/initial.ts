@@ -2,20 +2,14 @@ import { ICommunication } from 'shared/types/redux';
 
 import { IReduxState } from '../namespace';
 
-const initialInitUserCommunication: ICommunication = {
-  isRequesting: true,
-  error: '',
-};
-
-const initialLoadUserCommunication: ICommunication = {
+const initialCommunication: ICommunication = {
   isRequesting: true,
   error: '',
 };
 
 const initial: IReduxState = {
   communication: {
-    initUser: initialInitUserCommunication,
-    loadUser: initialLoadUserCommunication,
+    loadUser: initialCommunication,
   },
   data: {
     user: null,

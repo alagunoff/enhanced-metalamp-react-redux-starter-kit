@@ -11,12 +11,6 @@ const communicationReducer = combineReducers<NS.IReduxState['communication']>({
     'USER:LOAD_USER_FAIL',
     initial.communication.loadUser,
   ),
-  initUser: makeCommunicationReducer<NS.IInitUser, NS.IInitUserSuccess, NS.IInitUserFail>(
-    'USER:INIT_USER',
-    'USER:INIT_USER_SUCCESS',
-    'USER:INIT_USER_FAIL',
-    initial.communication.initUser,
-  ),
 });
 
 export { communicationReducer };

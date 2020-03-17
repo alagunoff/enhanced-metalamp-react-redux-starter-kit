@@ -11,7 +11,6 @@ export interface IUser {
 
 export interface IReduxState {
   communication: {
-    initUser: ICommunication;
     loadUser: ICommunication;
   };
   data: {
@@ -20,11 +19,6 @@ export interface IReduxState {
 }
 
 export type IUpdateUser = IAction<'USER:UPDATE_USER', IUser | null>;
-
-export type IInitUser = IPlainAction<'USER:INIT_USER'>;
-export type IInitUserSuccess = IPlainAction<'USER:INIT_USER_SUCCESS'>;
-export type IInitUserFail = IPlainFailAction<'USER:INIT_USER_FAIL'>;
-export type IInitUserAction = IInitUser | IInitUserSuccess | IInitUserFail;
 
 export type ILoadUser = IPlainAction<'USER:LOAD_USER'>;
 export type ILoadUserSuccess = IPlainAction<'USER:LOAD_USER_SUCCESS'>;
