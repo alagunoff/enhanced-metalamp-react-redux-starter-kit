@@ -6,7 +6,7 @@ export const {
   execute: login,
   completed: loginSuccess,
   failed: loginFail,
-} = makeCommunicationActionCreators<NS.ILogin, NS.ILoginSuccess, NS.ILoginFail>(
+} = makeCommunicationActionCreators<NS.Login, NS.LoginSuccess, NS.LoginFail>(
   'LOGIN:LOGIN',
   'LOGIN:LOGIN_SUCCESS',
   'LOGIN:LOGIN_FAIL',
@@ -16,7 +16,7 @@ export const {
   execute: loginGoogle,
   completed: loginGoogleSuccess,
   failed: loginGoogleFail,
-} = makeCommunicationActionCreators<NS.ILoginGoogle, NS.ILoginGoogleSuccess, NS.ILoginGoogleFail>(
+} = makeCommunicationActionCreators<NS.LoginGoogle, NS.LoginGoogleSuccess, NS.LoginGoogleFail>(
   'LOGIN:LOGIN_GOOGLE',
   'LOGIN:LOGIN_GOOGLE_SUCCESS',
   'LOGIN:LOGIN_GOOGLE_FAIL',
@@ -26,17 +26,17 @@ export const {
   execute: loginFacebook,
   completed: loginFacebookSuccess,
   failed: loginFacebookFail,
-} = makeCommunicationActionCreators<NS.ILoginFacebook, NS.ILoginFacebookSuccess, NS.ILoginFacebookFail>(
-  'LOGIN:LOGIN_FACEBOOK',
-  'LOGIN:LOGIN_FACEBOOK_SUCCESS',
-  'LOGIN:LOGIN_FACEBOOK_FAIL',
-);
+} = makeCommunicationActionCreators<
+NS.LoginFacebook,
+NS.LoginFacebookSuccess,
+NS.LoginFacebookFail
+>('LOGIN:LOGIN_FACEBOOK', 'LOGIN:LOGIN_FACEBOOK_SUCCESS', 'LOGIN:LOGIN_FACEBOOK_FAIL');
 
 export const {
   execute: logout,
   completed: logoutSuccess,
   failed: logoutFail,
-} = makeCommunicationActionCreators<NS.ILogout, NS.ILogoutSuccess, NS.ILogoutFail>(
+} = makeCommunicationActionCreators<NS.Logout, NS.LogoutSuccess, NS.LogoutFail>(
   'LOGIN:LOGOUT',
   'LOGIN:LOGOUT_SUCCESS',
   'LOGIN:LOGOUT_FAIL',
@@ -47,17 +47,17 @@ export const {
   completed: restorePasswordSuccess,
   failed: restorePasswordFail,
 } = makeCommunicationActionCreators<
-  NS.IRestorePassword,
-  NS.IRestorePasswordSuccess,
-  NS.IRestorePasswordFail
+NS.RestorePassword,
+NS.RestorePasswordSuccess,
+NS.RestorePasswordFail
 >('LOGIN:RESTORE_PASSWORD', 'LOGIN:RESTORE_PASSWORD_SUCCESS', 'LOGIN:RESTORE_PASSWORD_FAIL');
 
 export const {
   execute: registration,
   completed: registrationSuccess,
   failed: registrationFail,
-} = makeCommunicationActionCreators<
-  NS.IRegistration,
-  NS.IRegistrationSuccess,
-  NS.IRegistrationFail
->('LOGIN:REGISTRATION', 'LOGIN:REGISTRATION_SUCCESS', 'LOGIN:REGISTRATION_FAIL');
+} = makeCommunicationActionCreators<NS.Registration, NS.RegistrationSuccess, NS.RegistrationFail>(
+  'LOGIN:REGISTRATION',
+  'LOGIN:REGISTRATION_SUCCESS',
+  'LOGIN:REGISTRATION_FAIL',
+);

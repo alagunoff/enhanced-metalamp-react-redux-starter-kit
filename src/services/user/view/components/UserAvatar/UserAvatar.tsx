@@ -3,16 +3,16 @@ import block from 'bem-cn';
 
 import './UserAvatar.scss';
 
-type IStateProps = {
+interface IStateProps {
   avatarURL: string;
   size: 'small' | 'big';
-};
+}
 
-type IProps = IStateProps;
+type Props = IStateProps;
 
 const b = block('user-avatar');
 
-function UserAvatar(props: IProps) {
+function UserAvatar(props: Props) {
   const { avatarURL, size } = props;
 
   return (

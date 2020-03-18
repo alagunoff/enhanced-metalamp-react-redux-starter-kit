@@ -9,25 +9,25 @@ import { IAppReduxState } from 'shared/types/app';
 import { TextInputField } from 'shared/view/form';
 import { Button } from 'shared/view/elements';
 
-import { actionCreators } from './../../../redux';
-import { validateEmail } from './../constants';
+import { actionCreators } from '../../../redux';
+import { validateEmail } from '../constants';
 
 import './RestorePasswordForm.scss';
 
-type IStateProps = {
+interface IStateProps {
   restorePasswordCommunication: ICommunication;
-};
+}
 
-type OwnProps = {
+interface IOwnProps {
   onLoginLinkClick: () => void;
   onSuccessfulRestorePassword: () => void;
-};
+}
 
-type RestorePasswordFormFields = {
+interface IRestorePasswordFormFields {
   email: string;
-};
+}
 
-type IActionProps = typeof mapDispatchToProps;
+type ActionProps = typeof mapDispatchToProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -39,12 +39,12 @@ const mapDispatchToProps = {
   restorePassword: actionCreators.restorePassword,
 };
 
-type IProps = IActionProps & IStateProps & OwnProps;
+type Props = ActionProps & IStateProps & IOwnProps;
 
 const b = block('restore-password-form');
 
-class RestorePasswordForm extends React.Component<IProps> {
-  public componentDidUpdate(prevProps: IProps) {
+class RestorePasswordForm extends React.Component<Props> {
+  public componentDidUpdate(prevProps: Props) {
     const { onSuccessfulRestorePassword } = this.props;
 
     if (this.isSuccessfulRestorePassword(prevProps)) {
@@ -60,7 +60,7 @@ class RestorePasswordForm extends React.Component<IProps> {
 
     return (
       <div className={b()}>
-        <Button type='button' theme='with-arrow' onClick={onLoginLinkClick}>
+        <Button type="button" theme="with-arrow" onClick={onLoginLinkClick}>
           Войти
         </Button>
         <div className={b('title')}>Восстановить пароль</div>
@@ -74,7 +74,7 @@ class RestorePasswordForm extends React.Component<IProps> {
   }
 
   @autobind
-  private handleFormSubmit(formValues: RestorePasswordFormFields) {
+  private handleFormSubmit(formValues: IRestorePasswordFormFields) {
     const { restorePassword } = this.props;
 
     restorePassword(formValues);
@@ -90,20 +90,20 @@ class RestorePasswordForm extends React.Component<IProps> {
       <form onSubmit={handleSubmit} className={b('content')}>
         <div className={b('field')}>
           <TextInputField
-            name='email'
-            label='Email'
+            name="email"
+            label="Email"
             validate={validateEmail}
             disabled={isRequesting}
           />
         </div>
-        <Button type='submit' disabled={isRequesting}>
+        <Button type="submit" disabled={isRequesting}>
           Отправить новый пароль
         </Button>
       </form>
     );
   }
 
-  private isSuccessfulRestorePassword(prevProps: IProps) {
+  private isSuccessfulRestorePassword(prevProps: Props) {
     const {
       restorePasswordCommunication: { isRequesting, error },
     } = this.props;

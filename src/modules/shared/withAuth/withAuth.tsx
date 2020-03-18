@@ -6,9 +6,9 @@ import { IAppReduxState } from 'shared/types/app';
 import { routes } from 'modules/routes';
 import { namespace as UserNamespace } from 'services/user';
 
-type IStateProps = {
+interface IStateProps {
   user: UserNamespace.IUser | null;
-};
+}
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -16,10 +16,10 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
   };
 }
 
-type IProps = IStateProps & RouteComponentProps;
+type Props = IStateProps & RouteComponentProps;
 
 function withAuth(Component: React.ComponentType) {
-  class WithAuth extends React.Component<IProps> {
+  class WithAuth extends React.Component<Props> {
     public componentDidMount() {
       const { user, history } = this.props;
 

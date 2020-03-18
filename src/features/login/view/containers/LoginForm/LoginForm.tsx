@@ -13,34 +13,32 @@ import { actionCreators } from '../../../redux';
 
 import './LoginForm.scss';
 
-type IStateProps = {
+interface IStateProps {
   loginCommunication: ICommunication;
   loginGoogleCommunication: ICommunication;
   loginFacebookCommunication: ICommunication;
-};
+}
 
-type OwnProps = {
+interface OwnProps {
   onRestoreLinkClick: () => void;
   onRegistrationLinkClick: () => void;
   onSuccessfulLogin: () => void;
   onSuccessfulLoginGoogle: () => void;
   onSuccessfulLoginFacebook: () => void;
-};
+}
 
-type LoginFormFields = {
+interface LoginFormFields {
   email: string;
   password: string;
-};
+}
 
-type IActionProps = typeof mapDispatchToProps;
+type ActionProps = typeof mapDispatchToProps;
 
-const mapStateToProps = (state: IAppReduxState): IStateProps => {
-  return {
-    loginCommunication: state.login.communication.login,
-    loginGoogleCommunication: state.login.communication.loginGoogle,
-    loginFacebookCommunication: state.login.communication.loginFacebook,
-  };
-};
+const mapStateToProps = (state: IAppReduxState): IStateProps => ({
+  loginCommunication: state.login.communication.login,
+  loginGoogleCommunication: state.login.communication.loginGoogle,
+  loginFacebookCommunication: state.login.communication.loginFacebook,
+});
 
 const mapDispatchToProps = {
   login: actionCreators.login,
@@ -48,12 +46,12 @@ const mapDispatchToProps = {
   loginFacebook: actionCreators.loginFacebook,
 };
 
-type IProps = IActionProps & IStateProps & OwnProps;
+type Props = ActionProps & IStateProps & OwnProps;
 
 const b = block('login-form');
 
-class LoginForm extends React.Component<IProps> {
-  public componentDidUpdate(prevProps: IProps) {
+class LoginForm extends React.Component<Props> {
+  public componentDidUpdate(prevProps: Props) {
     const { onSuccessfulLogin, onSuccessfulLoginGoogle, onSuccessfulLoginFacebook } = this.props;
 
     if (this.isSuccessfulLogin(prevProps)) {
@@ -79,26 +77,26 @@ class LoginForm extends React.Component<IProps> {
 
     return (
       <div className={b()}>
-        <Button type='button' theme='with-arrow' onClick={onRegistrationLinkClick}>
+        <Button type="button" theme="with-arrow" onClick={onRegistrationLinkClick}>
           Зарегистрироваться
         </Button>
         <div className={b('title')}>Войти</div>
         <ul className={b('list')}>
           <li className={b('social-item')}>
             <button
-              className={b('social-link registration-form__social-link_theme_google')}
-              type='button'
-              aria-label='sign in via google'
+              className={b('social-link', { theme: 'google' })}
+              type="button"
+              aria-label="sign in via google"
               onClick={this.handleGoogleLinkClick}
-            ></button>
+            />
           </li>
           <li className={b('social-item')}>
             <button
-              className={b('social-link registration-form__social-link_theme_facebook')}
-              type='button'
-              aria-label='sign in via facebook'
+              className={b('social-link', { theme: 'facebook' })}
+              type="button"
+              aria-label="sign in via facebook"
               onClick={this.handleFacebookLinkClick}
-            ></button>
+            />
           </li>
         </ul>
         <div className={b('text')}>или</div>
@@ -142,20 +140,20 @@ class LoginForm extends React.Component<IProps> {
       <form onSubmit={handleSubmit} className={b('content')}>
         <div className={b('fields')}>
           <div className={b('field')}>
-            <TextInputField name='email' label='Email' disabled={isRequesting} />
+            <TextInputField name="email" label="Email" disabled={isRequesting} />
           </div>
           <div className={b('field')}>
             <TextInputField
-              name='password'
-              type='password'
-              label='Пароль'
+              name="password"
+              type="password"
+              label="Пароль"
               disabled={isRequesting}
             />
           </div>
         </div>
         <div className={b('button-container')}>
           <button
-            type='button'
+            type="button"
             className={b('password-restore-link')}
             onClick={onRestoreLinkClick}
             disabled={isRequesting}
@@ -163,7 +161,7 @@ class LoginForm extends React.Component<IProps> {
             Восстановить пароль
           </button>
           <div className={b('button')}>
-            <Button type='submit' disabled={isRequesting}>
+            <Button type="submit" disabled={isRequesting}>
               Войти
             </Button>
           </div>
@@ -172,7 +170,7 @@ class LoginForm extends React.Component<IProps> {
     );
   }
 
-  private isSuccessfulLogin(prevProps: IProps) {
+  private isSuccessfulLogin(prevProps: Props) {
     const {
       loginCommunication: { isRequesting, error },
     } = this.props;
@@ -183,7 +181,7 @@ class LoginForm extends React.Component<IProps> {
     return error === '' && !isRequesting && prevIsRequesting;
   }
 
-  private isSuccessfulLoginGoogle(prevProps: IProps) {
+  private isSuccessfulLoginGoogle(prevProps: Props) {
     const {
       loginGoogleCommunication: { isRequesting, error },
     } = this.props;
@@ -194,7 +192,7 @@ class LoginForm extends React.Component<IProps> {
     return error === '' && !isRequesting && prevIsRequesting;
   }
 
-  private isSuccessfulLoginFacebook(prevProps: IProps) {
+  private isSuccessfulLoginFacebook(prevProps: Props) {
     const {
       loginFacebookCommunication: { isRequesting, error },
     } = this.props;

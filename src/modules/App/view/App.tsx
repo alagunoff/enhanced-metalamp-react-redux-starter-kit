@@ -7,11 +7,11 @@ import { IAppReduxState } from 'shared/types/app';
 import { Preloader } from 'shared/view/elements';
 import { actionCreators as userActions } from 'services/user';
 
-type IStateProps = {
+interface IStateProps {
   loadUserCommunication: ICommunication;
-};
+}
 
-type IActionProps = typeof mapDispatchToProps;
+type ActionProps = typeof mapDispatchToProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -23,9 +23,9 @@ const mapDispatchToProps = {
   loadUser: userActions.loadUser,
 };
 
-type IProps = IStateProps & IActionProps & RouteComponentProps;
+type Props = ActionProps & IStateProps & RouteComponentProps;
 
-class App extends React.Component<IProps> {
+class App extends React.Component<Props> {
   public componentDidMount() {
     const { loadUser } = this.props;
 
@@ -34,13 +34,14 @@ class App extends React.Component<IProps> {
 
   public render() {
     const {
+      children,
       loadUserCommunication: { isRequesting },
     } = this.props;
 
     return isRequesting ? (
-      <Preloader size={100} backgroundColor='rgba(0, 0, 0, 0.05)' isShown={isRequesting} />
+      <Preloader size={100} backgroundColor="rgba(0, 0, 0, 0.05)" isShown={isRequesting} />
     ) : (
-      <>{this.props.children}</>
+      <>{children}</>
     );
   }
 }

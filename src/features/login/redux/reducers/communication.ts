@@ -5,42 +5,38 @@ import * as NS from '../../namespace';
 import { initialState } from '../initial';
 
 const communicationReducer = combineReducers<NS.IReduxState['communication']>({
-  login: makeCommunicationReducer<NS.ILogin, NS.ILoginSuccess, NS.ILoginFail>(
+  login: makeCommunicationReducer<NS.Login, NS.LoginSuccess, NS.LoginFail>(
     'LOGIN:LOGIN',
     'LOGIN:LOGIN_SUCCESS',
     'LOGIN:LOGIN_FAIL',
     initialState.communication.login,
   ),
-  loginGoogle: makeCommunicationReducer<
-    NS.ILoginGoogle,
-    NS.ILoginGoogleSuccess,
-    NS.ILoginGoogleFail
-  >(
+  loginGoogle: makeCommunicationReducer<NS.LoginGoogle, NS.LoginGoogleSuccess, NS.LoginGoogleFail>(
     'LOGIN:LOGIN_GOOGLE',
     'LOGIN:LOGIN_GOOGLE_SUCCESS',
     'LOGIN:LOGIN_GOOGLE_FAIL',
     initialState.communication.loginGoogle,
   ),
   loginFacebook: makeCommunicationReducer<
-    NS.ILoginFacebook,
-    NS.ILoginFacebookSuccess,
-    NS.ILoginFacebookFail
+  NS.LoginFacebook,
+  NS.LoginFacebookSuccess,
+  NS.LoginFacebookFail
   >(
     'LOGIN:LOGIN_FACEBOOK',
     'LOGIN:LOGIN_FACEBOOK_SUCCESS',
     'LOGIN:LOGIN_FACEBOOK_FAIL',
     initialState.communication.loginFacebook,
   ),
-  logout: makeCommunicationReducer<NS.ILogout, NS.ILogoutSuccess, NS.ILogoutFail>(
+  logout: makeCommunicationReducer<NS.Logout, NS.LogoutSuccess, NS.LogoutFail>(
     'LOGIN:LOGOUT',
     'LOGIN:LOGOUT_SUCCESS',
     'LOGIN:LOGOUT_FAIL',
     initialState.communication.logout,
   ),
   restorePassword: makeCommunicationReducer<
-    NS.IRestorePassword,
-    NS.IRestorePasswordSuccess,
-    NS.IRestorePasswordFail
+  NS.RestorePassword,
+  NS.RestorePasswordSuccess,
+  NS.RestorePasswordFail
   >(
     'LOGIN:RESTORE_PASSWORD',
     'LOGIN:RESTORE_PASSWORD_SUCCESS',
@@ -48,9 +44,9 @@ const communicationReducer = combineReducers<NS.IReduxState['communication']>({
     initialState.communication.restorePassword,
   ),
   registration: makeCommunicationReducer<
-    NS.IRegistration,
-    NS.IRegistrationSuccess,
-    NS.IRegistrationFail
+  NS.Registration,
+  NS.RegistrationSuccess,
+  NS.RegistrationFail
   >(
     'LOGIN:REGISTRATION',
     'LOGIN:REGISTRATION_SUCCESS',

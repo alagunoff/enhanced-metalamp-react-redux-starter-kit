@@ -18,17 +18,17 @@ import { LayoutHeaderMenu, IHeaderMenuItem } from './LayoutHeaderMenu/LayoutHead
 
 import './Layout.scss';
 
-type IOwnProps = {
+interface IOwnProps {
   title: string;
-};
+}
 
-type IFeatureProps = {
+interface IFeatureProps {
   loginFeatureEntry: features.login.Entry;
-};
+}
 
-type IStateProps = {
+interface IStateProps {
   logoutCommunication: ICommunication;
-};
+}
 
 type IActionProps = typeof mapDispatchToProps;
 
@@ -42,12 +42,12 @@ const mapDispatchToProps = {
   logout: loginActions.logout,
 };
 
-type IProps = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
+type Props = IOwnProps & IActionProps & IFeatureProps & RouteComponentProps & ITranslationProps;
 
 const b = block('layout');
 const { header, footer } = tKeys.shared;
 
-class LayoutComponent extends React.Component<IProps> {
+class LayoutComponent extends React.Component<Props> {
   public render() {
     const { children, title, location, t } = this.props;
 
@@ -81,9 +81,9 @@ class LayoutComponent extends React.Component<IProps> {
           <div className={b('footer-content')}>
             <a
               className={b('company-link')}
-              href='https://fullstack-development.com'
-              target='_blank'
-              rel='noopener noreferrer'
+              href="https://fullstack-development.com"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {t(footer.fsd)}
             </a>
@@ -93,7 +93,7 @@ class LayoutComponent extends React.Component<IProps> {
     );
   }
 
-  @memoizeByProps((props: IProps) => [props.t])
+  @memoizeByProps((props: Props) => [props.t])
   private getMenuItems(): IHeaderMenuItem[] {
     const { t } = this.props;
     return [
@@ -136,4 +136,4 @@ const Layout = withAsyncFeatures({
   loginFeatureEntry: features.login.loadEntry,
 })(withRouter(connectedComponent));
 
-export { Layout, LayoutComponent, IProps as ILayoutProps };
+export { Layout };

@@ -7,24 +7,25 @@ import { IAppReduxState } from 'shared/types/app';
 import { ICommunication } from 'shared/types/redux';
 import { Popover } from 'shared/view/components';
 import { withTranslation, ITranslationProps, tKeys } from 'services/i18n';
-import { namespace as UserNamespace } from 'services/user';
 
+
+import * as NS from '../../../namespace';
 import { UserAvatar } from '../../components';
 
 import './UserPreview.scss';
 
-type IState = {
+interface IState {
   isOpen: boolean;
 }
 
-type IOwnProps = {
+interface IOwnProps {
   onEditClick(): void;
   onLogoutLinkClick: () => void;
   onSuccessfulLogout: () => void;
 }
 
-type IStateProps = {
-  user: UserNamespace.IUser | null;
+interface IStateProps {
+  user: NS.IUser | null;
   logoutCommunication: ICommunication;
 }
 
@@ -35,19 +36,19 @@ function mapStateToProps(state: IAppReduxState): IStateProps {
   };
 }
 
-type IProps = IStateProps & IOwnProps & ITranslationProps;
+type Props = IStateProps & IOwnProps & ITranslationProps;
 
 const b = block('user-preview');
 const { user: intl } = tKeys.services;
 
-class UserPreview extends React.Component<IProps, IState> {
+class UserPreview extends React.Component<Props, IState> {
   public state: IState = {
     isOpen: false,
   };
 
   private blockRef = createRef<HTMLDivElement>();
 
-  public componentDidUpdate(prevProps: IProps) {
+  public componentDidUpdate(prevProps: Props) {
     const { onSuccessfulLogout } = this.props;
 
     if (this.isSuccessfulLogout(prevProps)) {
@@ -69,12 +70,12 @@ class UserPreview extends React.Component<IProps, IState> {
       <div className={b()} ref={this.blockRef}>
         <div
           tabIndex={0}
-          role='button img'
+          role="button img"
           className={b('avatar')}
           onClick={this.handleAvatarClick}
           onKeyPress={this.handleAvatarKeyPress}
         >
-          <UserAvatar avatarURL={avatarURL} size='small' />
+          <UserAvatar avatarURL={avatarURL} size="small" />
         </div>
         <Popover
           open={isOpen}
@@ -90,18 +91,18 @@ class UserPreview extends React.Component<IProps, IState> {
                 {age && <div className={b('age')}>{t(intl.yearsOld, { count: Number(age) })}</div>}
               </div>
             </div>
-            <div className={b('bio')}>{bio ? bio : null}</div>
+            <div className={b('bio')}>{bio || null}</div>
             <div className={b('buttons')}>
               <span
                 className={b('edit')}
                 tabIndex={0}
-                role='button'
+                role="button"
                 onClick={onEditClick}
                 onKeyPress={this.handleEditButtonKeyPress}
               >
                 {t(intl.edit)}
               </span>
-              <button type='button' className={b('logout-link')} onClick={onLogoutLinkClick}>
+              <button type="button" className={b('logout-link')} onClick={onLogoutLinkClick}>
                 {t(intl.logout)}
               </button>
             </div>
@@ -137,7 +138,7 @@ class UserPreview extends React.Component<IProps, IState> {
     }
   }
 
-  private isSuccessfulLogout(prevProps: IProps) {
+  private isSuccessfulLogout(prevProps: Props) {
     const {
       logoutCommunication: { isRequesting, error },
     } = this.props;

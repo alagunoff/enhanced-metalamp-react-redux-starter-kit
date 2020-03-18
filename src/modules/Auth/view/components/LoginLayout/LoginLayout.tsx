@@ -9,15 +9,15 @@ import { withAsyncFeatures } from 'core';
 
 import './LoginLayout.scss';
 
-type IFeatureProps = {
+interface IFeatureProps {
   loginFeatureEntry: features.login.Entry;
-};
+}
 
-type IProps = IFeatureProps & RouteComponentProps;
+type Props = IFeatureProps & RouteComponentProps;
 
 const b = block('login-layout');
 
-class LoginLayout extends React.Component<IProps> {
+class LoginLayout extends React.Component<Props> {
   public render() {
     const {
       loginFeatureEntry: { containers },

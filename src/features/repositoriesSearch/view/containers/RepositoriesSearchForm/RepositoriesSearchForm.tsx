@@ -11,7 +11,7 @@ import { makeRequired } from 'shared/validators';
 import { IRepositoriesSearchFilters } from 'shared/types/githubSearch';
 
 import { RepositoriesSearchSettings } from './RepositoriesSearchSettings/RepositoriesSearchSettings';
-import { selectors, actionCreators } from './../../../redux';
+import { selectors, actionCreators } from '../../../redux';
 import { IRepositoriesSearchFormFields } from '../../../namespace';
 import { fieldNames } from './constants';
 

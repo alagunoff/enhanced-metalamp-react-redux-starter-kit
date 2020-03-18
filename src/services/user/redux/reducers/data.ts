@@ -3,7 +3,7 @@ import { initial } from '../initial';
 
 function dataReducer(
   state: NS.IReduxState['data'] = initial.data,
-  action: NS.IUpdateUser,
+  action: NS.UpdateUser,
 ): NS.IReduxState['data'] {
   switch (action.type) {
     case 'USER:UPDATE_USER': {

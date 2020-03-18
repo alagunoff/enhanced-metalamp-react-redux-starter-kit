@@ -9,7 +9,7 @@ import { user as defaultUser } from '../constants';
 import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
-  const loadUserType: NS.ILoadUser['type'] = 'USER:LOAD_USER';
+  const loadUserType: NS.LoadUser['type'] = 'USER:LOAD_USER';
 
   return function* saga(): SagaIterator {
     yield all([takeLatest(loadUserType, executeLoadUser, deps)]);

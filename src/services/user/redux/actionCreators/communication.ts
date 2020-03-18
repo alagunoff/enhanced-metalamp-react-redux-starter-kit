@@ -6,7 +6,7 @@ const {
   execute: loadUser,
   completed: loadUserSuccess,
   failed: loadUserFail,
-} = makeCommunicationActionCreators<NS.ILoadUser, NS.ILoadUserSuccess, NS.ILoadUserFail>(
+} = makeCommunicationActionCreators<NS.LoadUser, NS.LoadUserSuccess, NS.LoadUserFail>(
   'USER:LOAD_USER',
   'USER:LOAD_USER_SUCCESS',
   'USER:LOAD_USER_FAIL',

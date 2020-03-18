@@ -48,6 +48,7 @@ module.exports = {
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
     'arrow-parens': ['error', 'as-needed'], // TODO: УДОЛИТЬ
     'no-undef': 'off',
+    'class-methods-use-this': 'off'
   },
   env: {
     jest: true,

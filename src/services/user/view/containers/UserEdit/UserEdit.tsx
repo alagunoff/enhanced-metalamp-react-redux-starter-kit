@@ -17,9 +17,9 @@ import { validateName, validateEmail } from './constants';
 
 import './UserEdit.scss';
 
-type IStateProps = {
+interface IStateProps {
   user: IUser | null;
-};
+}
 
 type IActionProps = typeof mapDispatchToProps;
 
@@ -34,12 +34,12 @@ const mapDispatchToProps = {
   setNotification: notificationActionCreators.setNotification,
 };
 
-type IProps = IStateProps & IActionProps & ITranslationProps;
+type Props = IStateProps & IActionProps & ITranslationProps;
 
 const b = block('user-edit');
 const { user: intl } = tKeys.services;
 
-class UserEdit extends React.Component<IProps> {
+class UserEdit extends React.Component<Props> {
   public render() {
     const { user } = this.props;
 
@@ -72,35 +72,35 @@ class UserEdit extends React.Component<IProps> {
         <div className={b('user-avatar')}>
           <UserAvatar
             avatarURL={avatarURL}
-            size='big'
+            size="big"
           />
         </div>
         <div className={b('fields')}>
           <div className={b('field')}>
-            <TextInputField name='name' label={t(intl.name)} validate={validateName} t={t} />
+            <TextInputField name="name" label={t(intl.name)} validate={validateName} t={t} />
           </div>
           <div className={b('field')}>
             <TextInputField
-              name='email'
+              name="email"
               label={t(intl.email)}
               validate={validateEmail}
               t={t}
             />
           </div>
           <div className={b('field')}>
-            <TextInputField name='avatarURL' label={t(intl.avatarURL)} t={t} />
+            <TextInputField name="avatarURL" label={t(intl.avatarURL)} t={t} />
           </div>
           <div className={b('field')}>
-            <TextInputField name='nickname' label={t(intl.nickname)} t={t} />
+            <TextInputField name="nickname" label={t(intl.nickname)} t={t} />
           </div>
           <div className={b('field')}>
-            <NumberInputField name='age' label={t(intl.age)} t={t} />
+            <NumberInputField name="age" label={t(intl.age)} t={t} />
           </div>
           <div className={b('field')}>
-            <TextInputField name='bio' label={t(intl.bio)} multiline rowsMax={10} t={t} />
+            <TextInputField name="bio" label={t(intl.bio)} multiline rowsMax={10} t={t} />
           </div>
           <div className={b('button')}>
-            <MuiButton variant='outlined' type='submit'>
+            <MuiButton variant="outlined" type="submit">
               {t(tKeys.shared.save)}
             </MuiButton>
           </div>

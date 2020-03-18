@@ -9,15 +9,15 @@ import { withAsyncFeatures } from 'core';
 
 import './RegistrationLayout.scss';
 
-type IFeatureProps = {
+interface IFeatureProps {
   loginFeatureEntry: features.login.Entry;
 }
 
-type IProps = IFeatureProps & RouteComponentProps;
+type Props = IFeatureProps & RouteComponentProps;
 
 const b = block('registration-layout');
 
-class RegistrationLayout extends React.Component<IProps> {
+class RegistrationLayout extends React.Component<Props> {
   public render() {
     const {
       loginFeatureEntry: { containers },

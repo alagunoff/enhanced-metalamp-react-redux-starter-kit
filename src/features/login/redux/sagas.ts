@@ -8,12 +8,12 @@ import * as NS from '../namespace';
 import * as actionCreators from './actionCreators';
 
 function getSaga(deps: IDependencies) {
-  const loginType: NS.ILogin['type'] = 'LOGIN:LOGIN';
-  const loginGoogleType: NS.ILoginGoogle['type'] = 'LOGIN:LOGIN_GOOGLE';
-  const loginFacebookType: NS.ILoginFacebook['type'] = 'LOGIN:LOGIN_FACEBOOK';
-  const logoutType: NS.ILogout['type'] = 'LOGIN:LOGOUT';
-  const restorePasswordType: NS.IRestorePassword['type'] = 'LOGIN:RESTORE_PASSWORD';
-  const registrationType: NS.IRegistration['type'] = 'LOGIN:REGISTRATION';
+  const loginType: NS.Login['type'] = 'LOGIN:LOGIN';
+  const loginGoogleType: NS.LoginGoogle['type'] = 'LOGIN:LOGIN_GOOGLE';
+  const loginFacebookType: NS.LoginFacebook['type'] = 'LOGIN:LOGIN_FACEBOOK';
+  const logoutType: NS.Logout['type'] = 'LOGIN:LOGOUT';
+  const restorePasswordType: NS.RestorePassword['type'] = 'LOGIN:RESTORE_PASSWORD';
+  const registrationType: NS.Registration['type'] = 'LOGIN:REGISTRATION';
 
   return function* saga(): SagaIterator {
     yield all([
@@ -27,7 +27,7 @@ function getSaga(deps: IDependencies) {
   };
 }
 
-function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
+function* executeLogin({ api }: IDependencies, { payload }: NS.Login) {
   try {
     yield call(api.login, payload);
     yield put(actionCreators.loginSuccess());
@@ -38,7 +38,7 @@ function* executeLogin({ api }: IDependencies, { payload }: NS.ILogin) {
 
 function* executeLoginGoogle({ api }: IDependencies) {
   try {
-    yield call(api.loginGoogle)
+    yield call(api.loginGoogle);
     yield put(actionCreators.loginGoogleSuccess());
   } catch (error) {
     yield put(actionCreators.loginGoogleFail(getErrorMsg(error)));
@@ -65,7 +65,7 @@ function* executeLogout({ api }: IDependencies) {
 
 function* executeRestorePassword(
   { api }: IDependencies,
-  { payload: { email } }: NS.IRestorePassword,
+  { payload: { email } }: NS.RestorePassword,
 ) {
   try {
     yield call(api.restorePassword, email);
@@ -75,7 +75,7 @@ function* executeRestorePassword(
   }
 }
 
-function* executeRegistration({ api }: IDependencies, { payload }: NS.IRegistration) {
+function* executeRegistration({ api }: IDependencies, { payload }: NS.Registration) {
   try {
     yield call(api.registration, payload);
     yield put(actionCreators.registrationSuccess());

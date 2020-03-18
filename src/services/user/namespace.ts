@@ -18,9 +18,9 @@ export interface IReduxState {
   };
 }
 
-export type IUpdateUser = IAction<'USER:UPDATE_USER', IUser | null>;
+export type UpdateUser = IAction<'USER:UPDATE_USER', IUser | null>;
 
-export type ILoadUser = IPlainAction<'USER:LOAD_USER'>;
-export type ILoadUserSuccess = IPlainAction<'USER:LOAD_USER_SUCCESS'>;
-export type ILoadUserFail = IPlainFailAction<'USER:LOAD_USER_FAIL'>;
-export type ILoadUserAction = ILoadUser | ILoadUserSuccess | ILoadUserFail;
+export type LoadUser = IPlainAction<'USER:LOAD_USER'>;
+export type LoadUserSuccess = IPlainAction<'USER:LOAD_USER_SUCCESS'>;
+export type LoadUserFail = IPlainFailAction<'USER:LOAD_USER_FAIL'>;
+export type LoadUserAction = LoadUser | LoadUserSuccess | LoadUserFail;

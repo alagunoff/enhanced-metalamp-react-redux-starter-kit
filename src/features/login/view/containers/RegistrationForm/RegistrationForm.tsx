@@ -9,31 +9,31 @@ import { IAppReduxState } from 'shared/types/app';
 import { TextInputField, CheckboxInputField } from 'shared/view/form';
 import { Button } from 'shared/view/elements';
 
-import { actionCreators } from './../../../redux';
-import { validateEmail, validatePassword } from './../constants';
+import { actionCreators } from '../../../redux';
+import { validateEmail, validatePassword } from '../constants';
 
 import './RegistrationForm.scss';
 
-type IStateProps = {
+interface IStateProps {
   registrationCommunication: ICommunication;
   loginGoogleCommunication: ICommunication;
   loginFacebookCommunication: ICommunication;
-};
+}
 
-type OwnProps = {
+interface IOwnProps {
   onLoginLinkClick: () => void;
   onSuccessfulRegistration: () => void;
   onSuccessfulLoginGoogle: () => void;
   onSuccessfulLoginFacebook: () => void;
-};
+}
 
-type RegistrationFormFields = {
+interface IRegistrationFormFields {
   email: string;
   password: string;
   refusalToSubscription: boolean;
-};
+}
 
-type IActionProps = typeof mapDispatchToProps;
+type ActionProps = typeof mapDispatchToProps;
 
 function mapStateToProps(state: IAppReduxState): IStateProps {
   return {
@@ -49,12 +49,12 @@ const mapDispatchToProps = {
   loginFacebook: actionCreators.loginFacebook,
 };
 
-type IProps = IActionProps & IStateProps & OwnProps;
+type Props = ActionProps & IStateProps & IOwnProps;
 
 const b = block('registration-form');
 
-class RegistrationForm extends React.Component<IProps> {
-  public componentDidUpdate(prevProps: IProps) {
+class RegistrationForm extends React.Component<Props> {
+  public componentDidUpdate(prevProps: Props) {
     const {
       onSuccessfulRegistration,
       onSuccessfulLoginGoogle,
@@ -84,26 +84,26 @@ class RegistrationForm extends React.Component<IProps> {
 
     return (
       <div className={b()}>
-        <Button type='button' theme='with-arrow' onClick={onLoginLinkClick}>
+        <Button type="button" theme="with-arrow" onClick={onLoginLinkClick}>
           Войти
         </Button>
         <div className={b('title')}>Регистрация</div>
         <ul className={b('list')}>
           <li className={b('social-item')}>
             <button
-              className={b('social-link registration-form__social-link_theme_google')}
-              type='button'
-              aria-label='sign in via google'
+              className={b('social-link', { theme: 'google' })}
+              type="button"
+              aria-label="sign in via google"
               onClick={this.handleGoogleLinkClick}
-            ></button>
+            />
           </li>
           <li className={b('social-item')}>
             <button
-              className={b('social-link registration-form__social-link_theme_facebook')}
-              type='button'
-              aria-label='sign in via facebook'
+              className={b('social-link', { theme: 'facebook' })}
+              type="button"
+              aria-label="sign in via facebook"
               onClick={this.handleFacebookLinkClick}
-            ></button>
+            />
           </li>
         </ul>
         <div className={b('text')}>или</div>
@@ -116,7 +116,7 @@ class RegistrationForm extends React.Component<IProps> {
   }
 
   @autobind
-  private handleFormSubmit(formValues: RegistrationFormFields) {
+  private handleFormSubmit(formValues: IRegistrationFormFields) {
     const { registration } = this.props;
 
     registration(formValues);
@@ -147,17 +147,17 @@ class RegistrationForm extends React.Component<IProps> {
         <div className={b('fields')}>
           <div className={b('field')}>
             <TextInputField
-              name='email'
-              label='Email'
+              name="email"
+              label="Email"
               validate={validateEmail}
               disabled={isRequesting}
             />
           </div>
           <div className={b('field')}>
             <TextInputField
-              name='password'
-              type='password'
-              label='Пароль'
+              name="password"
+              type="password"
+              label="Пароль"
               validate={validatePassword}
               disabled={isRequesting}
             />
@@ -170,23 +170,23 @@ class RegistrationForm extends React.Component<IProps> {
           <li className={b('password-tips-item')}>Минимум 8 знаков</li>
         </ul>
         <div className={b('button')}>
-          <Button type='submit' disabled={isRequesting}>
+          <Button type="submit" disabled={isRequesting}>
             Зарегистрироваться
           </Button>
         </div>
         <div className={b('agreement')}>
           Нажимая на кнопку «Зарегистрироваться», вы подтверждаете свое согласие с условиями
           предоставления услуг (
-          <a className={b('agreement-link')} href='/mock-address/change-me/' target='_blank'>
+          <a className={b('agreement-link')} href="/mock-address/change-me/" target="_blank">
             Пользовательское&nbsp;соглашение
           </a>
           )
         </div>
         <div className={b('subscription-refusal')}>
           <CheckboxInputField
-            name='refusalToSubscription'
-            label='Я не хочу получать еженедельную рассылку с советами по поиску работы и новостях о самых
-          востребованных профессиях'
+            name="refusalToSubscription"
+            label="Я не хочу получать еженедельную рассылку с советами по поиску работы и новостях о самых
+          востребованных профессиях"
             disabled={isRequesting}
           />
         </div>
@@ -194,7 +194,7 @@ class RegistrationForm extends React.Component<IProps> {
     );
   }
 
-  private isSuccessfulRegistration(prevProps: IProps) {
+  private isSuccessfulRegistration(prevProps: Props) {
     const {
       registrationCommunication: { isRequesting, error },
     } = this.props;
@@ -205,7 +205,7 @@ class RegistrationForm extends React.Component<IProps> {
     return error === '' && !isRequesting && prevIsRequesting;
   }
 
-  private isSuccessfulLoginGoogle(prevProps: IProps) {
+  private isSuccessfulLoginGoogle(prevProps: Props) {
     const {
       loginGoogleCommunication: { isRequesting, error },
     } = this.props;
@@ -216,7 +216,7 @@ class RegistrationForm extends React.Component<IProps> {
     return error === '' && !isRequesting && prevIsRequesting;
   }
 
-  private isSuccessfulLoginFacebook(prevProps: IProps) {
+  private isSuccessfulLoginFacebook(prevProps: Props) {
     const {
       loginFacebookCommunication: { isRequesting, error },
     } = this.props;

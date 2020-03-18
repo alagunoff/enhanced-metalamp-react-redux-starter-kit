@@ -39,7 +39,7 @@ function renderSharedPart(modules: IModule[]) {
         <Root>
           <Switch>
             {modules.map(module => (module.getRoutes ? module.getRoutes() : null))}
-            <Redirect exact from='/' to={routes.auth.registration.getRoutePath()} />
+            <Redirect exact from="/" to={routes.auth.registration.getRoutePath()} />
             <Route>
               <NotFound />
             </Route>
