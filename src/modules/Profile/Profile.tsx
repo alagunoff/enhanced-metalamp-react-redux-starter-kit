@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { withAuth } from 'modules/shared';
+import { withRedirect } from 'modules/shared';
 import { IModule } from 'shared/types/app';
 import { routes } from 'modules/routes';
 
@@ -14,7 +14,7 @@ const Profile: IModule = {
         exact
         key={routes.profile.getElementKey()}
         path={routes.profile.getRoutePath()}
-        component={withAuth(ProfileLayout)}
+        component={withRedirect({ Component: ProfileLayout, withAuth: true })}
       />
     );
   },

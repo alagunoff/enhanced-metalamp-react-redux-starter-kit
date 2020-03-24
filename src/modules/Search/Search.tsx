@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { IModule } from 'shared/types/app';
 import { routes } from 'modules/routes';
-import { NotFound, withAuth } from 'modules/shared';
+import { NotFound, withRedirect } from 'modules/shared';
 
 import { UsersSearchLayout, RepositoriesSearchLayout } from './view/components';
 
@@ -16,13 +16,13 @@ const Search: IModule = {
             exact
             key={routes.search.users.getElementKey()}
             path={routes.search.users.getRoutePath()}
-            component={withAuth(UsersSearchLayout)}
+            component={withRedirect({ Component: UsersSearchLayout, withAuth: true })}
           />
           <Route
             exact
             key={routes.search.repositories.getElementKey()}
             path={routes.search.repositories.getRoutePath()}
-            component={withAuth(RepositoriesSearchLayout)}
+            component={withRedirect({ Component: RepositoriesSearchLayout, withAuth: true })}
           />
           <Route>
             <NotFound />
